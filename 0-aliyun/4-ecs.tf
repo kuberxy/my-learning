@@ -1,7 +1,7 @@
 resource "alicloud_instance" "node1" {
   instance_name        = "node1"
 
-  instance_type        = "ecs.t5-lc2m1.nano"
+  instance_type        = "ecs.c6.xlarge"
   system_disk_category = "cloud_efficiency"
   system_disk_size     = 20
 
@@ -23,7 +23,7 @@ resource "alicloud_instance" "node1" {
 resource "alicloud_instance" "node2" {
   instance_name        = "node2"
 
-  instance_type        = "ecs.t5-lc2m1.nano"
+  instance_type        = "ecs.c6.xlarge"
   system_disk_category = "cloud_efficiency"
   system_disk_size     = 20
 
@@ -45,7 +45,7 @@ resource "alicloud_instance" "node2" {
 resource "alicloud_instance" "node3" {
   instance_name        = "node3"
 
-  instance_type        = "ecs.t5-lc2m1.nano"
+  instance_type        = "ecs.c6.xlarge"
   system_disk_category = "cloud_efficiency"
   system_disk_size     = 20
 
