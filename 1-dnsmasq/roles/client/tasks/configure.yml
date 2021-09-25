@@ -1,0 +1,4 @@
+---
+
+- name: create configuration file
+  template: src=client.conf.j2 dest={{ client_conf_dir }}/{{ client_conf_filename }} owner={{ client_user }}  group={{ client_user }} mode=0644 backup=yes

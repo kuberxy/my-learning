@@ -1,0 +1,20 @@
+network:
+  version: 2
+  renderer: networkd
+  ethernets:
+    eth0:
+      addresses:
+        - {{ client_ip }}
+{% if client_gw %}
+      gateway4: {{ client_gw }}
+{% else %}
+      gateway4: {{ client_ip | ipaddr('first_usable') }}
+{% endif %}
+      nameservers:
+          search: [{{ client_dn }}]
+          addresses: 
+{% for host in groups.dnsmasq_node %}
+            - {{ hostvars[host].ansible_host }}
+{% endfor %}
+      dhcp4: no
+      dhcp6: no

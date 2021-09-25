@@ -1,0 +1,20 @@
+---
+
+dnsmasq_port: 53
+
+dnsmasq_user: root
+dnsmasq_conf_dir: /etc
+dnsmasq_conf_filename: "dnsmasq.conf"
+
+deployment_method: apt
+
+# apt config
+system_apt_enable: False
+apt_packages:
+  - dnsmasq
+
+# dnsmasq config
+dnsmasq_addn_hosts_name: dnsmasq_static_hosts.conf
+dnsmasq_addn_hosts_path: "{{ dnsmasq_conf_dir }}/{{ dnsmasq_addn_hosts_name }}"
+dnsmasq_upstream_server: "{{ upstream_dns_server }}"
+dnsmasq_domain: "{{ local_domain }}"

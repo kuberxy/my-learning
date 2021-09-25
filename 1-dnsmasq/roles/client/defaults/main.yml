@@ -1,0 +1,9 @@
+---
+
+client_user: "root"
+client_conf_dir: "/etc/netplan/"
+client_conf_filename: "99-eth0.yaml"
+
+client_ip: "{{ ansible_host }}/{{ subnet_mask }}"
+client_gw: "{{ subnet_gw | default(false) }}"
+client_dn: "{{ local_domain }}"

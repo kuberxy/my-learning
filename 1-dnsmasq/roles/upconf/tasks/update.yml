@@ -1,0 +1,9 @@
+---
+
+- name: create dnsmasq addn hosts file
+  template: src={{ dnsmasq_addn_hosts_name }} dest={{ dnsmasq_conf_dir }}/{{ dnsmasq_addn_hosts_name }} owner={{ dnsmasq_user }}  group={{ dnsmasq_user }} mode=0644 backup=yes
+  register: dnsmasq_addn_hosts_st
+
+- name: create configuration file
+  template: src=dnsmasq.conf.j2 dest={{ dnsmasq_conf_dir }}/{{ dnsmasq_conf_filename }} owner={{ dnsmasq_user }}  group={{ dnsmasq_user }} mode=0644 backup=yes
+  register: dnsmasq_conf_st

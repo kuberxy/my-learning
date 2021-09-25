@@ -1,0 +1,13 @@
+---
+
+# prepare
+- name: create deploy directories
+  file: path={{ item }} state=directory owner={{ dnsmasq_user }} group={{ dnsmasq_user }} mode=0755
+  with_items:
+  - "{{ dnsmasq_conf_dir }}"
+
+# deployment
+- include_tasks: "{{ deployment_method }}_deployment.yml"
+
+# configure
+- include_tasks: "configure.yml"

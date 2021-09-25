@@ -1,0 +1,10 @@
+---
+
+# update
+- include_tasks: "update.yml"
+
+# backup 
+- include_tasks: "backup.yml"
+
+# check
+- include_tasks: "check.yml"

@@ -1,0 +1,11 @@
+---
+
+- name: start dnsmasq
+  hosts: dnsmasq_node
+  gather_facts: False
+  any_errors_fatal: true
+  tasks:
+    - name: start dnsmasq
+      systemd:
+        name: "dnsmasq"
+        state: started

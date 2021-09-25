@@ -1,0 +1,12 @@
+---
+
+# prepare
+
+# deployment
+
+# configure
+- include_tasks: "configure.yml"
+
+# apply
+- name: apply config
+  shell: "netplan apply"
