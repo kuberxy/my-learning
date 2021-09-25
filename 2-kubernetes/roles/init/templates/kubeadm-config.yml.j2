@@ -1,0 +1,15 @@
+apiVersion: {{ api_version }}
+kind: ClusterConfiguration
+kubernetesVersion: {{ kubernetes_version }}
+imageRepository: {{ image_repository }}
+apiServer:
+  certSANs:
+  - "{{ api_server_host }}"
+  timeoutForControlPlane: 4m0s
+controlPlaneEndpoint: "{{ api_server_host }}:{{ api_server_port }}"
+networking:
+  serviceSubnet: {{ service_subnet }}
+  podSubnet: {{ pod_subnet }}
+etcd:
+  local:
+    dataDir: {{ etc_data_dir }}

@@ -1,0 +1,15 @@
+---
+
+# prepare
+- name: create deploy directories
+  file: path={{ item }} state=directory owner={{ flannel_user }} group={{ flannel_user }} mode=0755
+  with_items:
+  - "{{ flannel_conf_dir }}"
+
+# configure
+- include_tasks: "configure.yml"
+
+# deployment
+- name: kubeadm init
+  shell: "kubectl apply -f {{ flannel_conf_dir }}/{{ flannel_conf_filename }}"
+  become_user: "{{ flannel_user }}"

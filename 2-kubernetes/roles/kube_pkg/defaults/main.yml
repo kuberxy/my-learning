@@ -1,0 +1,12 @@
+---
+
+deployment_method: apt
+
+# apt config
+service_apt_enable: True
+kubernetes_enable: True
+apt_packages:
+  - kubelet=1.16.14-00
+  - kubernetes-cni=0.8.6-00
+  - kubeadm=1.16.14-00
+  - kubectl=1.16.14-00

@@ -1,0 +1,4 @@
+---
+
+- name: create configuration file
+  template: src=kube-flannel.yml.j2 dest={{ flannel_conf_dir }}/{{ flannel_conf_filename }} owner={{ flannel_user }}  group={{ flannel_user }} mode=0644 backup=yes

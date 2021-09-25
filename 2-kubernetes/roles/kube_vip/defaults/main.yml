@@ -1,0 +1,20 @@
+---
+
+kube_vip_user: "root"
+kube_vip_conf_dir: "/etc/kube-vip/"
+kube_vip_conf_filename: "config.yaml"
+
+kube_vip_id: "{{ inventory_hostname_short }}"
+kube_vip_host: "{{ ansible_host }}"
+kube_vip_port: 10000
+
+kube_vip_addr: "{{ lb_kube_vip_addr }}"
+kube_vip_if: "{{ lb_kube_vip_if }}"
+kube_vip_lb_port: "{{ lb_kube_apiserver_dest_port }}"
+kube_apiserver_port: "{{ lb_kube_apiserver_src_port }}"
+
+kube_vip_version: 0.1.1
+
+# image config
+image_names:
+  - kube-vip

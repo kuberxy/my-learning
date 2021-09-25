@@ -1,0 +1,12 @@
+---
+
+client_user: "{{ deploy_user }}"
+client_conf_dir: "/home/{{ deploy_user }}/.kube"
+
+deployment_method: apt
+
+# apt config
+service_apt_enable: True
+kubernetes_enable: False
+apt_packages:
+  - kubectl=1.16.14-00

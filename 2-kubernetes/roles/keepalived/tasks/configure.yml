@@ -1,0 +1,9 @@
+---
+
+- name: create vrrp script
+  copy: src={{ keepalived_vrrp_script_name }}.sh dest={{ keepalived_conf_dir }}/{{ keepalived_vrrp_script_name }}.sh owner={{ keepalived_user }} group={{ keepalived_user }} mode=0755 backup=yes
+  when: enable_check
+
+- name: create configuration file by dynamic
+  template: src={{ keepalived_communication_type }}_keepalived.conf.j2 dest={{ keepalived_conf_dir }}/{{ keepalived_conf_filename }} owner={{ keepalived_user }} group={{ keepalived_user }} mode=0644 backup=yes
+  notify: restart keepalived

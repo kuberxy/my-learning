@@ -1,0 +1,40 @@
+---
+
+- name: stop haproxy
+  hosts: kube_master,kube_worker
+  gather_facts: False
+  any_errors_fatal: true
+  tasks:
+    - name: stop haproxy
+      systemd:
+        name: "haproxy"
+        state: stopped
+        enabled: no
+
+- name: stop kubelet
+  hosts: kube_node
+  gather_facts: False
+  any_errors_fatal: true
+  tasks:
+    - name: stop kubelet
+      systemd:
+        name: "kubelet"
+        state: stopped
+        enabled: no
+
+- name: stop kubernetes
+  hosts: kube_master
+  gather_facts: False
+  any_errors_fatal: true
+  tasks:
+    - name: stop kubernetes
+      shell: |
+        docker ps | awk '/{{ item }}/{print "docker stop "$1}' | bash
+      loop:
+      - apiserver
+      - controller-manager
+      - scheduler
+      - proxy
+      - coredns
+      - flannel
+      - etcd

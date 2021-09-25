@@ -1,0 +1,12 @@
+---
+
+worker_user: "{{ worker_user }}"
+
+deployment_method: docker
+
+# image config
+image_names:
+  - pause
+  - kube-proxy
+  - coredns
+  - flannel

@@ -1,0 +1,13 @@
+---
+
+# prepare
+- name: create deploy directories
+  file: path={{ item }} state=directory owner={{ kube_vip_user }} group={{ kube_vip_user }} mode=0755
+  with_items:
+  - "{{ kube_vip_conf_dir }}"
+
+# configure
+- include_tasks: "configure.yml"
+
+# deployment
+#- include_tasks: "deployment.yml"

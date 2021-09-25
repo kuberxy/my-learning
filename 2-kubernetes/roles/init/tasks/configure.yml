@@ -1,0 +1,4 @@
+---
+
+- name: create configuration file
+  template: src=kubeadm-config.yml.j2 dest={{ init_conf_dir }}/{{ init_conf_filename }} owner={{ init_user }} group={{ init_user }} mode=0644 backup=yes

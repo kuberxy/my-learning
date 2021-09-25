@@ -1,0 +1,31 @@
+localPeer:
+  id: {{ kube_vip_id }}
+  address: {{ kube_vip_host }}
+  port: {{ kube_vip_port }}
+remotePeers:
+{% for host in groups.load_balancer %}
+{% if host != inventory_hostname_short %}
+- id: {{ hostvars[host].inventory_hostname_short }}
+  address: {{ hostvars[host].ansible_host }}
+  port: {{ kube_vip_port }}
+{% endif %}
+{% endfor %}
+vip: {{ kube_vip_addr }}
+gratuitousARP: true
+singleNode: false
+{% if SEED is defined %}
+startAsLeader: true
+{% else %}
+startAsLeader: false
+{% endif %}
+interface: {{ kube_vip_if }}
+loadBalancers:
+- name: API Server Load Balancer
+  type: tcp
+  port: {{ kube_vip_lb_port }}
+  bindToVip: false
+  backends:
+{% for host in groups.kube_master %}
+  - address: {{ hostvars[host].ansible_host }}
+    port: {{ kube_apiserver_port }}
+{% endfor %}

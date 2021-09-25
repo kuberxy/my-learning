@@ -1,0 +1,26 @@
+---
+
+- name: start kubelet
+  hosts: kube_node
+  gather_facts: False
+  any_errors_fatal: true
+  tasks:
+    - name: start kubelet
+      systemd:
+        name: "kubelet"
+        state: started
+    - name: wait apiserver port is up
+      wait_for:
+        port: 6443
+        state: started
+        msg: "the apiserver port 6443 is not up"
+
+- name: start haproxy
+  hosts: kube_master,kube_worker
+  gather_facts: False
+  any_errors_fatal: true
+  tasks:
+    - name: start haproxy
+      systemd:
+        name: "haproxy"
+        state: started

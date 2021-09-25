@@ -1,0 +1,12 @@
+---
+
+# reset
+- name: kubeadm reset
+  shell: |
+    kubeadm reset -f
+
+- name: del vip
+  shell: |
+    ip a | grep '{{ kube_vip_addr }}/32' && ip address del {{ kube_vip_addr }}/32 dev {{ kube_vip_if }}
+  register: result
+  failed_when: result.rc not in [ 0, 1 ]

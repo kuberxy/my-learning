@@ -1,0 +1,41 @@
+---
+
+images_info: 
+  - repository: plndr/kube-vip
+    tag: {{ kube_vip_version }}
+    name: kube-vip
+{% if image_tar_st is defined %}
+    state: {{ image_tar_st['results'][0].stat.exists | default(false) }}
+{% endif %}
+  - repository: {{ flannel_image_repo }}/flannel
+    tag: {{ flannel_version }}
+    name: flannel
+{% if image_tar_st is defined %}
+    state: {{ image_tar_st['results'][0].stat.exists | default(false) }}
+{% endif %}
+  - repository: {{ kubernetes_image_repo }}/pause
+    tag: {{ pause_version }}
+    name: pause
+{% if image_tar_st is defined %}
+    state: {{ image_tar_st['results'][1].stat.exists | default(false) }}
+{% endif %}
+  - repository: {{ kubernetes_image_repo }}/etcd
+    tag: {{ etcd_version }}
+    name: etcd
+{% if image_tar_st is defined %}
+    state: {{ image_tar_st['results'][2].stat.exists | default(false) }}
+{% endif %}
+  - repository: {{ kubernetes_image_repo }}/coredns
+    tag: {{ coredns_version }}
+    name: coredns
+{% if image_tar_st is defined %}
+    state: {{ image_tar_st['results'][3].stat.exists | default(false) }}
+{% endif %}
+{% for name in names %}
+  - repository: {{ kubernetes_image_repo }}/{{ name }}
+    tag: {{ kube_version }}
+    name: {{ name }}
+{% if image_tar_st is defined %}
+    state: {{ image_tar_st['results'][loop.index0 + 4].stat.exists | default(false) }}
+{% endif %}
+{% endfor %}

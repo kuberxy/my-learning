@@ -1,0 +1,28 @@
+---
+
+init_user: "{{ deploy_user }}"
+init_conf_dir: /etc/kubernetes/
+init_conf_filename: "kubeadm-config.yml"
+
+deployment_method: docker
+
+# image config
+image_names:
+  - pause
+  - etcd
+  - kube-apiserver
+  - kube-controller-manager
+  - kube-scheduler
+  - kube-proxy
+  - coredns
+  - flannel
+
+# kubernetes config
+api_version: "{{ kube_api_version }}"
+kubernetes_version: "{{ kube_kubernetes_version }}"
+image_repository: "{{ kube_image_repository }}"
+api_server_host: "{{ kube_api_server_host }}"
+api_server_port: "{{ kube_api_server_port }}"
+service_subnet: "{{ kube_service_subnet }}"
+pod_subnet: "{{ kube_pod_subnet }}"
+etc_data_dir: "{{ kube_etc_data_dir }}"

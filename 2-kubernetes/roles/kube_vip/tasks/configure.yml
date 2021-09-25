@@ -1,0 +1,7 @@
+---
+
+- name: generate configuration file
+  template: src=kube_vip.conf.j2 dest={{ kube_vip_conf_dir }}/{{ kube_vip_conf_filename }} owner={{ kube_vip_user }}  group={{ kube_vip_user }} mode=0644 backup=yes
+
+- name: generate configuration file
+  template: src=kube-vip.yaml.j2 dest=/etc/kubernetes/manifests/kube-vip.yaml owner={{ kube_vip_user }}  group={{ kube_vip_user }} mode=0644 backup=yes

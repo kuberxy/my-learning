@@ -1,0 +1,16 @@
+---
+
+master_user: "{{ deploy_user }}"
+
+deployment_method: docker
+
+# image config
+image_names:
+  - pause
+  - etcd
+  - kube-apiserver
+  - kube-controller-manager
+  - kube-scheduler
+  - kube-proxy
+  - coredns
+  - flannel

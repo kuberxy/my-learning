@@ -1,0 +1,58 @@
+---
+
+- name: deploy kubernetes node
+  hosts: kube_node
+  gather_facts: false
+  any_errors_fatal: true
+  roles:
+    - { role: docker }
+    - { role: node }
+
+- name: reset node env
+  hosts: load_balancer
+  gather_facts: false
+  any_errors_fatal: true
+  roles:
+    - { role: reset }
+
+- name: deploy load balancer
+  hosts: load_balancer
+  gather_facts: false
+  any_errors_fatal: true
+  roles:
+    - { role: kube_vip }
+
+- name: init master
+  hosts: kube_master[0]
+  gather_facts: false
+  any_errors_fatal: true
+  roles:
+    - { role: init }
+
+- name: join master
+  hosts: kube_master[1:]
+  gather_facts: false
+  any_errors_fatal: true
+  roles:
+    - { role: master }
+
+- name: join worker
+  hosts: kube_worker
+  gather_facts: false
+  any_errors_fatal: true
+  roles:
+    - { role: worker }
+
+- name: deploy client
+  hosts: kube_client
+  gather_facts: false
+  any_errors_fatal: true
+  roles:
+    - { role: client }
+
+- name: deploy network_plugin
+  hosts: kube_client[0]
+  gather_facts: false
+  any_errors_fatal: true
+  roles:
+    - { role: flannel }

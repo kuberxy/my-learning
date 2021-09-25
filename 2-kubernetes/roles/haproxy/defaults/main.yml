@@ -1,0 +1,16 @@
+---
+
+haproxy_user: root
+haproxy_conf_dir: /etc/haproxy
+haproxy_conf_filename: haproxy.cfg
+
+deployment_method: apt
+
+# apt config
+system_apt_enable: True
+apt_packages:
+  - haproxy
+
+# haproxy config
+kube_apiserver_dest_port: "{{ lb_kube_apiserver_dest_port }}"
+kube_apiserver_src_port: "{{ lb_kube_apiserver_src_port }}"

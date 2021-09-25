@@ -1,0 +1,19 @@
+---
+
+# prepare
+- name: ensure client user exists
+  user:
+    name: "{{ client_user }}"
+    state: present
+    shell: /bin/bash
+
+- name: create deploy directories
+  file: path={{ item }} state=directory owner={{ client_user }} group={{ client_user }} mode=0755
+  with_items:
+  - "{{ client_conf_dir }}"
+
+# deployment
+- include_tasks: "{{ deployment_method }}_deployment.yml"
+
+# configure
+- include_tasks: "configure.yml"
