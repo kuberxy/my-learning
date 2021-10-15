@@ -1,0 +1,15 @@
+---
+
+- block:
+    - name: get backup data
+      shell: ncat --recv-only {{ xbstream_server_host }} {{ xbstream_server_port }} | xbstream -x -C {{ xbstream_client_data_dir }}
+    
+    - name: prepare backup data
+      shell: xtrabackup --prepare --target-dir={{ xbstream_client_data_dir }}
+  when: check_data.stdout.strip() == '0'
+
+- name: set mysql data dir permissions
+  file: path={{ xbstream_client_data_dir }} owner={{ mysql_user }} group={{ mysql_user }} mode=u=rwX,g=rX,o=rX recurse=yes
+
+- name: start mysql
+  systemd: name=mysql state=started daemon_reload=yes enabled=yes

@@ -1,0 +1,13 @@
+---
+
+mysql_port: 3306
+
+mysql_user: mysql
+mysql_conf_dir: /etc/mysql
+
+# user config
+root_user: "{{ mysql_root_user }}"
+root_pass: "{{ mysql_root_pass }}"
+replication_user: "{{ mysql_replication_user }}"
+replication_host: "{{ mysql_replication_host }}"
+replication_pass: "{{ msyql_replication_pass }}"

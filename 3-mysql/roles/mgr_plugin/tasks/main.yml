@@ -1,0 +1,31 @@
+---
+
+# ensure replication user exists
+#- include_role: 
+#    name: user
+#  vars:
+#  - mysql_login_user: "{{ root_user }}"
+#    mysql_login_pass: "{{ root_pass }}"
+#    USER: "{{ replication_user }}"
+#    HOST: "{{ replication_host }}"
+#    PASS: "{{ replication_pass }}"
+#    PRIV: "*.*,REPLICATION SLAVE"
+#    STATE: present
+#    SQL_LOG: no
+
+#- name: execute group replication sql file
+#  expect: 
+#    command: /bin/bash -c "mysql -u{{ root_user }} -p < {{ mysql_conf_dir }}/mgr.sql"
+#    responses:
+#      (?i)password: "{{ root_pass }}"
+
+- block:
+  - name: generate group replication plugin sql file
+    template: src=mgr_plugin.sql.j2 dest={{ mysql_conf_dir }}/mgr_plugin.sql owner=root  group=root mode=0644
+  
+  - name: execute group replication sql file
+    shell: |
+      mysql -u{{ mysql_root_user }} -p{{ mysql_root_pass }} < {{ mysql_conf_dir }}/mgr_plugin.sql
+    args:
+      executable: /bin/bash
+  when: check_data.stdout.strip() == '0'

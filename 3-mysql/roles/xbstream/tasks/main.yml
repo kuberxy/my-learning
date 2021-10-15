@@ -1,0 +1,13 @@
+---
+
+# prepare
+- name: create deploy directories
+  file: path={{ item }} state=directory owner={{ xbstream_user }} group={{ xbstream_user }} mode=0755
+  with_items:
+  - "{{ xbstream_log_dir }}"
+
+# deployment
+- include_tasks: "deployment.yml"
+
+# configure
+- include_tasks: "configure.yml"

@@ -1,0 +1,15 @@
+---
+
+xbstream_server_port: "{{ mysql_xbstream_server_port }}"
+
+xbstream_server_user: "{{ deploy_user }}"
+xbstream_server_log_dir: "{{ log_dir }}"
+xbstream_server_log_filename: "xbstream_server-{{ xbstream_server_port }}.log"
+
+deployment_method: binary
+process_supervision_method: systemd
+
+# mysql config
+mysql_host: localhost
+mysql_user: "{{ mysql_root_user }}"
+mysql_pass: "{{ mysql_root_pass }}"

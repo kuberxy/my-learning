@@ -1,0 +1,37 @@
+---
+
+mysql_port: 3306
+
+mysql_user: "{{ mysql_run_user }}"
+mysql_conf_dir: /etc/mysql
+mysql_conf_filename: my.cnf
+mysql_log_dir: /var/log/mysql
+mysql_error_log_filename: error.log
+mysql_slow_log_filename: slow.log
+mysql_data_dir: "{{ mysql_data_directory }}"
+mysql_socket_dir: /var/run/mysqld
+mysql_socket_filename: mysqld.sock
+
+deployment_method: dpkg
+
+# dpkg config
+dpkg_packages:
+  - mysql-common
+  - mysql-client
+  - mysql-community-client
+  - mysql-community-client-core
+  - mysql-server
+  - mysql-community-server
+  - mysql-community-server-core
+
+# mysql config
+root_pass: "{{ mysql_root_pass }}"
+cluster_type: "{{ mysql_cluster_type }}"
+
+bind_address: "{{ mysql_bind_address }}"
+server_id: "{{ mysql_server_id }}"
+group_name: "{{ mysql_group_name }}"
+group_port: "{{ mysql_group_port }}"
+local_address: "{{ mysql_local_address }}"
+ip_whitelist: "{{ mysql_ip_whitelist }}"
+report_host: "{{ mysql_report_host }}"

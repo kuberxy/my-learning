@@ -1,0 +1,10 @@
+---
+
+mysql_user: "{{ mysql_run_user }}"
+
+
+xbstream_server_host: "{{ hostvars[groups['mysql_node'][groups['mysql_node'].index(inventory_hostname_short) - 1]].ansible_host }}"
+xbstream_server_port: "{{ mysql_xbstream_server_port }}"
+
+xbstream_client_user: "{{ mysql_run_user }}"
+xbstream_client_data_dir: "{{ mysql_data_directory }}"

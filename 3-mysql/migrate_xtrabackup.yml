@@ -1,0 +1,71 @@
+---
+
+- name: deploy mysql
+  hosts: mysql_node
+  gather_facts: false
+  any_errors_fatal: true
+  roles:
+    - { role: mysql }
+
+- name: deploy xbstream server
+  hosts: src_node
+  gather_facts: false
+  any_errors_fatal: true
+  roles:
+    - { role: xbstream_server }
+
+- name: deploy xbstream client
+  hosts: localhost
+  gather_facts: false
+  any_errors_fatal: true
+  roles:
+    - { role: xbstream_client, vars: { xbstream_client_data_dir: "{{ playbook_dir }}/mysql", image_dir: "/tmp" } }
+
+
+- name: sync data to first mysql
+  hosts: mysql_node[0]
+  gather_facts: false
+  any_errors_fatal: true
+  tasks:
+    - name: stop mysql
+      systemd: name=mysql state=stopped
+    
+    - name: backup old data
+      shell: "mv /var/lib/mysql /var/lib/mysql-$(date +%Y%m%dT%H%M%S)"
+      register: mv_st
+      failed_when: "mv_st.rc not in [0,1]"
+
+    - name: copy new data
+      copy: src={{ playbook_dir }}/mysql dest=/var/lib/ owner=mysql group=mysql
+
+    - name: start mysql
+      systemd: name=mysql state=started
+
+    - name: change master
+      shell: |
+        mysql -uroot -pmymysql -e'
+        CHANGE MASTER TO MASTER_HOST="{{ hostvars[groups["src_node"][0]].ansible_host }}",MASTER_USER="rep",MASTER_PASSWORD="rep_passwd",MASTER_AUTO_POSITION=1'
+
+    - name: start slave
+      shell: |
+        mysql -uroot -pmymysql -e'start slave'
+
+
+- name: sync data to other mysql
+  hosts: mysql_node[1:]
+  gather_facts: false
+  any_errors_fatal: true
+  tasks:
+    - name: stop mysql
+      systemd: name=mysql state=stopped
+    
+    - name: backup old data
+      shell: "mv /var/lib/mysql /var/lib/mysql-$(date +%Y%m%dT%H%M%S)"
+      register: mv_st
+      failed_when: "mv_st.rc not in [0,1]"
+
+    - name: copy new data
+      copy: src={{ playbook_dir }}/mysql dest=/var/lib/ owner=mysql group=mysql
+
+    - name: start mysql
+      systemd: name=mysql state=started

@@ -1,0 +1,7 @@
+---
+
+- name: join to mysql group 
+  shell: |
+    mysql -u{{ mysql_root_user }} -p{{ mysql_root_pass }} -e"START GROUP_REPLICATION;"
+  args:
+    executable: /bin/bash

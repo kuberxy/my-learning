@@ -1,0 +1,13 @@
+---
+
+# clean data
+- include_tasks: "clean.yml"
+
+- include_role:
+    name: change_dir_cloud
+
+# recovery data
+- include_tasks: "recovery.yml"
+
+# join group
+- include_tasks: "join.yml"

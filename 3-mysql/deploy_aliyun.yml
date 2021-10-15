@@ -1,0 +1,60 @@
+---
+
+- name: check deploy env
+  hosts: mysql_node
+  gather_facts: false
+  any_errors_fatal: true
+  roles:
+    - { role: check }
+  tags:
+    - check
+
+- name: deploy mysql
+  hosts: mysql_node
+  gather_facts: false
+  any_errors_fatal: true
+  roles:
+    - { role: mysql }
+    - { role: xtrabackup }
+  tags:
+    - mysql
+
+- name: setup primary instance
+  hosts: mysql_node[0]
+  gather_facts: false
+  any_errors_fatal: true
+  roles:
+    - { role: mgr }
+    - { role: xbstream_server }
+  tags:
+    - primary
+
+- name: setup secondery instance
+  hosts: mysql_node[1:]
+  serial: 1
+  gather_facts: false
+  any_errors_fatal: true
+  roles:
+    - { role: xbstream_client }
+    - { role: xbstream_server }
+  tags:
+    - secondery
+
+- name: create mysql init env
+  hosts: mysql_node[0]
+  gather_facts: false
+  any_errors_fatal: true
+  roles:
+    - { role: init }
+  tags:
+    - init
+
+- name: deploy proxysql
+  hosts: mysql_node
+  gather_facts: false
+  any_errors_fatal: true
+  roles:
+    - { role: proxysql }
+  tags:
+    - proxysql
+

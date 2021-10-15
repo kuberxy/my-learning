@@ -1,0 +1,29 @@
+---
+
+keepalived_user: root
+keepalived_conf_dir: /etc/keepalived
+keepalived_conf_filename: keepalived.conf
+
+deployment_method: apt
+
+# apt config
+system_apt_enable: True
+apt_packages:
+  - keepalived
+
+# keepalived config
+enable_check: "{{ keepalived_enable_check }}"
+vrrp_script_user: "{{ keepalived_script_user }}"
+vrrp_script_name: "{{ keepalived_vrrp_script_name }}"
+vrrp_instance_name: "{{ keepalived_vrrp_instance_name }}"
+
+# keepalived vrrp instance communication type is multicast or unicast
+communication_type: "{{ keepalived_communication_type }}"
+
+# unicast requirement config
+notify_script_name: "{{ keepalived_notify_script_name }}"
+access_key_id: "{{ keepalived_access_key_id }}"
+access_secret: "{{ keepalived_access_secret }}"
+region_id: "{{ keepalived_region_id }}"
+master_eid: "{{ keepalived_master_eid }}"
+backup_eid: "{{ keepalived_backup_eid }}"

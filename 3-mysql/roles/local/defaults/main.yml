@@ -1,0 +1,28 @@
+---
+
+local_download_dir: "{{ playbook_dir }}/download"
+local_resource_dir: "{{ playbook_dir }}/resource"
+local_binary_dir: "{{ playbook_dir }}/resource/bin"
+local_conf_dir: "{{ playbook_dir }}/conf"
+
+download_type: package
+
+# urls
+proxysql_dpkg_url: "https://github.com/sysown/proxysql/releases/download"
+mysql_dpkg_url: "https://mirrors.tuna.tsinghua.edu.cn/mysql/downloads/MySQL-8.0"
+xtrabackup_dpkg_url: "https://mirrors.tuna.tsinghua.edu.cn/percona/apt/pool/main/p/percona-xtrabackup-80/percona-xtrabackup-80_8.0.22-15-1.bionic_amd64.deb"
+
+# versions
+proxysql_version: 2.0.12
+mysql_version: 8.0.21
+xtrabackup_version: 8.0.22-15-1
+
+# names
+names:
+  - mysql-common
+  - mysql-client
+  - mysql-community-client
+  - mysql-community-client-core
+  - mysql-server
+  - mysql-community-server
+  - mysql-community-server-core

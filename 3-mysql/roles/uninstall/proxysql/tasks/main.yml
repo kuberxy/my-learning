@@ -1,0 +1,14 @@
+---
+
+- name: populate service facts
+  service_facts:
+
+- block:
+  - name: ensure proxysql stopped
+    systemd: name=proxysql state=stopped
+  
+  - name: remove proxysql packages
+    shell: |
+      apt-get purge -y proxysql
+  when: "'proxysql' in services"
+

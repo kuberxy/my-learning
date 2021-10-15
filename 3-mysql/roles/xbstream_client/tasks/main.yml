@@ -1,0 +1,10 @@
+---
+
+# clean data
+- include_tasks: "clean.yml"
+
+# recovery data
+- include_tasks: "recovery.yml"
+
+# join group
+- include_tasks: "join.yml"

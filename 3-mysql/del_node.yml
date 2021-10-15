@@ -1,0 +1,40 @@
+---
+
+- name: delete node from replication group
+  hosts: del_node[2]
+  gather_facts: false
+  any_errors_fatal: true
+  tasks:
+    - name: stop mysql
+      systemd: name=mysql state=stopped
+    
+    - name: backup old data
+      shell: "mv /var/lib/mysql /var/lib/mysql-$(date +%Y%m%dT%H%M%S)"
+      register: mv_st
+      failed_when: "mv_st.rc not in [0,1]"
+
+- name: delete node from replication group
+  hosts: del_node[1]
+  gather_facts: false
+  any_errors_fatal: true
+  tasks:
+    - name: stop mysql
+      systemd: name=mysql state=stopped
+    
+    - name: backup old data
+      shell: "mv /var/lib/mysql /var/lib/mysql-$(date +%Y%m%dT%H%M%S)"
+      register: mv_st
+      failed_when: "mv_st.rc not in [0,1]"
+
+- name: delete node from replication group
+  hosts: del_node[0]
+  gather_facts: false
+  any_errors_fatal: true
+  tasks:
+    - name: stop mysql
+      systemd: name=mysql state=stopped
+    
+    - name: backup old data
+      shell: "mv /var/lib/mysql /var/lib/mysql-$(date +%Y%m%dT%H%M%S)"
+      register: mv_st
+      failed_when: "mv_st.rc not in [0,1]"

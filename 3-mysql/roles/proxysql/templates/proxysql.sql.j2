@@ -1,0 +1,80 @@
+-- set mysql version
+set mysql-server_version='{{ mysql_version }}';
+
+-- set character
+set mysql-default_CHARSET='{{ character_set }}';
+set mysql-default_character_set_client='{{ character_set }}';
+set mysql-default_character_set_connection='{{ character_set }}';
+set mysql-default_character_set_database='{{ character_set }}';
+set mysql-default_character_set_results='{{ character_set }}';
+set mysql-default_charset='{{ character_set }}';
+set mysql-default_collation_connection='{{ character_collation }}';
+set mysql-default_schema='{{ default_schema }}';
+
+-- set monitor user
+set mysql-monitor_username='{{ monitor_user }}';
+set mysql-monitor_password='{{ monitor_pass }}';
+
+load mysql variables to runtime;
+save mysql variables to disk;
+
+-- add backend server
+{% for server in groups['mysql_node'] %}
+INSERT INTO mysql_servers
+(hostgroup_id,hostname,port)
+VALUES 
+({{ hostgroup_id }},'{{ hostvars[server].inventory_hostname_short }}',{{ mysql_port }});
+{% endfor %}
+
+-- set failover
+insert into mysql_group_replication_hostgroups 
+(writer_hostgroup,backup_writer_hostgroup,reader_hostgroup, offline_hostgroup,
+active,max_writers,writer_is_also_reader,max_transactions_behind) 
+values 
+({{ writer_hostgroup_id }},{{ backup_writer_hostgroup_id }},{{ reader_hostgroup_id }},{{ offline_hostgroup_id }},
+1,1,1,{{ max_transactions_behind }});
+
+load mysql servers to runtime;
+save mysql servers to disk;
+
+-- set read write
+insert into mysql_query_rules
+(active,match_pattern,destination_hostgroup,apply) 
+values
+(1,'^select.*for update$',{{ writer_hostgroup_id }},1),
+(1,'^select',{{ reader_hostgroup_id }},1);
+
+load mysql query rules to runtime;
+save mysql query rules to disk;
+
+-- set app user
+INSERT INTO mysql_users
+(username,password,default_hostgroup,default_schema) 
+VALUES 
+('{{ app_user }}','{{ app_pass }}',{{ writer_hostgroup_id }},'{{ app_db }}');
+
+load mysql users to runtime;
+save mysql users to memory;
+save mysql users to disk;
+
+-- set other
+set mysql-set_query_lock_on_hostgroup=0;
+
+set mysql-wait_timeout=25200000;
+
+set mysql-log_unhealthy_connections='false';
+
+load mysql variables to runtime;
+save mysql variables to disk;
+
+
+INSERT INTO mysql_query_rules 
+(active, match_digest, multiplex) 
+VALUES
+(1, '^SET character_set_results', 1),
+(1, '^SET session transaction', 1),
+(1, '^SET net_write_timeout', 1),
+(1, 'SET SQL_SELECT_LIMIT', 1);
+
+load mysql query rules to runtime;
+save mysql query rules to disk;

@@ -1,0 +1,10 @@
+---
+
+- import_role: 
+    name: mgr_user
+
+- import_role: 
+    name: mgr_plugin
+
+- import_role: 
+    name: mgr_start

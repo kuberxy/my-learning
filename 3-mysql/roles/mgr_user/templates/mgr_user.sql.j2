@@ -1,0 +1,15 @@
+-- add replication user
+SET SQL_LOG_BIN=0;
+CREATE USER rep@'mysql%' IDENTIFIED BY 'rep_passwd';
+GRANT REPLICATION SLAVE ON *.* TO rep@'mysql%';
+GRANT BACKUP_ADMIN ON *.* TO rep@'mysql%';
+{% for host in replication_host %}
+CREATE USER IF NOT EXISTS {{ replication_user }}@'{{ host }}' IDENTIFIED BY '{{replication_pass}}';
+GRANT REPLICATION SLAVE ON *.* TO {{ replication_user }}@'{{ host }}';
+GRANT BACKUP_ADMIN ON *.* TO {{ replication_user }}@'{{ host }}';
+{% endfor %}
+FLUSH PRIVILEGES;
+SET SQL_LOG_BIN=1;
+
+-- change master to
+CHANGE MASTER TO MASTER_USER='{{ replication_user }}', MASTER_PASSWORD='{{ replication_pass }}' FOR CHANNEL 'group_replication_recovery';

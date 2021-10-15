@@ -1,0 +1,20 @@
+---
+
+init_conf_dir: /etc/mysql
+
+root_user: "{{ mysql_root_user }}"
+root_pass: "{{ mysql_root_pass }}"
+
+monitor_user: "{{ mysql_monitor_user }}"
+monitor_host: "{{ mysql_monitor_host }}"
+monitor_pass: "{{ mysql_monitor_pass }}"
+
+app_users:
+  - user: test
+    host: '%'
+    pass: test
+    privs: ["ALL PRIVILEGES ON test.*", "ALL PRIVILEGES ON *.*"]
+  - user: t
+    host: '%'
+    pass: t
+    privs: ["ALL PRIVILEGES ON test.*", "ALL PRIVILEGES ON *.*"]

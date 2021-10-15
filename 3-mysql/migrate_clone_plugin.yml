@@ -1,0 +1,42 @@
+---
+
+- name: deploy mysql
+  hosts: mysql_node
+  gather_facts: false
+  any_errors_fatal: true
+  roles:
+    - { role: mysql }
+
+- name: clone data
+  hosts: mysql_node[0]
+  gather_facts: false
+  any_errors_fatal: true
+  tasks:
+    - import_role: 
+        name: mgr_user
+
+    - import_role: 
+        name: mgr_plugin
+
+    - name: set valid donor
+      shell: |
+        mysql -e'
+        SET GLOBAL clone_valid_donor_list = "{{ hostvars[groups['src_node'][0]].ansible_host }}:3306"'
+
+    - name: clone donor
+      shell: |
+        mysql -e'
+        CLONE INSTANCE FROM "rep"@"{{ hostvars[groups['src_node'][0]].ansible_host }}":3306 IDENTIFIED BY "rep_passwd"'
+
+    - name: change master
+      shell: |
+        mysql -uroot -pmymysql -e'
+        CHANGE MASTER TO MASTER_HOST="{{ hostvars[groups["src_node"][0]].ansible_host }}",MASTER_USER="rep",MASTER_PASSWORD="rep_passwd",MASTER_AUTO_POSITION=1'
+      register: shell_st
+      retries: 3
+      delay: 3
+      until: shell_st.rc != 1
+
+    - name: start slave
+      shell: |
+        mysql -uroot -pmymysql -e'start slave'

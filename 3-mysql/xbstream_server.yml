@@ -1,0 +1,9 @@
+---
+
+- name: setup xbstream_server
+  hosts: mysql_node
+  serial: 1
+  gather_facts: false
+  any_errors_fatal: true
+  roles:
+    - { role: xbstream_server }

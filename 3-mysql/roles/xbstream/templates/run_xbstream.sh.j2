@@ -1,0 +1,15 @@
+#!/bin/bash
+
+set -e
+ulimit -n 1000000
+
+# WARNING: This file was auto-generated. Do not edit!
+#          All your edit might be overwritten!
+DEPLOY_DIR={{ deploy_dir }}
+cd "${DEPLOY_DIR}" || exit 1
+
+exec > >(tee -i -a "{{ xbstream_log_dir }}/{{ xbstream_log_filename }}")
+exec 2>&1
+
+exec ncat --listen --keep-open --send-only --max-conns=1 {{ xbstream_port }} -c \
+  "xtrabackup --backup --stream=xbstream --host=localhost --user=root -pmymysql"

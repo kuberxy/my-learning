@@ -1,0 +1,24 @@
+---
+
+- name: copy packages
+  copy: src={{ local_download_dir }}/{{ item }}.deb dest={{ image_dir }} owner={{ deploy_user }} group={{ deploy_user }} mode=0644
+  loop: "{{ dpkg_packages }}"
+
+- name: set mysql root password
+  debconf:
+    name: mysql-community-server
+    question: "{{ item }}"
+    vtype: password
+    value: "{{ root_pass }}"
+  with_items:
+    - mysql-community-server/root-pass
+    - mysql-community-server/re-root-pass
+  when: check_data.stdout.strip() == '0'
+
+- name: noninteractive install packages
+  shell: |
+    DEBIAN_FRONTEND=noninteractive apt-get install -y ./*.deb
+  args:
+    executable: /bin/bash
+    chdir: "{{ image_dir }}"
+

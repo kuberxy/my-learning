@@ -1,0 +1,9 @@
+---
+
+- name: set root password
+  shell: |
+    mysql -e"UPDATE mysql.user SET plugin='mysql_native_password' WHERE user='root' and host='localhost';"
+    mysql -e "FLUSH PRIVILEGES;"
+    mysql -e"ALTER USER 'root'@'localhost' IDENTIFIED BY '{{ root_pass }}';"
+  when: check_data.stdout.strip() == '0'
+

@@ -1,0 +1,4 @@
+---
+
+check_data_dir: "{{ mysql_data_directory }}"
+

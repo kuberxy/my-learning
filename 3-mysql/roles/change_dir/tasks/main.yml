@@ -1,0 +1,19 @@
+---
+
+# stop mysql
+- name: stop mysql
+  systemd: name=mysql state=stopped
+
+# change dir
+- name: change data and log dir
+  script: change_dir.sh
+
+- name: modify apparmor
+  shell: |
+    sudo sed -i.bak 's#/var/lib/mysql/#/data/lib/mysql/#g' /etc/apparmor.d/usr.sbin.mysqld
+    sudo sed -i 's#/var/log/mysql/#/data/log/mysql/#g' /etc/apparmor.d/usr.sbin.mysqld
+    sudo /etc/init.d/apparmor reload
+
+# start mysql
+- name: start mysql
+  systemd: name=mysql state=started

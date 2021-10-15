@@ -1,0 +1,12 @@
+---
+
+- name: deploy proxysql
+  hosts: proxysql_node
+  gather_facts: false
+  any_errors_fatal: true
+  roles:
+    - { role: proxysql }
+    - { role: keepalived }
+  tags:
+    - proxysql
+  

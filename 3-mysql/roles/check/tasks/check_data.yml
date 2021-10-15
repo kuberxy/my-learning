@@ -1,0 +1,17 @@
+---
+
+- name: check data dir exist and not empty
+  shell: |
+    if [[ ! -d {{ check_data_dir }} ]]; then
+      echo 0
+      exit 0
+    fi
+    if [[ $(du -sL {{ check_data_dir }} | awk '{print $1}') -le 1024000 ]]; then
+      echo 0
+      exit 0
+    fi
+    echo 1
+  args:
+    executable: /bin/bash
+  register: check_data
+

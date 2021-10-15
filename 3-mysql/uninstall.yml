@@ -1,0 +1,23 @@
+---
+
+- name: uninstall proxysql
+  hosts: proxysql_node
+  gather_facts: false
+  any_errors_fatal: true
+  roles:
+    - { role: uninstall/proxysql }
+
+- name: uninstall mysql
+  hosts: mysql_node
+  gather_facts: false
+  any_errors_fatal: true
+  roles:
+    - { role: uninstall/mysql }
+
+- name: uninstall xbstream_server
+  hosts: mysql_node
+  gather_facts: false
+  any_errors_fatal: true
+  roles:
+    - { role: uninstall/xbstream_server }
+

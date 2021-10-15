@@ -1,0 +1,54 @@
+! Configuration File for keepalived
+global_defs {
+    script_user {{ keepalived_script_user }}
+    enable_script_security
+}
+
+{% if enable_check %}
+vrrp_script {{ keepalived_vrrp_script_name }} {               
+  script "/etc/keepalived/{{ keepalived_vrrp_script_name }}.sh" 
+  interval 3
+  weight -2
+  fall 10
+  rise 2
+}
+
+{% endif %}
+vrrp_instance {{ keepalived_vrrp_instance_name }} {
+    state {{ STATE }}
+    interface {{ INTERFACE }}
+    virtual_router_id {{ ROUTER_ID1 }}
+    priority {{ PRIORITY }}
+    advert_int 1
+
+    authentication {
+        auth_type PASS
+        auth_pass {{ AUTH_PASS1 }}
+    }
+
+    virtual_ipaddress {
+        {{ VIP_SUB }}.{{ ROUTER_ID1 }}/{{ VIP_MASK }} dev {{ INTERFACE }} label {{ INTERFACE }}:{{ ROUTER_ID1 }}
+    }
+
+{% if enable_check %}
+    track_script {
+        {{ keepalived_vrrp_script_name }}
+    }
+{% endif %}
+}
+
+vrrp_instance monitor {
+    state MASTER
+    interface {{ INTERFACE }}
+    virtual_router_id {{ ROUTER_ID2 }}
+    priority 150
+    advert_int 1
+    authentication {
+        auth_type PASS
+        auth_pass 2522
+    }
+
+    virtual_ipaddress {
+        {{ VIP_SUB }}.{{ ROUTER_ID2 }}/{{ VIP_MASK }} dev {{ INTERFACE }} label {{ INTERFACE }}:{{ ROUTER_ID2 }}
+    }
+}

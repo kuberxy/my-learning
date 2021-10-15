@@ -1,0 +1,12 @@
+---
+
+- block:
+  - name: stop xbstream_server
+    systemd: name=xbstream_server-{{ xbstream_server_port }} state=stopped
+
+  - name: delete run script
+    file: path={{ script_dir }}/run_xbstream_server_{{ xbstream_server_port }}.sh state=absent
+
+  - name: delete systemd file
+    file: path=/etc/systemd/system/xbstream_server-{{ xbstream_server_port }}.service state=absent
+  when: "'xbstream_server-{{ xbstream_server_port }}.service' in services"

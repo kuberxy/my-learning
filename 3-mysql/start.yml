@@ -1,0 +1,55 @@
+---
+
+- name: start mysql
+  hosts: mysql_node
+  gather_facts: False
+  any_errors_fatal: true
+  tags:
+    - mysql
+  tasks:
+    - name: start mysql
+      systemd:
+        name: mysql
+        state: started
+
+- name: boot mysql master
+  hosts: mysql_node[0]
+  gather_facts: False
+  any_errors_fatal: true
+  tags:
+    - mysql
+  tasks:
+    - name: start group
+      shell: |
+        mysql -u{{ mysql_root_user }} -p{{ mysql_root_pass }} -e"\
+        SET GLOBAL group_replication_bootstrap_group=ON; \
+        START GROUP_REPLICATION; \
+        SET GLOBAL group_replication_bootstrap_group=OFF;"
+
+- name: boot mysql slave
+  hosts: mysql_node[1:]
+  gather_facts: False
+  any_errors_fatal: true
+  tags:
+    - mysql
+  tasks:
+    - name: start group
+      shell: |
+        mysql -u{{ mysql_root_user }} -p{{ mysql_root_pass }} -e"START GROUP_REPLICATION;"
+
+- name: start proxysql
+  hosts: proxysql_node
+  serial: 1
+  gather_facts: False
+  any_errors_fatal: true
+  tags:
+    - proxysql
+  tasks:
+    - name: start proxysql
+      systemd:
+        name: proxysql
+        state: started
+    - name: start keepalived
+      systemd:
+        name: keepalived
+        state: started

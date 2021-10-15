@@ -1,0 +1,5 @@
+---
+
+mysql_conf_dir: /etc/mysql
+mysql_data_dir: "{{ mysql_data_directory }}"
+

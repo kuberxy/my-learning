@@ -1,0 +1,8 @@
+---
+
+# deployment
+- include_tasks: "deployment.yml"
+
+# start 
+- name: start xbstream_server
+  systemd: name=xbstream_server-{{ xbstream_server_port }} state=started daemon_reload=yes enabled=off

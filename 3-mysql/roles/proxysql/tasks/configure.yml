@@ -1,0 +1,21 @@
+---
+
+- name: create configuration sql file
+  template: src=proxysql.sql.j2 dest={{ proxysql_conf_dir }}/{{ proxysql_conf_filename }} owner={{ proxysql_user }}  group={{ proxysql_user }} mode=0644 backup=yes
+  
+- name: clear configuration db
+  file: path={{ proxysql_conf_dir }}/{{ proxysql_conf_db_filename }} state=absent
+
+- name: restart proxysql
+  systemd: name=proxysql state=restarted
+
+- name: execute configuration sql file
+  shell: |
+    mysql -uadmin -padmin -h 127.0.0.1 -P6032 --default-auth=mysql_native_password < {{ proxysql_conf_dir }}/{{ proxysql_conf_filename }}
+  args:
+    executable: /bin/bash
+  register: result
+  retries: 3
+  delay: 3
+  until: result.rc == 0
+  notify: restart proxysql

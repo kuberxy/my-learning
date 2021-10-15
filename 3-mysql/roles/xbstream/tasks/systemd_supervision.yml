@@ -1,0 +1,9 @@
+---
+
+- name: deploy systemd
+  include_role:
+    name: systemd
+  vars:
+    this_role_name: "xbstream_{{ xbstream_port }}"
+    service_name: "xbstream-{{ xbstream_port }}"
+    service_type: "{{ deployment_method }}" 

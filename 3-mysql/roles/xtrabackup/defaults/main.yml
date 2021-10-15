@@ -1,0 +1,7 @@
+---
+
+deployment_method: dpkg
+
+# dpkg config
+dpkg_packages:
+  - xtrabackup

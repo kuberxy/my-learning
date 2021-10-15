@@ -1,0 +1,10 @@
+---
+
+xbstream_port: 3307
+
+xbstream_user: root
+xbstream_log_dir: "{{ log_dir }}"
+xbstream_log_filename: "xbstream-{{ xbstream_port }}.log"
+
+deployment_method: binary
+process_supervision_method: systemd

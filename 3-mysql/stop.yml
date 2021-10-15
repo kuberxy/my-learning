@@ -1,0 +1,48 @@
+---
+
+- name: stop proxysql
+  hosts: 
+    - proxysql_node[1]
+    - proxysql_node[0]
+  serial: 1
+  gather_facts: False
+  any_errors_fatal: true
+  tags:
+    - proxysql
+  tasks:
+    - name: stop keepalived
+      systemd:
+        name: keepalived
+        state: stopped
+        enabled: no
+    - name: stop proxysql
+      systemd:
+        name: proxysql
+        state: stopped
+        enabled: no
+  
+- name: stop mysql
+  hosts: mysql_node
+  gather_facts: False
+  any_errors_fatal: true
+  tags:
+    - mysql
+  tasks:
+    - name: stop mysql
+      systemd:
+        name: mysql
+        state: stopped
+        enabled: no
+
+- name: stop xbstream server
+  hosts: mysql_node
+  gather_facts: False
+  any_errors_fatal: true
+  tags:
+    - mysql
+  tasks:
+    - name: stop xbstream server
+      systemd:
+        name: xbstream_server-3307
+        state: stopped
+        enabled: no

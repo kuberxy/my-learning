@@ -1,0 +1,6 @@
+---
+
+mysql_port: 3306
+
+mysql_user: mysql
+mysql_conf_dir: /etc/mysql

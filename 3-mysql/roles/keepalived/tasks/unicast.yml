@@ -1,0 +1,13 @@
+---
+
+- include_role: 
+    name: pip
+  vars:
+  - python_modules: 
+      - aliyun-python-sdk-core
+      - aliyun-python-sdk-ecs
+  when: keepalived_communication_type == 'unicast'
+
+- name: create notify script
+  template: src={{ keepalived_notify_script_name }}.py.j2 dest={{ keepalived_conf_dir }}/{{ keepalived_notify_script_name }}.py owner={{ keepalived_user }} group={{ keepalived_user }} mode=0755 backup=yes
+  when: keepalived_communication_type == 'unicast'

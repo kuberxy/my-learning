@@ -1,0 +1,20 @@
+---
+
+# ensure pymysql module installed
+- include_role: 
+    name: pip
+  vars:
+  - python_modules: pymysql
+    pip_version: pip3
+
+# mysql user manager
+- name: manage mysql user
+  mysql_user:
+    login_user: "{{ mysql_login_user | default('root') }}"
+    login_password: "{{ mysql_login_pass | default('') }}"
+    name: "{{ USER }}"
+    host: "{{ HOST | default('localhost') }}"
+    password: "{{ PASS }}"
+    priv: "{{ PRIV }}"
+    state: "{{ STATE | default('present') }}"
+    sql_log_bin: "{{ SQL_LOG | default('yes') }}"

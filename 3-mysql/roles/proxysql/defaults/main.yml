@@ -1,0 +1,37 @@
+---
+
+proxysql_port: 80
+
+proxysql_user: proxysql
+proxysql_conf_dir: /var/lib/proxysql/
+proxysql_conf_filename: "proxysql.sql"
+proxysql_conf_db_filename: "proxysql.db"
+
+deployment_method: dpkg
+
+# dpkg config
+dpkg_packages:
+  - proxysql
+
+# proxysql config
+mysql_version: "{{ proxysql_mysql_version }}"
+
+character_set: "{{ proxysql_character_set }}"
+character_collation: "{{ proxysql_character_collation }}"
+default_schema: "{{ proxysql_default_schema }}"
+
+monitor_user: "{{ proxysql_monitor_user }}"
+monitor_pass: "{{ proxysql_monitor_pass }}"
+
+hostgroup_id: "{{ proxysql_hostgroup_id }}"
+mysql_port: "{{ proxysql_mysql_port }}"
+
+writer_hostgroup_id: "{{ proxysql_writer_hostgroup_id }}"
+backup_writer_hostgroup_id: "{{ proxysql_backup_writer_hostgroup_id }}"
+reader_hostgroup_id: "{{ proxysql_reader_hostgroup_id }}"
+offline_hostgroup_id: "{{ proxysql_offline_hostgroup_id }}"
+max_transactions_behind: "{{ proxysql_max_transactions_behind }}"
+
+app_user: "{{ proxysql_app_user }}"
+app_pass: "{{ proxysql_app_pass }}"
+app_db: "{{ proxysql_app_db }}"

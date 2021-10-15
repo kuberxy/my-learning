@@ -1,0 +1,14 @@
+---
+
+- name: create run script
+  template:
+    src: "run_{{ role_name }}.sh.j2"
+    dest: "{{ script_dir }}/run_{{ role_name }}_{{ xbstream_server_port }}.sh"
+    owner: "{{ xbstream_server_user }}"
+    group: "{{ xbstream_server_user }}"
+    mode: "0755"
+    backup: yes
+  with_items:
+    - run
+
+- include_tasks: "{{ process_supervision_method }}_supervision.yml"

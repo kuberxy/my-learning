@@ -1,0 +1,8 @@
+---
+
+- name: create configuration file
+  template: src=mysql_{{ cluster_type }}.cnf.j2 dest={{ mysql_conf_dir }}/{{ mysql_conf_filename }} owner=root  group=root mode=0644 backup=yes
+
+- name: ensure mysql started
+  systemd: name=mysql state=restarted daemon_reload=yes enabled=yes
+

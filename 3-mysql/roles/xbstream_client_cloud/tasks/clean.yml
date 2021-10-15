@@ -1,0 +1,16 @@
+---
+
+- name: stop mysql
+  systemd: name=mysql state=stopped
+  when: check_data.stdout.strip() == '0'
+
+- name: backup old data
+  shell: "mv {{ mysql_data_directory }} {{ mysql_data_directory }}-$(date +%Y%m%dT%H%M%S)"
+  register: mv_st
+  failed_when: "mv_st.rc not in [0,1]"
+  when: check_data.stdout.strip() == '0'
+
+- name: create mysql data dir
+  file: path={{ mysql_data_directory }} state=directory owner={{ mysql_user }} group={{ mysql_user }} mode=0755
+  when: check_data.stdout.strip() == '0'
+

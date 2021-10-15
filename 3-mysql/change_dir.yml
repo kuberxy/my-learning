@@ -1,0 +1,29 @@
+---
+
+- name: change data dir
+  hosts: mysql_node
+  gather_facts: false
+  any_errors_fatal: true
+  roles:
+    - { role: change_dir }
+  tags:
+    - mysql
+
+- name: setup primary instance
+  hosts: mysql_node[0]
+  gather_facts: false
+  any_errors_fatal: true
+  roles:
+    - { role: mgr_start }
+  tags:
+    - primary
+
+- name: setup secondery instance
+  hosts: mysql_node[1:]
+  serial: 1
+  gather_facts: false
+  any_errors_fatal: true
+  roles:
+    - { role: mgr_start }
+  tags:
+    - secondery

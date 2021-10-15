@@ -1,0 +1,157 @@
+#! /usr/bin/env python3
+#-*- coding: utf-8 -*-
+
+"""
+安装好python3后执行如下步骤：
+step1: apt-get install python-pip3
+step2: pip3 install aliyun-python-sdk-core aliyun-python-sdk-ecs
+"""
+
+import json
+import time
+import sys
+
+from aliyunsdkcore.acs_exception.exceptions import ServerException, ClientException
+from aliyunsdkecs.request.v20140526.DescribeNetworkInterfaceAttributeRequest import DescribeNetworkInterfaceAttributeRequest
+from aliyunsdkecs.request.v20140526.UnassignPrivateIpAddressesRequest import UnassignPrivateIpAddressesRequest
+from aliyunsdkecs.request.v20140526.AssignPrivateIpAddressesRequest import AssignPrivateIpAddressesRequest
+from aliyunsdkcore.client import AcsClient
+
+class MigratePrivateIpAddress:
+    def __init__(self, client, src_eid, dest_eid, vip):
+        self.client = client
+        self.src_eid = src_eid
+        self.dest_eid = dest_eid
+        self.vip = vip
+
+    # 获取弹性网卡信息 by 弹性网卡ID
+    def get_iface_info_by_id(self, id):
+        try:
+            request = DescribeNetworkInterfaceAttributeRequest()
+
+            request.set_NetworkInterfaceId(id)
+
+            response_json = self.client.do_action_with_exception(request)
+            return response_json
+        except ClientException as e:
+            print(e)
+        except ServerException as e:
+            print(e)
+        except Exception as e:
+            print(e)
+
+    #  获取弹性网卡所有的私有IP
+    def get_iface_private_ip(self, id):
+        try:
+            ips = json.loads(self.get_iface_info_by_id(id))["PrivateIpSets"]["PrivateIpSet"]
+            ip_list = []
+            for ip in ips:
+                ip_list.append(ip["PrivateIpAddress"])
+            return ip_list
+        except Exception as e:
+            print(e)
+
+    # 判断ip是否被分配给了弹性网卡
+    def ip_assigned_iface(self, ip, id):
+        try:
+            ip_list = self.get_iface_private_ip(id)
+            if vip in ip_list:
+                return True
+            else:
+                return False
+        except Exception as e:
+            print(e)
+
+    def check_ip_status(self, ip, id, status, times=15, interval=0.2):
+        if status == 'Assigned':
+            for i in range(times):
+                if self.ip_assigned_iface(ip, id):
+                    return True
+                time.sleep(interval)
+        elif status == 'Unassigned':
+            for i in range(times):
+                if not self.ip_assigned_iface(ip, id):
+                    return True
+                time.sleep(interval)
+        else:
+            raise ValueError("status is Assigned or Unassigned")
+
+    def _unassign_ip(self, id, ip):
+        try:
+            request = UnassignPrivateIpAddressesRequest()
+
+            request.set_NetworkInterfaceId(id)
+            request.set_PrivateIpAddresss([ip])
+
+            self.client.do_action_with_exception(request)
+            return True
+        except ClientException as e:
+            print(e)
+        except ServerException as e:
+            print(e)
+        except Exception as e:
+            print(e)
+
+    def unassign_ip(self, id, ip, try_times=3):
+        try:
+            if not self.ip_assigned_iface(ip, id):
+                return True
+
+            for i in range(try_times):
+                self._unassign_ip(id, ip)
+                unassigned = self.check_ip_status(ip, id, 'Unassigned')
+                if unassigned:
+                    return True
+        except Exception as e:
+            print(e)
+
+    def _assign_ip(self, id, ip):
+        try:
+            request = AssignPrivateIpAddressesRequest()
+
+            request.set_NetworkInterfaceId(id)
+            request.set_PrivateIpAddresss([ip])
+
+            self.client.do_action_with_exception(request)
+            return True
+        except Exception as e:
+            print(e)
+
+    def assign_ip(self, id, ip, try_times=3):
+        try:
+            if self.ip_assigned_iface(ip, id):
+                return True
+
+            for i in range(try_times):
+                self._assign_ip(id, ip)
+                assigned = self.check_ip_status(ip, id, 'Assigned')
+                if assigned:
+                    return True
+        except Exception as e:
+            print(e)
+
+    def do_action(self):
+        try:
+            if self.unassign_ip(self.src_eid, self.vip):
+                self.assign_ip(self.dest_eid, self.vip)
+        except Exception as e:
+            print(e)
+
+if __name__ == '__main__':
+    client = AcsClient('{{ access_key_id }}', '{{ access_secret }}', '{{ region_id }}')
+    master_eid = "{{ master_eid }}"
+    backup_eid = "{{ backup_eid }}"
+    vip = "{{ VIP_SUB }}.{{ ROUTER_ID1 }}"
+
+    if len(sys.argv) != 3:
+        print("Please run: {} master backup or {} backup master ".format(sys.argv[0], sys.argv[0]))
+        exit(1)
+
+    if sys.argv[1] == 'master' and sys.argv[2] == 'backup':
+        migrate = MigratePrivateIpAddress(client, master_eid, backup_eid, vip)
+        migrate.do_action()
+    elif sys.argv[1] == 'backup' and sys.argv[2] == 'master':
+        migrate = MigratePrivateIpAddress(client, backup_eid, master_eid, vip)
+        migrate.do_action()
+    else:
+        print("Please run: {0} master backup or {0} backup master ".format(sys.argv[0]))

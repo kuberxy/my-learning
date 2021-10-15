@@ -1,0 +1,8 @@
+-- start group replication
+{% if groups['mysql_node'].index(inventory_hostname_short) == 0 %}
+SET GLOBAL group_replication_bootstrap_group=ON;
+START GROUP_REPLICATION;
+SET GLOBAL group_replication_bootstrap_group=OFF;
+{% else %}
+START GROUP_REPLICATION;
+{% endif %}

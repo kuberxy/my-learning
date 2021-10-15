@@ -1,0 +1,16 @@
+---
+
+# prepare
+- name: create deploy directories
+  file: path={{ item }} state=directory owner={{ keepalived_user }} group={{ keepalived_user }} mode=0755
+  with_items:
+  - "{{ keepalived_conf_dir }}"
+
+# deployment
+- include_tasks: "{{ deployment_method }}_deployment.yml"
+
+# configure
+- include_tasks: "unicast.yml"
+  when: communication_type == 'unicast'
+
+- include_tasks: "configure.yml"
