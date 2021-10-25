@@ -1,0 +1,50 @@
+---
+
+- name: stop mgmt
+  hosts: cm_server_node
+  gather_facts: false
+  any_errors_fatal: true
+  roles:
+    - { role: change_dir/stop_mgmt }
+
+- name: stop agent
+  hosts: cm_agent_node
+  gather_facts: false
+  any_errors_fatal: true
+  roles:
+    - { role: change_dir/stop_agent }
+
+- name: stop server
+  hosts: cm_server_node
+  gather_facts: false
+  any_errors_fatal: true
+  roles:
+    - { role: change_dir/stop_server }
+
+- name: change data and log dir
+  hosts: nodes
+  gather_facts: false
+  any_errors_fatal: true
+  roles:
+    - { role: change_dir/change_dir }
+
+- name: start server
+  hosts: cm_server_node
+  gather_facts: false
+  any_errors_fatal: true
+  roles:
+    - { role: change_dir/start_server }
+
+- name: stop agent
+  hosts: cm_agent_node
+  gather_facts: false
+  any_errors_fatal: true
+  roles:
+    - { role: change_dir/start_agent }
+
+- name: start mgmt
+  hosts: cm_server_node
+  gather_facts: false
+  any_errors_fatal: true
+  roles:
+    - { role: change_dir/start_mgmt }

@@ -1,0 +1,51 @@
+[
+  {
+    "refName": "HostTemplate-Master",
+    "cardinality": 1,
+    "roleConfigGroupsRefNames": [
+      "hdfs-NAMENODE-1",
+      "hdfs-FAILOVERCONTROLLER-BASE",
+      "hdfs-DATANODE-BASE",
+      "hdfs-JOURNALNODE-BASE",
+      "hdfs-BALANCER-BASE",
+      "yarn-RESOURCEMANAGER-BASE",
+      "yarn-NODEMANAGER-BASE",
+      "zookeeper-SERVER-BASE",
+      "hbase-MASTER-BASE",
+      "hbase-REGIONSERVER-BASE",
+      "ks_indexer-HBASE_INDEXER-BASE",
+      "solr-SOLR_SERVER-BASE"
+    ]
+  },
+  {
+    "refName": "HostTemplate-Slave",
+    "cardinality": 1,
+    "roleConfigGroupsRefNames": [
+      "hdfs-DATANODE-BASE",
+      "hdfs-JOURNALNODE-BASE",
+      "yarn-NODEMANAGER-BASE",
+      "zookeeper-SERVER-BASE",
+      "hbase-REGIONSERVER-BASE",
+      "ks_indexer-HBASE_INDEXER-BASE",
+      "solr-SOLR_SERVER-BASE"
+    ]
+  },
+  {
+    "refName": "HostTemplate-Worker",
+    "cardinality": 1,
+    "roleConfigGroupsRefNames": [
+      "hdfs-NAMENODE-1",
+      "hdfs-FAILOVERCONTROLLER-BASE",
+      "hdfs-DATANODE-BASE",
+      "hdfs-JOURNALNODE-BASE",
+      "yarn-RESOURCEMANAGER-BASE",
+      "yarn-NODEMANAGER-BASE",
+      "yarn-JOBHISTORY-BASE",
+      "zookeeper-SERVER-BASE",
+      "hbase-MASTER-BASE",
+      "hbase-REGIONSERVER-BASE",
+      "ks_indexer-HBASE_INDEXER-BASE",
+      "solr-SOLR_SERVER-BASE"
+    ]
+  }
+]

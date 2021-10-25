@@ -1,0 +1,36 @@
+{
+  "name": "mgmt",
+  "type": "MGMT",
+  "roles": [
+    {
+      "name": "mgmt-HOSTMONITOR",
+      "type": "HOSTMONITOR",
+      "hostRef": {
+        "hostId": "{{ cm_hosts['ids'][mgmt_host_monitor_host|default('mgmt_host')] }}"
+      }
+    }, 
+    {
+      "name": "mgmt-SERVICEMONITOR",
+      "type": "SERVICEMONITOR",
+      "hostRef": {
+        "hostId": "{{ cm_hosts['ids'][mgmt_service_monitor_host|default('mgmt_host')] }}"
+      }
+    }, 
+    {
+      "name": "mgmt-EVENTSERVER",
+      "type": "EVENTSERVER",
+      "hostRef": {
+        "hostId": "{{ cm_hosts['ids'][mgmt_event_server_host|default('mgmt_host')] }}"
+      }
+    },
+    {
+      "name": "mgmt-ALERTPUBLISHER",
+      "type": "ALERTPUBLISHER",
+      "hostRef": {
+        "hostId": "{{ cm_hosts['ids'][mgmt_alert_publisher_host|default('mgmt_host')] }}"
+      }
+    }
+  ],
+  "roleConfigGroups": [
+  ]
+}

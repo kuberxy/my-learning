@@ -1,0 +1,56 @@
+---
+
+- name: deploy cloudera manager parcel
+  hosts: cm_repo_node
+  gather_facts: false
+  any_errors_fatal: true
+  roles:
+    - { role: cm_parcel }
+  tags:
+    - cm_parcel
+
+- name: deploy cloudera manager database
+  hosts: cm_database_node
+  gather_facts: false
+  any_errors_fatal: true
+  roles:
+    - { role: cm_db }
+    - { role: init_cm_db }
+  tags:
+    - cm_db
+
+- name: deploy cloudera manager server
+  hosts: cm_server_node
+  gather_facts: false
+  any_errors_fatal: true
+  roles:
+    - { role: cm_server }
+  tags:
+    - cm_server
+
+- name: deploy cloudera manager agent
+  hosts: cm_agent_node
+  gather_facts: false
+  any_errors_fatal: true
+  roles:
+    - { role: cm_agent }
+  tags:
+    - cm_agent
+
+- name: setup cloudera manager web
+  hosts: cm_server_node
+  gather_facts: false
+  any_errors_fatal: true
+  roles:
+    - { role: cm_web }
+  tags:
+    - cm_web
+
+- name: setup cdh cluster
+  hosts: cm_server_node
+  gather_facts: false
+  any_errors_fatal: true
+  roles:
+    - { role: cdh }
+  tags:
+    - cdh

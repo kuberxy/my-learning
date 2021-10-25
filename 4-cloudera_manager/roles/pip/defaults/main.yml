@@ -1,0 +1,15 @@
+---
+
+pip_user: root
+pip_conf_dir: /etc/
+
+deployment_method: apt
+
+# apt config
+system_apt_enable: True
+apt_packages:
+  - python-pip
+  - python3-pip
+
+pip_index_url: https://mirrors.aliyun.com/pypi/simple/
+pip_trusted_host: mirrors.aliyum.com

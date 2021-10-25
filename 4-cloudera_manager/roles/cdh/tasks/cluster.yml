@@ -1,0 +1,59 @@
+---
+
+# generator cluster template
+- name: discover product versions from parcel manifests
+  uri:
+    url: "{{ cm_repo }}/manifest.json"
+    status_code: 200
+    body_format: json
+    return_content: yes
+  register: cdh_manifests
+
+- set_fact:
+    cm_products: "{{ cdh_manifests | json_query('json.parcels[*].parcelName') | map('regex_replace', '-[a-z0-9]+.parcel$','') | list }}"
+
+- set_fact:
+    cluster_template_json: "{{ lookup('template', 'cluster_template.j2', convert_data=False) }}"
+
+# import cluster template
+- name: import cluster template
+  uri:
+    url: "{{ cm_api_url }}/cm/importClusterTemplate?addRepositories=true"
+    method: POST
+    body_format: json
+    body: "{{ cluster_template_json|to_json }}"
+    status_code: 200
+    force_basic_auth: yes
+    user: "{{ cm_default_user }}"
+    password: "{{ cm_default_pass }}"
+    return_content: yes
+  register: template_resp
+
+- set_fact:
+    command_id: "{{ template_resp.json.id }}"
+
+- name: wait for import cluster template command to complete
+  uri: 
+    url: "{{ cm_api_url }}/commands/{{ command_id }}"
+    body_format: json
+    force_basic_auth: yes
+    user: "{{ cm_default_user }}"
+    password: "{{ cm_default_pass }}"
+    return_content: yes
+  register: result
+  until: not result.json.active
+  retries: 30
+  delay: 60
+  failed_when: "'Failed to import cluster template' in result.content"
+
+- name: restart cloudera management service
+  uri:
+    url: "{{ cm_api_url }}/cm/service/commands/restart"
+    method: POST
+    status_code: 200
+    force_basic_auth: yes
+    user: "{{ cm_default_user }}"
+    password: "{{ cm_default_pass }}"
+    return_content: yes
+  register: start_resp
+  failed_when: "'startTime' not in start_resp.content"

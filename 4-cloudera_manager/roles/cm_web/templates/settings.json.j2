@@ -1,0 +1,8 @@
+{
+  "items": [
+    {
+      "name": "REMOTE_PARCEL_REPO_URLS",
+      "value": {% set repo_j = joiner(",") %}"{% for repo in cm_parcel_repositories %}{{ repo_j() }}{{ repo }}{% endfor %}"
+    }
+  ]
+}

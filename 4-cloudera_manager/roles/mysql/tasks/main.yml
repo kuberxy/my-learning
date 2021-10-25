@@ -1,0 +1,17 @@
+---
+
+# prepare
+- name: create deploy directories
+  file: path={{ item }} state=directory owner={{ mysql_user }} group={{ mysql_user }} mode=0755
+  with_items:
+  - "{{ mysql_conf_dir }}"
+  - "{{ mysql_log_dir }}"
+  - "{{ mysql_data_dir }}"
+  - "{{ mysql_socket_dir }}"
+  when: deployment_method != 'apt' and deployment_method != 'dpkg'
+
+# deployment
+- include_tasks: "{{ deployment_method }}_deployment.yml"
+
+# configure
+- include_tasks: "configure.yml"

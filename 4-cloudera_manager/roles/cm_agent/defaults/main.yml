@@ -1,0 +1,25 @@
+---
+
+cm_agent_port: 80
+
+cm_agent_user: "{{ deploy_user }}"
+cm_agent_bin_dir: "{{ bin_dir }}"
+cm_agent_conf_dir: "/etc/cloudera-scm-agent"
+cm_agent_conf_filename: "config.ini"
+cm_agent_log_dir: "{{ log_dir }}"
+cm_agent_log_filename: "cm_agent-{{ cm_agent_port }}"
+cm_agent_data_dir: "/var/lib/cloudera-scm-agent/"
+
+deployment_method: dpkg
+
+# dpkg config
+dpkg_packages:
+  - oracle-j2sdk1.8_1.8.0+update181-1_amd64.deb
+  - libmysql-java_5.1.45-1_all.deb
+  - cloudera-manager-daemons_6.3.0~2117683.ubuntu1804_all.deb
+  - cloudera-manager-agent_6.3.0~2117683.ubuntu1804_amd64.deb
+
+# config
+cm_server_host: "{{ cloudera_management_server_host }}"
+cm_agent_listening_hostname: "{{ cloudera_management_agent_listening_hostname }}"
+cm_agent_reported_hostname: "{{ cloudera_management_agent_reported_hostname }}"

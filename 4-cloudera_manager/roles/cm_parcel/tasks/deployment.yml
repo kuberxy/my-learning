@@ -1,0 +1,29 @@
+---
+
+- name: check parcel exists
+  stat:
+    path:  "{{ cm_parcel_data_dir }}/{{ item }}"
+  loop: "{{ parcel_names }}"
+  register: parcel_file_st
+
+- name: generate parcel info
+  set_fact:
+    parcels_info: "{{ parcel_file_st.results }}"
+
+- name: install parcel
+  copy: src={{ local_download_dir }}/{{ item.item }} dest={{ cm_parcel_data_dir }}
+  when: not item.stat.exists
+  with_items: "{{ parcels_info }}"
+
+- name: create run script
+  template:
+    src: "run_{{ role_name }}.sh.j2"
+    dest: "{{ script_dir }}/run_{{ role_name }}_{{ cm_parcel_port }}.sh"
+    owner: "{{ cm_parcel_user }}"
+    group: "{{ cm_parcel_user }}"
+    mode: "0755"
+    backup: yes
+  with_items:
+    - run
+
+- include_tasks: "{{ process_supervision_method }}_supervision.yml"

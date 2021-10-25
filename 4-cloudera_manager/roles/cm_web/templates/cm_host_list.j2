@@ -1,0 +1,16 @@
+{%- set cm_hosts =  { "ids" : {}, "names" : {} } -%}
+{%- for host, vars in hostvars.items() -%}
+  {%- for cm_host in cm_host_list['json']['items'] -%}
+    {%- set found_host = False -%}
+    {%- if cm_host.hostname == vars.inventory_hostname or cm_host.ipAddress == vars.inventory_hostname -%}
+      {%- set found_host = True -%}
+    {%- elif 'ansible_host' in vars and cm_host.ipAddress == vars['ansible_host'] -%}
+      {%- set found_host = True -%}
+    {%- endif -%}
+    {%- if found_host -%}
+      {%- set x = cm_hosts.ids.__setitem__(host, cm_host.hostId) -%}
+      {%- set x = cm_hosts.names.__setitem__(host, cm_host.hostname) -%}
+    {%- endif -%}
+  {%- endfor -%}
+{%- endfor -%}
+{{ cm_hosts|to_yaml }}

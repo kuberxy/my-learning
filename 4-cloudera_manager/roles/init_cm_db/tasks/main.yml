@@ -1,0 +1,17 @@
+---
+
+- name: generate mysql command
+  copy: src=mysql dest={{ mysql_bin_dir }}/mysql.client owner=root  group=root mode=0755
+
+- name: generate init sql file
+  template: src=init.sql.j2 dest={{ mysql_conf_dir }}/init.sql owner=root  group=root mode=0644
+
+- name: execute init sql file
+  shell: |
+    {{ mysql_bin_dir }}/mysql.client -h{{ mysql_root_host }} -P{{ mysql_root_port }} -uroot -p{{ mysql_root_pass }}  < {{ mysql_conf_dir }}/init.sql
+  args:
+    executable: /bin/bash
+  register: result
+  retries: 20
+  delay: 6
+  until: result.rc == 0

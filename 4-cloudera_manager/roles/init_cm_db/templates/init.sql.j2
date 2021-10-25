@@ -1,0 +1,12 @@
+-- create databae & user
+{% for db in databases %}
+create database {{ db.name }} DEFAULT CHARACTER SET {{ db.char }};
+{% for host in db.hosts %}
+create user '{{ db.user }}'@'{{ host }}' IDENTIFIED WITH mysql_native_password BY '{{ db.pass }}';
+{% for priv in db.privs %}
+grant {{ priv }} TO '{{ db.user }}'@'{{ host }}';
+{% endfor %}
+{% endfor %}
+
+{% endfor %}
+FLUSH PRIVILEGES;

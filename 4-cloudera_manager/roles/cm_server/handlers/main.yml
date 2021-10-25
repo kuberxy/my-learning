@@ -1,0 +1,13 @@
+---
+
+- name: restart cm_server
+  systemd: name=cloudera-scm-server state=restarted daemon_reload=yes enabled=yes
+  notify: wait cm_server up
+
+- name: wait cm_server up
+  wait_for:
+    host: "{{ cm_server_host }}"
+    port: "{{ cm_server_web_port }}"
+    delay: 5
+    state: started
+    timeout: 600

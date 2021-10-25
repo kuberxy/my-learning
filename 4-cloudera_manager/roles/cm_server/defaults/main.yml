@@ -1,0 +1,22 @@
+---
+
+cm_server_host: "{{ cloudera_management_server_host }}"
+cm_server_web_port: 7180
+
+deployment_method: dpkg
+
+# dpkg config
+dpkg_packages:
+  - oracle-j2sdk1.8_1.8.0+update181-1_amd64.deb
+  - libmysql-java_5.1.45-1_all.deb
+  - cloudera-manager-daemons_6.3.0~2117683.ubuntu1804_all.deb
+  - cloudera-manager-server_6.3.0~2117683.ubuntu1804_all.deb
+
+# config
+scm_prepare_database_script_path: /opt/cloudera/cm/schema/scm_prepare_database.sh
+scm_db_type: "{{ cloudera_management_database_type }}"
+scm_db_host: "{{ cloudera_management_database_host }}"
+scm_db_port: "{{ cloudera_management_database_port }}"
+scm_db_user: scm
+scm_db_pass: scm_password
+scm_db_name: scm

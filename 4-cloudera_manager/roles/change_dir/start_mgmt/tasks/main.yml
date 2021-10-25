@@ -1,0 +1,33 @@
+---
+# set cm api
+- name: get cloudera manager api version
+  uri:
+    url: http://{{ cloudera_management_server_host }}:7180/api/version
+    method: GET
+    status_code: 200
+    user: "{{ cloudera_management_default_user }}"
+    password: "{{ cloudera_management_default_pass }}"
+    force_basic_auth: yes
+    return_content: yes
+  register: api_version
+
+- name: set base cm api url
+  set_fact:
+    cm_api_url: "http://{{ cloudera_management_server_host }}:7180/api/{{ api_version.content }}"
+
+# start mgmt
+- name: start mgmt
+  uri:
+    url: "{{ cm_api_url }}/cm/service/commands/start"
+    method: POST
+    body_format: json
+    status_code: 200
+    user: "{{ cloudera_management_default_user }}"
+    password: "{{ cloudera_management_default_pass }}"
+    force_basic_auth: yes
+    return_content: yes
+  register: stop_mgmt
+  until: stop_mgmt['json']['active']  == true
+  retries: 10
+  delay: 3
+  when: "inventory_hostname_short in groups['cm_server_node']"

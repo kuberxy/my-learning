@@ -1,0 +1,46 @@
+---
+
+# set cm api
+- name: get cloudera manager api version
+  uri:
+    url: http://{{ cm_server_host }}:{{ cm_server_web_port }}/api/version
+    method: GET
+    status_code: 200
+    user: "{{ cm_default_user }}"
+    password: "{{ cm_default_pass }}"
+    force_basic_auth: yes
+    return_content: yes
+  register: api_version
+
+- name: set base cm api url
+  set_fact:
+    cm_api_url: "http://{{ cm_server_host }}:{{ cm_server_web_port }}/api/{{ api_version.content }}"
+
+
+# set host list
+- name: get the host ids and names
+  uri:
+    url: "{{ cm_api_url }}/hosts"
+    method: GET
+    status_code: 200
+    user: "{{ cm_default_user }}"
+    password: "{{ cm_default_pass }}"
+    force_basic_auth: yes
+    return_content: yes
+  register: cm_host_list
+  until: cm_host_list['json']['items'] | length == groups.cm_agent_node | length
+  retries: 10
+  delay: 3
+
+- name: extract the host ids and names into facts
+  set_fact:
+    cm_hosts: "{{ lookup('template', 'cm_host_list.j2') | from_yaml }}"
+
+# cm license
+- include_tasks: license.yml
+
+# cm settings
+- include_tasks: settings.yml
+
+# cm service
+- include_tasks: service.yml

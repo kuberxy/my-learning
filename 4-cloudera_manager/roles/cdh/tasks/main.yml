@@ -1,0 +1,19 @@
+---
+
+# check whether cluster already exists
+- name: check whether cluster exists
+  uri:
+    url: "{{ cm_api_url }}/clusters/{{ cluster_name }}"
+    method: GET
+    status_code: 200,404
+    force_basic_auth: yes
+    user: "{{ cm_default_user }}"
+    password: "{{ cm_default_pass }}"
+    return_content: yes
+  register: cluster_resp
+
+- set_fact:
+    cluster_exists: "{{ 'True' if cluster_resp.status == 200 else 'False' }}"
+
+- include_tasks: cluster.yml
+  when: not cluster_exists

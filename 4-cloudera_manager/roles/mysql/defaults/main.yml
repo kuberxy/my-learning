@@ -1,0 +1,36 @@
+---
+
+mysql_port: 3306
+
+mysql_user: mysql
+mysql_conf_dir: /etc/mysql
+mysql_conf_filename: my.cnf
+mysql_log_dir: /var/log/mysql
+mysql_error_log_filename: error.log
+mysql_slow_log_filename: slow.log
+mysql_data_dir: /var/lib/mysql
+mysql_socket_dir: /var/run/mysqld
+mysql_socket_filename: mysqld.sock
+mysql_pid_file: "{{ mysql_socket_dir }}/mysqld.pid"
+
+deployment_method: dpkg
+
+# apt config
+system_apt_enable: False
+service_apt_enable: True
+mysql_enable: True
+apt_packages:
+  - mysql-server
+
+# dpkg config
+dpkg_packages:
+  - mysql-common_5.7.32-1ubuntu18.04_amd64.deb
+  - mysql-client_5.7.32-1ubuntu18.04_amd64.deb
+  - mysql-community-client_5.7.32-1ubuntu18.04_amd64.deb
+  - mysql-server_5.7.32-1ubuntu18.04_amd64.deb
+  - mysql-community-server_5.7.32-1ubuntu18.04_amd64.deb
+
+# mysql config
+mysql_root_pass: mymysql
+mysql_innodb_log_buffer_size: 64M
+mysql_innodb_buffer_pool_size: 1G

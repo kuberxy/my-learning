@@ -1,0 +1,31 @@
+{
+  "refName": "solr",
+  "serviceType": "SOLR",
+  "serviceConfigs": [
+    {
+      "name": "hdfs_service",
+      "ref": "hdfs"
+    },
+    {
+      "name": "zookeeper_service",
+      "ref": "zookeeper"
+    }
+  ],
+  "roleConfigGroups": [
+    {
+      "refName": "solr-SOLR_SERVER-BASE",
+      "roleType": "SOLR_SERVER",
+      "configs": [
+        {
+          "name": "solr_java_heapsize",
+          "value": "2147483648"
+        },
+        {
+          "name": "solr_java_direct_memory_size",
+          "value": "2147483648"
+        }
+      ],
+      "base": true
+    }
+  ]
+}

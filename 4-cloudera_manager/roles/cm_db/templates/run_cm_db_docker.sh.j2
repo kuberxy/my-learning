@@ -1,0 +1,17 @@
+#!/bin/bash
+
+set -e
+ulimit -n 1000000
+
+# WARNING: This file was auto-generated. Do not edit!
+#          All your edit might be overwritten!
+DEPLOY_DIR={{ deploy_dir }}
+cd "${DEPLOY_DIR}" || exit 1
+
+exec docker run -p {{ cm_db_port }}:3306 --restart=always \
+-v /etc/localtime:/etc/localtime:ro \
+-v {{ cm_db_conf_dir }}/{{ cm_db_conf_filename }}:/etc/mysql/my.cnf \
+-v {{ cm_db_data_dir }}:/var/lib/mysql \
+-v {{ cm_db_log_dir }}:/var/log/mysql/ \
+-e MYSQL_ROOT_PASSWORD={{ cm_db_root_pass }} \
+--name cm_db-{{ cm_db_port }} mysql:{{ cm_db_mysql_version }}

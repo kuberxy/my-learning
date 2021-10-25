@@ -1,0 +1,14 @@
+---
+
+# - name: Configure Cloudera Manager Agent 'server_host'
+#   lineinfile:
+#     dest: /etc/cloudera-scm-agent/config.ini
+#     regexp: "^server_host"
+#     line: "server_host={{ cm_server_host }}"
+#   notify: restart cm_agent
+#   changed_when: true
+
+- name: create configuration file
+  template: src=config.ini.j2 dest={{ cm_agent_conf_dir }}/{{ cm_agent_conf_filename }} owner=root  group=root mode=0644 backup=yes
+  notify: restart cm_agent
+  changed_when: true

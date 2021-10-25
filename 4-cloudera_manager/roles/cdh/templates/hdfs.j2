@@ -1,0 +1,63 @@
+{
+  "refName": "hdfs",
+  "serviceType": "HDFS",
+  "serviceConfigs": [
+    {
+      "name": "zookeeper_service",
+      "ref": "zookeeper"
+    }
+  ],
+  "roleConfigGroups": [
+    {
+      "refName": "hdfs-NAMENODE-1",
+      "roleType": "NAMENODE",
+      "configs": [
+        {
+          "name": "dfs_federation_namenode_nameservice",
+          "value": "ns1"
+        },
+        {
+          "name": "dfs_namenode_quorum_journal_name",
+          "value": "ns1"
+        },
+        {
+          "name": "autofailover_enabled",
+          "value": "true"
+        },
+        {
+          "name": "erasure_coding_default_policy",
+          "value": " "
+        }
+      ],
+      "base": true
+    },
+    {
+      "refName": "hdfs-DATANODE-BASE",
+      "roleType": "DATANODE",
+      "configs": [
+      ],
+      "base": true
+    },
+    {
+      "refName": "hdfs-JOURNALNODE-BASE",
+      "roleType": "JOURNALNODE",
+      "configs": [
+      ],
+      "base": true
+    },
+    {
+      "refName": "hdfs-FAILOVERCONTROLLER-BASE",
+      "roleType": "FAILOVERCONTROLLER",
+      "configs": [
+      ],
+      "base": true
+    },
+    {
+      "refName": "hdfs-BALANCER-BASE",
+      "roleType": "BALANCER",
+      "configs": [
+      ],
+      "base": true
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "refName": "yarn",
+  "serviceType": "YARN",
+  "serviceConfigs": [
+    {
+      "name": "hdfs_service",
+      "ref": "hdfs"
+    },
+    {
+      "name": "zookeeper_service",
+      "ref": "zookeeper"
+    }
+  ],
+  "roleConfigGroups": [
+    {
+      "refName": "yarn-RESOURCEMANAGER-BASE",
+      "roleType": "RESOURCEMANAGER",
+      "configs": [],
+      "base": true
+    },
+    {
+      "refName": "yarn-NODEMANAGER-BASE",
+      "roleType": "NODEMANAGER",
+      "configs": [
+      ],
+      "base": true
+    },
+    {
+      "refName": "yarn-JOBHISTORY-BASE",
+      "roleType": "JOBHISTORY",
+      "configs": [],
+      "base": true
+    }
+  ]
+}

@@ -1,0 +1,61 @@
+---
+
+mysql_conf_dir: /etc/mysql
+
+mysql_root_pass: mymysql
+
+databases:
+  - name: scm
+    char: utf8
+    user: scm
+    hosts: ['192.168.3.%','localhost']
+    pass: scm_password
+    privs: ["all on scm.*"]
+  - name: amon
+    char: utf8
+    user: amon
+    hosts: ['192.168.3.%','localhost']
+    pass: amon_password
+    privs: ["all on amon.*"]
+  - name: rman
+    char: utf8
+    user: rman
+    hosts: ['192.168.3.%','localhost']
+    pass: rman_password
+    privs: ["all on rman.*"]
+  - name: hue
+    char: utf8
+    user: hue
+    hosts: ['192.168.3.%','localhost']
+    pass: hue_password
+    privs: ["all on hue.*"]
+  - name: metastore
+    char: utf8
+    user: metastore
+    hosts: ['192.168.3.%','localhost']
+    pass: metastore_password
+    privs: ["all on metastore.*"]
+  - name: sentry
+    char: utf8
+    user: sentry
+    hosts: ['192.168.3.%','localhost']
+    pass: sentry_password
+    privs: ["all on sentry.*"]
+  - name: nav
+    char: utf8
+    user: nav
+    hosts: ['192.168.3.%','localhost']
+    pass: nav_password
+    privs: ["all on nav.*"]
+  - name: navms
+    char: utf8
+    user: navms
+    hosts: ['192.168.3.%','localhost']
+    pass: navms_password
+    privs: ["all on navms.*"]
+  - name: oozie
+    char: utf8
+    user: oozie
+    hosts: ['192.168.3.%','localhost']
+    pass: oozie_password
+    privs: ["all on oozie.*"]

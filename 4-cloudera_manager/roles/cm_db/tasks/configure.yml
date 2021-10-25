@@ -1,0 +1,15 @@
+---
+
+- name: stop cm_db
+  systemd: name=cm_db-{{ cm_db_port }} state=stopped
+
+- name: rm data
+  file: path={{ cm_db_data_dir }} state=absent
+
+- name: create configuration file
+  template: src=cm_db.conf.j2 dest={{ cm_db_conf_dir }}/{{ cm_db_conf_filename }} owner={{ cm_db_user }}  group={{ cm_db_user }} mode=0644 backup=yes
+  notify: restart cm_db
+  changed_when: true
+
+- name: restart mysql
+  meta: flush_handlers

@@ -1,0 +1,28 @@
+---
+
+cm_server_host: "{{ cloudera_management_server_host }}"
+cm_server_web_port: 7180
+
+cm_default_user: "{{ cloudera_management_default_user }}"
+cm_default_pass: "{{ cloudera_management_default_pass }}"
+
+cm_repo: "{{ cloudera_management_repository_host }}:{{ cloudera_management_repository_port }}"
+
+cluster_name: "{{ cloudera_management_cdh_cluster_name }}"
+
+cm_version: 6.3.0
+cdh_version: 6.3.0
+
+cdh_services:
+  - type: zookeeper
+  - type: hdfs
+    dfs_data_dir_list: /data/dfs/dn
+    fs_checkpoint_dir_list: /data/dfs/snn
+    dfs_name_dir_list: /data/dfs/nn
+    dfs_journalnode_edits_dir: /data/dfs/jn
+  - type: yarn
+    yarn_nodemanager_local_dirs: /tmp/nm
+    yarn_nodemanager_log_dirs: /var/log/nm
+  - type: hbase
+  - type: solr
+  - type: ks_indexer

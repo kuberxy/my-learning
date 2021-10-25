@@ -1,0 +1,11 @@
+---
+
+# stop server
+- name: start cloudera-scm-server
+  systemd: name=cloudera-scm-server state=stopped
+
+- name: wait until the cm-server web port is up
+  wait_for:
+    port: 7180
+    state: stopped
+    msg: "the cm-server web port 7180 is up"

@@ -1,0 +1,12 @@
+---
+
+- name: copy packages
+  copy: src={{ local_download_dir }}/{{ item }} dest={{ image_dir }} owner={{ deploy_user }} group={{ deploy_user }} mode=0644
+  loop: "{{ dpkg_packages }}"
+
+- name: noninteractive install packages
+  shell: |
+    DEBIAN_FRONTEND=noninteractive apt-get install -y ./mysql*.deb
+  args:
+    executable: /bin/bash
+    chdir: "{{ image_dir }}"

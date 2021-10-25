@@ -1,0 +1,23 @@
+{
+  "refName": "ks_indexer",
+  "serviceType": "KS_INDEXER",
+  "serviceConfigs": [
+    {
+      "name": "hbase_service",
+      "ref": "hbase"
+    },
+    {
+      "name": "solr_service",
+      "ref": "solr"
+    }
+  ],
+  "roleConfigGroups": [
+    {
+      "refName": "ks_indexer-HBASE_INDEXER-BASE",
+      "roleType": "HBASE_INDEXER",
+      "configs": [
+      ],
+      "base": true
+    }
+  ]
+}

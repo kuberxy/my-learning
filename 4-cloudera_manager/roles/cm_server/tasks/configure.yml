@@ -1,0 +1,8 @@
+---
+
+- name: Prepare Cloudera Manager Server External Database
+  command: |
+    {{ scm_prepare_database_script_path }}  -f
+    --host {{ scm_db_host }} --port {{ scm_db_port }}
+    {{ scm_db_type }} {{ scm_db_name }} {{ scm_db_user }} {{ scm_db_pass }}
+  notify: restart cm_server

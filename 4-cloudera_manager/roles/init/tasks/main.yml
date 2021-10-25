@@ -1,0 +1,10 @@
+---
+
+- name: generate init sql file
+  template: src=init.sql.j2 dest={{ mysql_conf_dir }}/init.sql owner=root  group=root mode=0644
+
+- name: execute init sql file
+  shell: |
+    mysql < {{ mysql_conf_dir }}/init.sql
+  args:
+    executable: /bin/bash

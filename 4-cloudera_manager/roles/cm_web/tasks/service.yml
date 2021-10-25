@@ -1,0 +1,29 @@
+---
+
+- name: setup the cloudera management services
+  uri:
+    url: "{{ cm_api_url }}/cm/service"
+    method: PUT
+    body_format: json
+    body: "{{ lookup('template', 'service.json.j2', convert_data=False) }}"
+    status_code: 200,400
+    force_basic_auth: yes
+    user: "{{ cm_default_user }}"
+    password: "{{ cm_default_pass }}"
+    return_content: yes
+  register: cms_resp
+  failed_when:
+    - "'MGMT' not in cms_resp.content"
+    - "'CMS instance already exists' not in cms_resp.content"
+
+- name: restart cloudera management service
+  uri:
+    url: "{{ cm_api_url }}/cm/service/commands/restart"
+    method: POST
+    status_code: 200
+    force_basic_auth: yes
+    user: "{{ cm_default_user }}"
+    password: "{{ cm_default_pass }}"
+    return_content: yes
+  register: start_resp
+  failed_when: "'startTime' not in start_resp.content"

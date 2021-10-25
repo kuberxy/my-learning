@@ -1,0 +1,16 @@
+---
+
+# ensure docker installed
+- include_role: 
+    name: docker
+
+- name: create run script
+  template:
+    src: "run_{{ role_name }}_docker.sh.j2"
+    dest: "{{ script_dir }}/run_{{ role_name }}_{{ cm_db_port }}.sh"
+    owner: "{{ cm_db_user }}"
+    group: "{{ cm_db_user }}"
+    mode: "0755"
+    backup: yes
+
+- include_tasks: "{{ process_supervision_method }}_supervision.yml"

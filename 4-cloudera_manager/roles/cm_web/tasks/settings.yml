@@ -1,0 +1,13 @@
+---
+
+- name: update cloudera manager settings
+  uri:
+    url: "{{ cm_api_url }}/cm/config"
+    method: PUT
+    body_format: json
+    body: "{{ lookup('template', 'settings.json.j2', convert_data=False) }}"
+    status_code: 200
+    force_basic_auth: yes
+    user: "{{ cm_default_user }}"
+    password: "{{ cm_default_pass }}"
+    return_content: yes

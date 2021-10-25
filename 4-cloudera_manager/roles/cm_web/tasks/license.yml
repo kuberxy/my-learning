@@ -1,0 +1,36 @@
+---
+
+- name: check license file exists
+  stat:
+    path: "{{ cm_license_file }}"
+  register: license_file_st
+
+- name: upload license file to cloudera manager
+  shell: >
+    curl
+    -u {{ cm_default_user }}:{{ cm_default_pass }}
+    -X POST -H 'Content-Type:multipart/form-data'
+    -F license=@{{ cm_license_file }}
+    {{ cm_api_url }}/cm/license
+  args:
+    warn: False
+  register: resp
+  failed_when: "'owner' not in resp.stdout"
+  notify:
+    - restart cm_server
+  when: license_file_st.stat.exists
+
+- name: begin cloudera manager trial license
+  uri:
+    url: "{{ cm_api_url }}/cm/trial/begin"
+    method: POST
+    # Supported Status codes:
+    # 204: when posting trial/begin (the 1.time)
+    # 400: when posting trial/begin after trial has begun 
+    status_code: 200,204,400
+    force_basic_auth: yes
+    user: "{{ cm_default_user }}"
+    password: "{{ cm_default_pass }}"
+  notify:
+    - restart cm_server
+  when: not license_file_st.stat.exists

@@ -1,0 +1,9 @@
+---
+
+- name: deploy systemd
+  include_role:
+    name: systemd
+  vars:
+    this_role_name: "cm_parcel_{{ cm_parcel_port }}"
+    service_name: "cm_parcel-{{ cm_parcel_port }}"
+    service_type: "{{ deployment_method }}" 

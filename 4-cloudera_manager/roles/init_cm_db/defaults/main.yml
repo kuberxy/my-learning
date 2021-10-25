@@ -1,0 +1,64 @@
+---
+
+mysql_bin_dir: "{{ bin_dir }}"
+mysql_conf_dir: "{{ conf_dir }}"
+
+mysql_root_host: "{{ cloudera_management_database_host }}"
+mysql_root_port: "{{ cloudera_management_database_port }}"
+mysql_root_pass: "{{ cloudera_management_database_root_pass }}"
+
+databases:
+  - name: scm
+    char: utf8
+    user: scm
+    hosts: ['%','localhost']
+    pass: scm_password
+    privs: ["all on scm.*"]
+  - name: amon
+    char: utf8
+    user: amon
+    hosts: ['%','localhost']
+    pass: amon_password
+    privs: ["all on amon.*"]
+  - name: rman
+    char: utf8
+    user: rman
+    hosts: ['%','localhost']
+    pass: rman_password
+    privs: ["all on rman.*"]
+  - name: hue
+    char: utf8
+    user: hue
+    hosts: ['%','localhost']
+    pass: hue_password
+    privs: ["all on hue.*"]
+  - name: metastore
+    char: utf8
+    user: metastore
+    hosts: ['%','localhost']
+    pass: metastore_password
+    privs: ["all on metastore.*"]
+  - name: sentry
+    char: utf8
+    user: sentry
+    hosts: ['%','localhost']
+    pass: sentry_password
+    privs: ["all on sentry.*"]
+  - name: nav
+    char: utf8
+    user: nav
+    hosts: ['%','localhost']
+    pass: nav_password
+    privs: ["all on nav.*"]
+  - name: navms
+    char: utf8
+    user: navms
+    hosts: ['%','localhost']
+    pass: navms_password
+    privs: ["all on navms.*"]
+  - name: oozie
+    char: utf8
+    user: oozie
+    hosts: ['%','localhost']
+    pass: oozie_password
+    privs: ["all on oozie.*"]

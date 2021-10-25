@@ -1,0 +1,15 @@
+---
+
+# prepare
+- name: create deploy directories
+  file: path={{ item }} state=directory owner={{ cm_parcel_user }} group={{ cm_parcel_user }} mode=0755
+  with_items:
+  - "{{ cm_parcel_log_dir }}"
+  - "{{ cm_parcel_data_dir }}"
+
+# deployment
+- include_tasks: "deployment.yml"
+
+# start
+- name: start cm_parcel
+  systemd: name=cm_parcel-{{ cm_parcel_port }} state=started daemon_reload=yes enabled=yes

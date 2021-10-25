@@ -1,0 +1,8 @@
+---
+
+- name: deploy cloudera manager agent
+  hosts: cm_agent_node
+  gather_facts: false
+  any_errors_fatal: true
+  roles:
+    - { role: cm_agent }

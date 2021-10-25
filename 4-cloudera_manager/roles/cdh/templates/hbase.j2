@@ -1,0 +1,30 @@
+{
+  "refName": "hbase",
+  "serviceType": "HBASE",
+  "serviceConfigs": [
+    {
+      "name": "zookeeper_service",
+      "ref": "zookeeper"
+    },
+    {
+      "name": "hdfs_service",
+      "ref": "hdfs"
+    }
+  ],
+  "roleConfigGroups": [
+    {
+      "refName": "hbase-MASTER-BASE",
+      "roleType": "MASTER",
+      "configs": [
+      ],
+      "base": true
+    },
+    {
+      "refName": "hbase-REGIONSERVER-BASE",
+      "roleType": "REGIONSERVER",
+      "configs": [
+      ],
+      "base": true
+    }
+  ]
+}

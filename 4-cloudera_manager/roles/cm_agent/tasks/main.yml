@@ -1,0 +1,11 @@
+---
+
+# prepare
+- name: delete cm_guid file
+  file: path={{ cm_agent_data_dir }}/cm_guid state=absent
+
+# deployment
+- include_tasks: "{{ deployment_method }}_deployment.yml"
+
+# configure
+- include_tasks: "configure.yml"

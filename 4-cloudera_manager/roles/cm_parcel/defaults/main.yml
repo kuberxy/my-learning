@@ -1,0 +1,17 @@
+---
+
+cm_parcel_port: "{{ cloudera_management_repository_port }}"
+cm_parcel_user: "{{ deploy_user }}"
+cm_parcel_log_dir: "{{ log_dir }}"
+cm_parcel_log_filename: "cm_parcel-{{ cm_parcel_port }}.log"
+cm_parcel_data_dir: "{{ local_download_dir }}"
+
+deployment_method: binary
+process_supervision_method: systemd
+
+# binary config
+parcel_names:
+  - CDH-6.3.0-1.cdh6.3.0.p0.1279813-bionic.parcel
+  - CDH-6.3.0-1.cdh6.3.0.p0.1279813-bionic.parcel.sha1
+  - CDH-6.3.0-1.cdh6.3.0.p0.1279813-bionic.parcel.sha256
+  - manifest.json

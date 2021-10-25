@@ -1,0 +1,135 @@
+---
+
+- name: start cm db
+  hosts: cm_database_node
+  gather_facts: false
+  any_errors_fatal: true
+  tasks:
+  - name: start cm db
+    systemd: 
+      name: cm_db-6603
+      state: started
+
+  - name: wait cm db port is up
+    wait_for:
+      port: 6603
+      state: started
+      msg: "the cm db port 6603 is not up"
+
+
+- name: start cm repo
+  hosts: cm_repo_node
+  gather_facts: false
+  any_errors_fatal: true
+  tasks:
+  - name: start cm repo
+    systemd: 
+      name: cm_parcel-8000
+      state: started
+
+  - name: wait until the cm-db port is up
+    wait_for:
+      port: 8000
+      state: started
+      msg: "the cm repo port 8000 is not up"
+
+- name: start cm server
+  hosts: cm_server_node
+  gather_facts: false
+  any_errors_fatal: true
+  tasks:
+  - name: start cm server
+    systemd: 
+      name: cloudera-scm-server
+      state: started
+
+  - name: wait cm web port is up
+    wait_for:
+      port: 7180
+      state: started
+      msg: "the cm web port 7180 is not up"
+
+- name: start cm agent
+  hosts: cm_agent_node
+  gather_facts: false
+  any_errors_fatal: true
+  tasks:
+  - name: start cm agent
+    systemd:
+      name: cloudera-scm-agent
+      state: started
+
+  - name: wait cm agent port is up
+    wait_for:
+      port: 9001
+      state: started
+      msg: "the cm-agent port 9001 is not up"
+
+
+- name: set cm api
+  hosts: localhost
+  gather_facts: false
+  any_errors_fatal: true
+  tasks:
+  - name: get cloudera manager api version
+    uri:
+      url: http://{{ cloudera_management_server_host }}:{{ cloudera_management_web_port }}/api/version
+      method: GET
+      status_code: 200
+      user: "{{ cloudera_management_default_user }}"
+      password: "{{ cloudera_management_default_pass }}"
+      force_basic_auth: yes
+      return_content: yes
+    register: api_version
+
+  - name: set base cm api url
+    set_fact:
+      cm_api_url: "http://{{ cloudera_management_server_host }}:{{ cloudera_management_web_port }}/api/{{ api_version.content }}"
+
+- name: start mgmt
+  hosts: localhost
+  gather_facts: false
+  any_errors_fatal: true
+  tasks:
+  - name: start mgmt service
+    uri:
+      method: POST
+      url: "{{ cm_api_url }}/cm/service/commands/start"
+      user: "{{ cloudera_management_default_user }}"
+      password: "{{ cloudera_management_default_pass }}"
+    register: "http_result"
+    
+  - name: "wait mgmt service started"
+    uri:
+      method: GET
+      url: "{{ cm_api_url }}/commands/{{ http_result.json.id }}"
+      user: "{{ cloudera_management_default_user }}"
+      password: "{{ cloudera_management_default_pass }}"
+    register: "start_status"
+    until: "start_status.json.active == true"
+    retries: 12
+    delay: 10
+
+- name: start cdh
+  hosts: localhost
+  gather_facts: false
+  any_errors_fatal: true
+  tasks:
+  - name: start cdh cluster
+    uri:
+      method: POST
+      url: "{{ cm_api_url }}/clusters/CyTestCluster/commands/start"
+      user: "{{ cloudera_management_default_user }}"
+      password: "{{ cloudera_management_default_pass }}"
+    register: "http_result"
+
+  - name: "wait cdh started"
+    uri:
+      method: GET
+      url: "{{ cm_api_url }}/commands/{{ http_result.json.id }}"
+      user: "{{ cloudera_management_default_user }}"
+      password: "{{ cloudera_management_default_pass }}"
+    register: "start_status"
+    until: "start_status.json.active == true"
+    retries: 12
+    delay: 10

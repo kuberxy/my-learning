@@ -1,0 +1,24 @@
+{
+  "cmVersion" : "{{ cm_version }}",
+  "cdhVersion" : "{{ cdh_version }}",
+  "displayName" : "{{ cluster_name }}",
+  "products" : [
+    {% set prod_j = joiner(",") %}
+    {% for product in cm_products %}
+    {{ prod_j() }}
+    {
+      "product" : "{{ product.split('-')[0] }}",
+      "version" : "{{ '-'.join(product.split('-')[1:]) }}"
+    }
+    {% endfor %}
+  ],
+  "services" : [
+    {% set serv_j = joiner(",") %}
+    {% for service in cdh_services %}
+    {{ serv_j() }}
+    {% set t = service['type'] + '.j2' %}{% include t %}
+    {% endfor %}
+  ],
+  "hostTemplates" : {% include 'host_template.j2' %},
+  "instantiator" : {% include 'instantiator.j2' %}
+}

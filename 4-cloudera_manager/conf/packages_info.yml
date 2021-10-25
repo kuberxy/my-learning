@@ -1,0 +1,59 @@
+---
+
+packages_info:
+  - name: oracle-j2sdk1.8
+    url: https://archive.cloudera.com/cm6/6.3.0/ubuntu1804/apt/pool/contrib/o/oracle-j2sdk1.8/oracle-j2sdk1.8_1.8.0+update181-1_amd64.deb
+    version: 1.8.0
+    state: True
+  - name: libmysql-java
+    url: https://mirrors.aliyun.com/ubuntu/pool/universe/m/mysql-connector-java/libmysql-java_5.1.45-1_all.deb
+    version: 5.1.45-1
+    state: True
+  - name: mysql-common
+    url: https://mirrors.tuna.tsinghua.edu.cn/mysql/downloads/MySQL-5.7/mysql-common_5.7.32-1ubuntu18.04_amd64.deb
+    version: 5.7.32
+    state: True
+  - name: mysql-client
+    url: https://mirrors.tuna.tsinghua.edu.cn/mysql/downloads/MySQL-5.7/mysql-client_5.7.32-1ubuntu18.04_amd64.deb
+    version: 5.7.32
+    state: True
+  - name: mysql-community-client
+    url: https://mirrors.tuna.tsinghua.edu.cn/mysql/downloads/MySQL-5.7/mysql-community-client_5.7.32-1ubuntu18.04_amd64.deb
+    version: 5.7.32
+    state: True
+  - name: mysql-server
+    url: https://mirrors.tuna.tsinghua.edu.cn/mysql/downloads/MySQL-5.7/mysql-server_5.7.32-1ubuntu18.04_amd64.deb
+    version: 5.7.32
+    state: True
+  - name: mysql-community-server
+    url: https://mirrors.tuna.tsinghua.edu.cn/mysql/downloads/MySQL-5.7/mysql-community-server_5.7.32-1ubuntu18.04_amd64.deb
+    version: 5.7.32
+    state: True
+  - name: cloudera-manager-daemons
+    url: https://archive.cloudera.com/cm6/6.3.0/ubuntu1804/apt/pool/contrib/e/enterprise/cloudera-manager-daemons_6.3.0~2117683.ubuntu1804_all.deb
+    version: 6.3.0~2117683
+    state: True
+  - name: cloudera-manager-server
+    url: https://archive.cloudera.com/cm6/6.3.0/ubuntu1804/apt/pool/contrib/e/enterprise/cloudera-manager-server_6.3.0~2117683.ubuntu1804_all.deb
+    version: 6.3.0~2117683
+    state: True
+  - name: cloudera-manager-agent
+    url: https://archive.cloudera.com/cm6/6.3.0/ubuntu1804/apt/pool/contrib/e/enterprise/cloudera-manager-agent_6.3.0~2117683.ubuntu1804_amd64.deb
+    version: 6.3.0~2117683
+    state: True
+  - name: CDH-6.3.0-1.cdh6.3.0.p0.1279813-bionic.parcel
+    url: https://archive.cloudera.com/cdh6/6.3.2/parcels/CDH-6.3.0-1.cdh6.3.0.p0.1279813-bionic.parcel
+    version: 6.3.2
+    state: True
+  - name: CDH-6.3.0-1.cdh6.3.0.p0.1279813-bionic.parcel.sha1
+    url: https://archive.cloudera.com/cdh6/6.3.2/parcels/CDH-6.3.0-1.cdh6.3.0.p0.1279813-bionic.parcel.sha1
+    version: 6.3.2
+    state: True
+  - name: CDH-6.3.0-1.cdh6.3.0.p0.1279813-bionic.parcel.sha256
+    url: https://archive.cloudera.com/cdh6/6.3.2/parcels/CDH-6.3.0-1.cdh6.3.0.p0.1279813-bionic.parcel.sha256
+    version: 6.3.2
+    state: True
+  - name: manifest.json
+    url: https://archive.cloudera.com/cdh6/6.3.2/parcels/manifest.json
+    version: 6.3.2
+    state: True

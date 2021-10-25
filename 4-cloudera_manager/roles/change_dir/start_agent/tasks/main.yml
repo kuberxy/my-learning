@@ -1,0 +1,11 @@
+---
+
+# start agent
+- name: start cloudera-scm-agent
+  systemd: name=cloudera-scm-agent state=started
+
+- name: wait until the cm-agent port is up
+  wait_for:
+    port: 9001
+    state: started
+    msg: "the cm-agent port 9001 is up"

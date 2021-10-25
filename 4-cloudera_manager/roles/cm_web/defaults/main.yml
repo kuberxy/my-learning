@@ -1,0 +1,18 @@
+---
+
+cm_server_host: "{{ cloudera_management_server_host }}"
+cm_server_web_port: 7180
+
+cm_default_user: "{{ cloudera_management_default_user }}"
+cm_default_pass: "{{ cloudera_management_default_pass }}"
+
+cm_license_file: "{{ deploy_dir }}/cm.license"
+
+cm_parcel_repositories:
+  - "{{ cloudera_management_repository_host }}:{{ cloudera_management_repository_port }}"
+
+mgmt_host: "{{ cloudera_management_node }}"
+mgmt_host_monitor_host: "{{ cloudera_management_host_monitor_node }}"
+mgmt_service_monitor_host: "{{ cloudera_management_service_monitor_node }}"
+mgmt_event_server_host: "{{ cloudera_management_event_server_node }}"
+mgmt_alert_publisher_host: "{{ cloudera_management_alert_publisher_node }}"

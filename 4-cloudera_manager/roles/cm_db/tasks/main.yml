@@ -1,0 +1,14 @@
+---
+
+# prepare
+- name: create deploy directories
+  file: path={{ item }} state=directory owner={{ cm_db_user }} group={{ cm_db_user }} mode=0755
+  with_items:
+  - "{{ cm_db_conf_dir }}"
+  - "{{ cm_db_log_dir }}"
+
+# deployment
+- include_tasks: "{{ deployment_method }}_deployment.yml"
+
+# configure
+- include_tasks: "configure.yml"

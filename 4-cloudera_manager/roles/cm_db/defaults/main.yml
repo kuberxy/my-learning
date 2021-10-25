@@ -1,0 +1,16 @@
+---
+
+cm_db_port: "{{ cloudera_management_database_port }}"
+
+cm_db_user: "{{ deploy_user }}"
+cm_db_conf_dir: "{{ deploy_dir }}/conf"
+cm_db_conf_filename: "cm_db-{{ cm_db_port }}.cnf"
+cm_db_log_dir: "{{ deploy_dir }}/log"
+cm_db_log_filename: "cm_db-{{ cm_db_port }}.log"
+cm_db_data_dir: "{{ deploy_dir }}/data/mysql"
+cm_db_root_pass: "{{ cloudera_management_database_root_pass }}"
+cm_db_mysql_version: "{{ cloudera_management_database_mysql_version }}"
+
+deployment_method: "{{ cloudera_management_database_deployment_method }}"
+process_supervision_method: systemd
+docker_bin_dir: "/usr/bin"
