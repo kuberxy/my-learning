@@ -10,9 +10,28 @@
 - name: remove data
   shell: |
     backup_time=$(date +%Y%m%dT%H%M%S)
-    if [[ -d {{ mysql_data_dir }}  ]]; then
-      mv {{ mysql_data_dir }} {{ backup_dir }}/mysql-${backup_time}
+
+    if [[ "$(readlink {{ mysql_data_dir }})" == "" ]];then
+      if [[ -d {{ mysql_data_dir }}  ]]; then
+        mv {{ mysql_data_dir }} {{ backup_dir }}/mysql-${backup_time}
+      fi
+    else
+      oridir={{ mysql_data_dir }}
+      target=$(readlink $oridir)
+     
+      if [[ "$(dirname $target)" == "." ]]; then
+        oribase=$(dirname $oridir)
+        if [[ "$oribase" == "." ]]; then
+          mv $target {{ backup_dir }}/mysql-${backup_time}
+        else
+          mv $oribase/$target {{ backup_dir }}/mysql-${backup_time}
+        fi
+      else
+        mv $target {{ backup_dir }}/mysql-${backup_time}
+      fi
+      unlink $oridir
     fi
+
     if [[ -d {{ mysql_conf_dir }} ]]; then
       mv {{ mysql_conf_dir }} {{ backup_dir }}/mysql-cnf-${backup_time}
     fi
