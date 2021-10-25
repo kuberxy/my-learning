@@ -40,21 +40,13 @@
   tags:
     - secondery
 
-- name: create mysql init env
-  hosts: mysql_node[0]
-  gather_facts: false
-  any_errors_fatal: true
-  roles:
-    - { role: init }
-  tags:
-    - init
-
 - name: deploy proxysql
   hosts: proxysql_node
   gather_facts: false
   any_errors_fatal: true
   roles:
     - { role: proxysql }
+    - { role: keepalived }
   tags:
     - proxysql
 
