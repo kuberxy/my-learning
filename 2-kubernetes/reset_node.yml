@@ -1,0 +1,9 @@
+---
+
+- name: reset node env
+  hosts: kube_node
+  gather_facts: false
+  any_errors_fatal: true
+  roles:
+    - { role: reset }
+

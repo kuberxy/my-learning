@@ -1,0 +1,9 @@
+---
+
+- name: delete node
+  hosts: kube_master[0]
+  gather_facts: false
+  any_errors_fatal: true
+  roles:
+    - { role: delete }
+

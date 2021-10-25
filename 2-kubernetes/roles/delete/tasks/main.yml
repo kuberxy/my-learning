@@ -1,0 +1,12 @@
+---
+
+- name: set nodes facts
+  set_fact: "del_nodes={{ nodes.split(',') }}"
+
+- name: delete node
+  shell: |
+    kubectl delete nodes {{ item }}
+  args:
+    executable: /bin/bash
+  loop: "{{ del_nodes  }}"
+
