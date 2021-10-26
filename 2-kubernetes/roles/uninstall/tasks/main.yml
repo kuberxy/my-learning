@@ -1,0 +1,6 @@
+---
+
+# uninstall
+- name: remove kubernetes package
+  apt: "name={{ item }} state=absent purge=yes"
+  loop: "{{ apt_packages }}"
