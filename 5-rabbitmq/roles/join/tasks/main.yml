@@ -1,0 +1,14 @@
+---
+
+# join
+- name: stop rabbitmq app
+  shell: rabbitmqctl stop_app
+
+- name: reset rabbitmq
+  shell: rabbitmqctl reset
+
+- name: join cluster
+  shell: rabbitmqctl join_cluster rabbit@{{ hostvars[groups['rabbitmq_node'][0]]['inventory_hostname_short'] }}
+
+- name: start rabbitmq app
+  shell: rabbitmqctl start_app

@@ -1,0 +1,45 @@
+---
+
+packages_info:
+  - name: rabbitmq_delayed_message_exchange
+    url: https://github.com/rabbitmq/rabbitmq-delayed-message-exchange/releases/download/v3.8.0/rabbitmq_delayed_message_exchange-3.8.0.ez
+    version: 3.8.0
+{% if package_tar_st is defined %}
+    state: {{ package_tar_st['results'][0].stat.exists | default(false) }}
+{% endif %}
+  - name: prometheus_rabbitmq_exporter
+    url: https://github.com/deadtrickster/prometheus_rabbitmq_exporter/releases/download/v3.7.9.1/prometheus_rabbitmq_exporter-3.7.9.1.ez
+    version: 3.7.9.1
+{% if package_tar_st is defined %}
+    state: {{ package_tar_st['results'][1].stat.exists | default(false) }}
+{% endif %}
+  - name: prometheus_process_collector
+    url: https://github.com/deadtrickster/prometheus_rabbitmq_exporter/releases/download/v3.7.9.1/prometheus_process_collector-1.4.3.ez
+    version: 1.4.3
+{% if package_tar_st is defined %}
+    state: {{ package_tar_st['results'][2].stat.exists | default(false) }}
+{% endif %}
+  - name: prometheus_httpd
+    url: https://github.com/deadtrickster/prometheus_rabbitmq_exporter/releases/download/v3.7.9.1/prometheus_httpd-2.1.10.ez
+    version: 2.1.10
+{% if package_tar_st is defined %}
+    state: {{ package_tar_st['results'][3].stat.exists | default(false) }}
+{% endif %}
+  - name: prometheus_cowboy
+    url: https://github.com/deadtrickster/prometheus_rabbitmq_exporter/releases/download/v3.7.9.1/prometheus_cowboy-0.1.7.ez
+    version: 0.1.7
+{% if package_tar_st is defined %}
+    state: {{ package_tar_st['results'][4].stat.exists | default(false) }}
+{% endif %}
+  - name: prometheus
+    url: https://github.com/deadtrickster/prometheus_rabbitmq_exporter/releases/download/v3.7.9.1/prometheus-4.3.0.ez
+    version: 4.3.0
+{% if package_tar_st is defined %}
+    state: {{ package_tar_st['results'][5].stat.exists | default(false) }}
+{% endif %}
+  - name: accept
+    url: https://github.com/deadtrickster/prometheus_rabbitmq_exporter/releases/download/v3.7.9.1/accept-0.3.5.ez
+    version: 0.3.5
+{% if package_tar_st is defined %}
+    state: {{ package_tar_st['results'][6].stat.exists | default(false) }}
+{% endif %}

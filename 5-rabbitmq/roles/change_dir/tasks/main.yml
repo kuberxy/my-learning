@@ -1,0 +1,13 @@
+---
+
+# stop rabbitmq
+- name: stop rabbitmq
+  systemd: name=rabbitmq-server state=stopped
+
+# change dir
+- name: change data and log dir
+  script: change_dir.sh
+
+# start rabbitmq
+- name: start rabbitmq
+  systemd: name=rabbitmq-server state=started

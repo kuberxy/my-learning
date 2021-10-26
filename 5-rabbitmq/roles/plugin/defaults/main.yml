@@ -1,0 +1,15 @@
+---
+  
+plugin_user: rabbitmq
+
+# first party plugin
+enable_first_party_plugins: True
+first_party_plugins:
+  - rabbitmq_management
+
+# third party plugin
+enable_third_party_plugins: True
+third_party_plugins:
+  - rabbitmq_delayed_message_exchange
+  - prometheus_process_collector
+  - prometheus_rabbitmq_exporter

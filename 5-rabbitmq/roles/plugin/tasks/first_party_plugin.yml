@@ -1,0 +1,6 @@
+---
+
+- name: "enable plugin"
+  shell: rabbitmq-plugins enable {{ item }}
+  with_items:
+    - "{{ first_party_plugins }}"

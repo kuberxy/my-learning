@@ -1,0 +1,8 @@
+---
+
+# deployment
+- include_tasks: "first_party_plugin.yml"
+  when: enable_first_party_plugins
+
+- include_tasks: "third_party_plugin.yml"
+  when: enable_third_party_plugins

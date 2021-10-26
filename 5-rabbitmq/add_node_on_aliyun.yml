@@ -1,0 +1,26 @@
+---
+
+- name: deploy node
+  hosts: rabbitmq_node
+  gather_facts: false
+  any_errors_fatal: true
+  roles:
+    - { role: erlang }
+    - { role: rabbitmq }
+    - { role: change_dir }
+    - { role: cookie }
+
+- name: create rabbimtq cluster
+  hosts: rabbitmq_node[1:]
+  gather_facts: false
+  any_errors_fatal: true
+  roles:
+    - { role: join, vars: {group_name: 'rabbitmq_node'} }
+
+- name: enable rabbimtq plugin
+  hosts: rabbitmq_node
+  gather_facts: false
+  any_errors_fatal: true
+  roles:
+    - { role: plugin }
+

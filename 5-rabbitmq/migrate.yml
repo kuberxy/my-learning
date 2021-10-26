@@ -1,0 +1,8 @@
+---
+
+- name: migrate data
+  hosts: localhost
+  gather_facts: false
+  any_errors_fatal: true
+  roles:
+    - { role: migrate }

@@ -1,0 +1,25 @@
+---
+
+erlang_user: "{{ deploy_user }}"
+
+deployment_method: dpkg
+
+# dpkg config
+dpkg_packages:
+  - erlang-base_21.3.8.18-1_amd64.deb
+  - erlang-asn1_21.3.8.18-1_amd64.deb
+  - erlang-crypto_21.3.8.18-1_amd64.deb
+  - erlang-eldap_21.3.8.18-1_amd64.deb
+  - erlang-ftp_21.3.8.18-1_amd64.deb
+  - erlang-inets_21.3.8.18-1_amd64.deb
+  - erlang-mnesia_21.3.8.18-1_amd64.deb
+  - erlang-os-mon_21.3.8.18-1_amd64.deb
+  - erlang-parsetools_21.3.8.18-1_amd64.deb
+  - erlang-public-key_21.3.8.18-1_amd64.deb
+  - erlang-runtime-tools_21.3.8.18-1_amd64.deb
+  - erlang-snmp_21.3.8.18-1_amd64.deb
+  - erlang-ssl_21.3.8.18-1_amd64.deb
+  - erlang-syntax-tools_21.3.8.18-1_amd64.deb
+  - erlang-tftp_21.3.8.18-1_amd64.deb
+  - erlang-tools_21.3.8.18-1_amd64.deb
+  - erlang-xmerl_21.3.8.18-1_amd64.deb

@@ -1,0 +1,13 @@
+---
+
+rabbitmq_http_port: 15672
+
+vhost_name: edu
+shovel_name: old2new
+src_protocol: amqp091
+src_uri: "amqp://chianyu:cyadmin@{{ ansible_host }}/edu"
+src_queue_name: hello
+
+dest_protocol: amqp091
+dest_uri: "amqp://chianyu:cyadmin@{{ hostvars[groups['new_rabbitmq_node'][-1]]['ansible_host'] }}/edu"
+dest_queue_name: hello

@@ -1,0 +1,4 @@
+---
+
+- name: create configuration env file
+  template: src=rabbitmq-env.conf.j2 dest={{ rabbitmq_conf_dir }}/{{ rabbitmq_conf_emv_file }} owner=root  group=root mode=0644 backup=yes

@@ -1,0 +1,26 @@
+---
+
+- name: start epmd
+  hosts: rabbitmq_node
+  gather_facts: False
+  any_errors_fatal: true
+  tasks:
+    - name: start epmd
+      systemd:
+        name: "{{ item }}"
+        state: started
+        enabled: no
+      loop:
+      - epmd
+      - epmd.socket
+
+- name: start rabbitmq
+  hosts: rabbitmq_node
+  gather_facts: False
+  any_errors_fatal: true
+  tasks:
+    - name: start rabbitmq-server
+      systemd:
+        name: rabbitmq-server
+        state: started
+        enabled: no

@@ -1,0 +1,7 @@
+---
+
+cookie_user: rabbitmq
+cookie_conf_dir: /var/lib/rabbitmq
+cookie_conf_filename: ".erlang.cookie"
+
+cookie_string: "Chianyu RabbitMQ Cluster"

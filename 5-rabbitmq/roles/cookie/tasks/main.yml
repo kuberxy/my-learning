@@ -1,0 +1,10 @@
+---
+
+# prepare
+- name: create deploy directories
+  file: path={{ item }} state=directory owner={{ cookie_user }} group={{ cookie_user }} mode=0755
+  with_items:
+  - "{{ cookie_conf_dir }}"
+
+# configure
+- include_tasks: "configure.yml"

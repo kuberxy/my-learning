@@ -1,0 +1,8 @@
+---
+
+# reset
+- name: stop rabbitmq app
+  shell: rabbitmqctl stop_app
+
+- name: stop rabbitmq
+  systemd: name=rabbitmq-server state=stopped enabled=no

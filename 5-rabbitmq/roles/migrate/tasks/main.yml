@@ -1,0 +1,54 @@
+---
+# todo file
+# get old cluster definitions
+- name: get definitions
+  shell: |
+    mkdir -p {{ playbook_dir }}/conf
+    curl \
+    -H "Accept:application/json" \
+    -u admin:admin \
+    "http://{{ hostvars[groups['rabbitmq_node'][-1]]['ansible_host'] }}:{{ rabbitmq_http_port }}/api/definitions" > {{ playbook_dir }}/conf/definitions.json
+  register: df_st
+
+# set new cluster definitions
+- name: copy definitions
+  copy: src={{ playbook_dir }}/conf/definitions.json dest=/tmp/definitions.json
+  delegate_to: "{{ groups['new_rabbitmq_node'][-1] }}"
+  run_once: true
+
+- name: post definitions
+  shell: |
+    curl \
+    -u admin:admin \
+    -X POST \
+    -H 'Content-Type:multipart/form-data' \
+    -F file=@/tmp/definitions.json \
+    http://127.0.0.1:{{ rabbitmq_http_port }}/api/definitions
+  delegate_to: "{{ groups['new_rabbitmq_node'][-1] }}"
+  run_once: true
+
+# enable shovel
+- name: enable shovel
+  shell: |
+    rabbitmq-plugins enable rabbitmq_shovel && \
+    rabbitmq-plugins enable rabbitmq_shovel_management
+  delegate_to: "{{ item }}"
+  run_once: true
+  with_items:
+    - "{{ groups['rabbitmq_node'][-1] }}"
+    - "{{ groups['new_rabbitmq_node'][-1] }}"
+
+# setting shovel
+- name: set shovel
+  shell: |
+    rabbitmqctl set_parameter --vhost {{ vhost_name }} shovel {{ shovel_name }} \
+    '{
+      "src-protocol": "{{ src_protocol }}",
+      "src-uri": "{{ src_uri }}",
+      "src-queue": "{{ src_queue_name }}",
+      "dest-protocol": "{{ dest_protocol }}",
+      "dest-uri": "{{ dest_uri }}",
+      "dest-queue": "{{ dest_queue_name }}"
+    }'
+  delegate_to: "{{ groups['rabbitmq_node'][-1] }}"
+  run_once: true

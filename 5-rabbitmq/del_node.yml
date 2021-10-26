@@ -1,0 +1,9 @@
+---
+
+- name: reset node
+  hosts: rabbitmq_node
+  gather_facts: false
+  any_errors_fatal: true
+  roles:
+    - { role: reset }
+    - { role: uninstall }

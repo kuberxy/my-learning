@@ -1,0 +1,4 @@
+---
+
+admin_user: "{{ rabbitmq_admin_user }}"
+admin_pass: "{{ rabbitmq_admin_pass }}"
