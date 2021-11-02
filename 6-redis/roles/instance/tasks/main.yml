@@ -1,0 +1,16 @@
+---
+
+# prepare
+- name: create deploy directories
+  file: path={{ item }} state=directory owner={{ instance_user }} group={{ instance_user }} mode=0755
+  with_items:
+  - "{{ instance_conf_dir }}"
+  - "{{ instance_log_dir }}"
+  - "{{ instance_data_dir }}"
+  - "{{ instance_pid_dir }}"
+
+# deployment
+- include_tasks: "{{ deployment_method }}_deployment.yml"
+
+# configure
+- include_tasks: "configure.yml"

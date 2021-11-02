@@ -1,0 +1,11 @@
+---
+
+- name: rollback configuration file
+  command: mv {{ backup_dir }}/{{ redis_conf_st.backup_file.split('/')[-1] }} {{ instance_conf_dir }}/{{ instance_conf_filename }}
+  when: redis_conf_st.changed and redis_conf_st.backup_file is defined
+
+- include_tasks: "restart.yml"
+
+- name: update result
+  fail:
+    msg: update dnsmasq failed

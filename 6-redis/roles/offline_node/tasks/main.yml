@@ -1,0 +1,62 @@
+---
+
+# get master instance on node
+- name: get master
+  shell: |
+    {{ reids_cli_exec }} \
+    -h {{ ansible_host }} -p {{ redis_port }} \
+    cluster nodes | awk '/myself,master/{print $1}'
+  register: master_st
+
+# remove slot in mater instance
+- name: remove slot
+  shell: |
+    {{ reids_cli_exec }} \
+    --cluster rebalance \
+    {{ hostvars[groups['redis_clusters'][0]]['ansible_host'] }}:{{ hostvars[groups['redis_clusters'][0]]['redis_port'] }} \
+    --cluster-weight {{ master_st.stdout }}=w1
+  register: remove_st
+  retries: 10
+  delay: 60
+  until: "'[ERR]' not in remove_st.stdout"
+  when: master_st.stdout != ""
+  failed_when: 
+    - "remove_st.rc not in [ 0, 1 ]"
+    - "'[ERR]' in remove_st.stdout"
+
+# delete instance on node
+- name: get instance id
+  shell: |
+    {{ reids_cli_exec }} \
+    -h {{ ansible_host }} -p {{ redis_port }} \
+    cluster nodes | awk '/myself/{print $1}'
+  register: get_st
+
+- name: print get_st
+  debug: var=get_st
+
+- name: delete instance
+  shell: |
+    {{ reids_cli_exec }} \
+    --cluster del-node \
+    {{ hostvars[groups['redis_clusters'][0]]['ansible_host'] }}:{{ hostvars[groups['redis_clusters'][0]]['redis_port'] }} \
+    {{ get_st.stdout }}
+  register: del_st
+  failed_when: 
+    - "del_st.rc not in [ 0, 1 ]"
+    - "'SHUTDOWN the node' not in del_st.stdout"
+
+- name: print del_st
+  debug: var=del_st
+
+- name: check redis cluster
+  shell: |
+    {{ reids_cli_exec }} --cluster check \
+    {{ hostvars[groups['redis_clusters'][0]]['ansible_host'] }}:{{ hostvars[groups['redis_clusters'][0]]['redis_port'] }}
+  register: check_st
+  delegate_to: "{{ groups['redis_clusters'][0] }}"
+  run_once: true
+  retries: 3
+  delay: 3
+  until: "'[OK] All nodes agree about slots configuration' in check_st.stdout"
+  failed_when: "'[OK] All nodes agree about slots configuration' not in check_st.stdout"

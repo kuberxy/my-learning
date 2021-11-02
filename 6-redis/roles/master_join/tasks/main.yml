@@ -1,0 +1,17 @@
+---
+
+- name: set existing master info
+  set_fact:
+    existing_master_host: "{{ hostvars[groups['redis_masters'][0]]['ansible_host'] }}"
+    existing_master_port: "{{ hostvars[groups['redis_masters'][0]]['redis_port'] }}"
+
+- name: instance join to cluster as master
+  shell: |
+    {{ reids_cli_exec }} --cluster add-node \
+    {{ ansible_host }}:{{ redis_port }} \
+    {{ existing_master_host }}:{{ existing_master_port }}
+  register: check_st
+  retries: 3
+  delay: 3
+  until: "'[ERR]' not in check_st.stdout"
+

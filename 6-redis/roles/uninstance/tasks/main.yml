@@ -1,0 +1,25 @@
+---
+
+- name: stop instance
+  systemd: name=redis-{{ instance_port }} state=stopped enabled=no
+
+- name: delete configuration file
+  file: path={{ instance_conf_dir }}/{{ instance_conf_filename }} state=absent
+
+- name: delete log file
+  file: path={{ instance_log_dir }}/{{ instance_log_filename }} state=absent
+
+- name: delete systemd service configuration
+  file: path=/etc/systemd/system/redis-{{ instance_port }}.service state=absent
+
+- name: delete start/stop script
+  file: path={{ deploy_dir }}/script/{{ item }}_redis_{{ instance_port }}.sh state=absent
+  with_items:
+    - start
+    - stop
+
+- name: delete data directories
+  file: path={{ item }} state=absent
+  with_items:
+  - "{{ instance_data_dir }}"
+

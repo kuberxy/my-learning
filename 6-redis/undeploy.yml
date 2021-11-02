@@ -1,0 +1,16 @@
+---
+
+- name: check_if_master
+  hosts: redis_cluster
+  gather_facts: false
+  any_errors_fatal: true
+  roles:
+    - { role: uninstance }
+
+- name: check_if_master
+  hosts: redis_nodes
+  gather_facts: false
+  any_errors_fatal: true
+  roles:
+    - { role: unredis }
+

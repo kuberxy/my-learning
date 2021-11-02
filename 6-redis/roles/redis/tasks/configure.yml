@@ -1,0 +1,4 @@
+---
+
+- name: config profile
+  template: src=redis.sh.j2 dest=/etc/profile.d/redis.sh owner=root group=root mode=0755

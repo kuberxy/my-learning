@@ -1,0 +1,33 @@
+---
+
+redis_shake_port: 9310
+
+redis_shake_user: "{{ deploy_user }}"
+redis_shake_bin_dir: "{{ bin_dir }}"
+redis_shake_conf_dir: "{{ conf_dir }}"
+redis_shake_conf_filename: "redis_shake-{{ redis_shake_port }}.conf"
+redis_shake_log_dir: "{{ log_dir }}"
+redis_shake_log_filename: "redis_shake-{{ redis_shake_port }}.log"
+redis_shake_pid_dir: "{{ status_dir }}"
+redis_shake_data_dir: "{{ data_dir }}"
+
+deployment_method: binary
+process_supervision_method: systemd
+
+# binary config
+binary_names:
+  - redis_shake
+
+redis_shake_run_type: sync
+
+# redis-shake config
+parallel: 64
+
+source_type: cluster
+source_address: "master@192.168.3.150:7001;192.168.3.141:7001;192.168.3.146:7001"
+source_password_raw: 
+
+target_type: cluster
+target_address: "master@192.168.3.150:8001;192.168.3.141:8001;192.168.3.146:8001"
+target_password_raw:
+target_db: 0

@@ -1,0 +1,9 @@
+---
+
+redis_user: "{{ deploy_user }}"
+
+deployment_method: compile
+
+# source config
+source_names:
+  - redis

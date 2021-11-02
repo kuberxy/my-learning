@@ -1,0 +1,9 @@
+---
+
+- name: check if the node is the master
+  shell: |
+    {{ reids_cli_exec }} \
+    -h {{ ansible_host }} -p {{ redis_port }} \
+    cluster nodes | awk '/myself,master/{print $1}'
+  register: master_st
+

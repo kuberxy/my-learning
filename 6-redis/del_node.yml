@@ -1,0 +1,15 @@
+---
+
+- name: check_if_master
+  hosts: redis_cluster
+  gather_facts: false
+  any_errors_fatal: true
+  roles:
+    - { role: if_master }
+    - { role: remove_slot }
+    - { role: get_instance_id }
+    - { role: del_instance }
+    - { role: cluster_check }
+    - { role: uninstance }
+    - { role: unredis }
+

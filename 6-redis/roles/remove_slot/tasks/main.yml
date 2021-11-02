@@ -1,0 +1,18 @@
+---
+
+# remove slot in mater instance
+- name: remove slot
+  shell: |
+    {{ reids_cli_exec }} \
+    --cluster rebalance \
+    {{ ansible_host }}:{{ redis_port }} \
+    --cluster-weight {{ master_st.stdout }}=w1
+  register: remove_st
+  retries: 10
+  delay: 60
+  until: "'[ERR]' not in remove_st.stdout"
+  when: master_st.stdout != ""
+  failed_when: 
+    - "remove_st.rc not in [ 0, 1 ]"
+    - "'[ERR]' in remove_st.stdout"
+

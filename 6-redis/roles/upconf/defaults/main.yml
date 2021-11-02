@@ -1,0 +1,18 @@
+---
+
+instance_port: "{{ redis_port }}"
+
+instance_user: "{{ deploy_user }}"
+instance_conf_dir: "{{ conf_dir }}"
+instance_conf_filename: "{{ instance_port }}.conf"
+instance_log_dir: "{{ log_dir }}"
+redis_log_filename: "{{ instance_port }}.log"
+instance_data_dir: "{{ data_dir }}/{{ instance_port }}"
+instance_pid_dir: "{{ status_dir }}"
+redis_pid_filename: "{{ instance_port}}.pid"
+
+deployment_method: binary
+process_supervision_method: systemd
+
+# redis mode is instance or cluster
+redis_mode: cluster

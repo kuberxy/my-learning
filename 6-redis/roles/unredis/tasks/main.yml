@@ -1,0 +1,8 @@
+---
+
+- name: delete config profile
+  file: path=/etc/profile.d/redis.sh state=absent
+
+- name: delete deploy dir
+  file: path={{ deploy_dir }} state=absent
+

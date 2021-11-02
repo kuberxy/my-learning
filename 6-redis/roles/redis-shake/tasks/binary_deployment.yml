@@ -1,0 +1,32 @@
+---
+
+- name: unarchive binary packages
+  unarchive:
+    src: "{{ local_download_dir }}/{{ item }}.tar.gz"
+    dest: "{{ tmp_dir }}"
+    owner: "{{ deploy_user }}"
+    group: "{{ deploy_user }}"
+  loop: "{{ binary_names }}"
+
+- name: find redis-shake.linux
+  find:
+    paths: "{{ tmp_dir }}"
+    recurse: yes
+    patterns: 'redis-shake.linux'
+  register: find_st
+
+- name: install redis-shake
+  shell: "cp -a {{ find_st.files[0].path }} {{ redis_shake_bin_dir }}/redis-shake"
+
+- name: create run script
+  template:
+    src: "run_{{ role_name }}_binary.sh.j2"
+    dest: "{{ script_dir }}/run_{{ role_name }}_{{ redis_shake_port }}.sh"
+    owner: "{{ redis_shake_user }}"
+    group: "{{ redis_shake_user }}"
+    mode: "0755"
+    backup: yes
+  with_items:
+    - run
+
+- include_tasks: "{{ process_supervision_method }}_supervision.yml"

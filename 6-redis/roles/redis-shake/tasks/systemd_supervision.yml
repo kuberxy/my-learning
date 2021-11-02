@@ -1,0 +1,9 @@
+---
+
+- name: deploy systemd
+  include_role:
+    name: systemd
+  vars:
+    this_role_name: "redis-shake_{{ redis_shake_port }}"
+    service_name: "redis_shake-{{ redis_shake_port }}"
+    service_type: "{{ deployment_method }}" 

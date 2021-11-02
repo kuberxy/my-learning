@@ -1,0 +1,15 @@
+#!/bin/bash
+
+set -e
+ulimit -n 1000000
+
+# WARNING: This file was auto-generated. Do not edit!
+#          All your edit might be overwritten!
+DEPLOY_DIR={{ deploy_dir }}
+cd "${DEPLOY_DIR}" || exit 1
+
+exec > >(tee -i -a "{{ instance_log_dir }}/{{ instance_log_filename }}")
+exec 2>&1
+
+exec bin/redis-server \
+  "{{ instance_conf_dir }}/{{ instance_conf_filename }}"

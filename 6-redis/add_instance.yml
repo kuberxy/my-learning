@@ -1,0 +1,30 @@
+---
+
+- name: create redis instance
+  hosts: redis_cluster
+  gather_facts: false
+  any_errors_fatal: true
+  roles:
+    - { role: instance }
+
+- name: add master to cluster
+  hosts: redis_masters
+  gather_facts: false
+  any_errors_fatal: true
+  roles:
+    - { role: add_master }
+
+- name: slave join to cluster
+  hosts: redis_slaves
+  gather_facts: false
+  any_errors_fatal: true
+  roles:
+    - { role: slave_join }
+
+- name: cluster check
+  hosts: redis_masters[-1]
+  gather_facts: false
+  any_errors_fatal: true
+  roles:
+    - { role: cluster_check }
+

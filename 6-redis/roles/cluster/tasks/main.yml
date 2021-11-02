@@ -1,0 +1,13 @@
+---
+
+- name: set cluster node list
+  set_fact:
+    redis_cluster_node: "{{ lookup('template', 'cluster_node_list.j2') | from_yaml }}"
+
+- name: create redis cluster
+  shell: |
+    echo "yes" | {{ reids_cli_exec }} --cluster create \
+    {{ redis_cluster_node }} \
+    --cluster-replicas 0
+  register: create_st
+  failed_when: "'[OK] All nodes agree about slots configuration' not in create_st.stdout"

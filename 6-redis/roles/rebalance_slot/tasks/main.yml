@@ -1,0 +1,11 @@
+---
+
+- name: rebalance cluster slots
+  shell: |
+    {{ reids_cli_exec }} --cluster rebalance \
+    {{ ansible_host }}:{{ redis_port }}
+  register: rebalance_st
+  retries: 3
+  delay: 3
+  until: "'[ERR]' not in rebalance_st.stdout"
+

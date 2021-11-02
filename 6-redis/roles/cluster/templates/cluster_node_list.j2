@@ -1,0 +1,12 @@
+{%- set redis_cluster_node = [] -%}
+
+{# get all master node #}
+{%- for instance in groups['redis_masters']  -%}
+  {%- set host = hostvars[instance]['ansible_host'] -%}
+  {%- set port = hostvars[instance]['redis_port'] | string -%}
+  {%- set _ = redis_cluster_node.append(host + ':' + port) -%}
+{%- endfor -%}
+
+{%- set redis_cluster_node = (" ").join(redis_cluster_node) -%}
+
+{{ redis_cluster_node | to_yaml }}

@@ -1,0 +1,5 @@
+---
+
+- name: backup configuration file
+  command: mv {{ redis_conf_st.backup_file }} {{ backup_dir }}
+  when: redis_conf_st.changed and redis_conf_st.backup_file is defined

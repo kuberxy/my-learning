@@ -1,0 +1,8 @@
+---
+
+- name: deploy redis-shake
+  hosts: redis_nodes[2]
+  gather_facts: false
+  any_errors_fatal: true
+  roles:
+    - { role: redis-shake }

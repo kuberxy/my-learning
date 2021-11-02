@@ -1,0 +1,17 @@
+
+---
+
+- name: update one instance
+  hosts: redis_instances[-1]
+  gather_facts: false
+  any_errors_fatal: true
+  roles:
+    - { role: upconf }
+
+- name: update other instance
+  hosts: redis_instances[-2:]
+  gather_facts: false
+  any_errors_fatal: true
+  roles:
+    - { role: upconf }
+

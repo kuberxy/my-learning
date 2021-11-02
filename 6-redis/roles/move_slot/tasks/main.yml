@@ -1,0 +1,29 @@
+---
+
+- name: get existing master id
+  shell: |
+    {{ reids_cli_exec }} \
+    -h {{ existing_master_host }} -p {{ existing_master_port }} \
+    cluster nodes | awk '/myself,master/{print $1}'
+  register: get_existing_st
+
+- name: get new master id
+  shell: |
+    {{ reids_cli_exec }} \
+    -h {{ ansible_host }} -p {{ redis_port }} \
+    cluster nodes | awk '/myself,master/{print $1}'
+  register: get_new_st
+
+- name: move slots to new master instance
+  shell: |
+    {{ reids_cli_exec }} --cluster reshard \
+    {{ existing_master_host }}:{{ existing_master_port }} \
+    --cluster-from {{ get_existing_st.stdout }} \
+    --cluster-to {{ get_new_st.stdout }} \
+    --cluster-slots 200 \
+    --cluster-yes
+  register: reshard_st
+  retries: 3
+  delay: 3
+  until: "'[ERR]' not in reshard_st.stdout"
+

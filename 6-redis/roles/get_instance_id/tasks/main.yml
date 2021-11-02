@@ -1,0 +1,10 @@
+---
+
+# delete instance on node
+- name: get instance id
+  shell: |
+    {{ reids_cli_exec }} \
+    -h {{ ansible_host }} -p {{ redis_port }} \
+    cluster nodes | awk '/myself/{print $1}'
+  register: id_st
+

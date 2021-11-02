@@ -1,0 +1,13 @@
+---
+
+- name: delete instance
+  shell: |
+    {{ reids_cli_exec }} \
+    --cluster del-node \
+    {{ hostvars[groups['redis_cluster'][0]]['ansible_host'] }}:{{ hostvars[groups['redis_cluster'][0]]['redis_port'] }} \
+    {{ id_st.stdout }}
+  register: del_st
+  failed_when: 
+    - "del_st.rc not in [ 0, 1 ]"
+    - "'SHUTDOWN the node' not in del_st.stdout"
+

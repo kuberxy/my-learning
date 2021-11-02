@@ -1,0 +1,14 @@
+---
+
+- name: create run script
+  template:
+    src: "run_{{ role_name }}_binary.sh.j2"
+    dest: "{{ script_dir }}/run_redis_{{ instance_port }}.sh"
+    owner: "{{ instance_user }}"
+    group: "{{ instance_user }}"
+    mode: "0755"
+    backup: yes
+  with_items:
+    - run
+
+- include_tasks: "{{ process_supervision_method }}_supervision.yml"

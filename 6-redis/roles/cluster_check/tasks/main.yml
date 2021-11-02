@@ -1,0 +1,11 @@
+---
+
+- name: check redis cluster
+  shell: |
+    {{ reids_cli_exec }} --cluster check \
+    {{ hostvars[groups['redis_cluster'][0]]['ansible_host'] }}:{{ hostvars[groups['redis_cluster'][0]]['redis_port'] }}
+  register: check_st
+  retries: 3
+  delay: 3
+  until: "'[OK] All nodes agree about slots configuration' in check_st.stdout"
+  failed_when: "'[OK] All nodes agree about slots configuration' not in check_st.stdout"

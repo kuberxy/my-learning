@@ -1,0 +1,3 @@
+---
+
+reids_cli_exec: "{{ deploy_dir }}/bin/redis-cli"

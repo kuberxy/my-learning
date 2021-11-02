@@ -1,0 +1,14 @@
+---
+  
+- block:
+    - name: restart redis
+      systemd: name=redis-{{ instance_port }} state=restarted
+    - name: "check redis"
+      shell: 'ss -lntup | grep ":{{ instance_port }} " 1> /dev/null 2> /dev/null; echo $?'
+      register: ss_st
+    - name: check redis result
+      fail: msg="check failed"
+      when: ss_st.stdout.strip() != '0'
+  when: redis_conf_st.changed
+  rescue:
+    - include_tasks: "rollback.yml"

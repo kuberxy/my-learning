@@ -1,0 +1,28 @@
+---
+
+- name: set master host
+  set_fact:
+    my_master_host: "{{ lookup('template', 'master_host.j2') | from_yaml }}"
+
+- name: set master port
+  set_fact:
+    my_master_port: "{{ lookup('template', 'master_port.j2') | from_yaml }}"
+
+- name: get master id
+  shell: |
+    {{ reids_cli_exec }} \
+    -h {{ my_master_host }} -p {{ my_master_port }} \
+    cluster nodes | awk '/myself,master/{print $1}'
+  register: get_st
+
+- name: join to cluster
+  shell: |
+    {{ reids_cli_exec }} --cluster add-node \
+    {{ ansible_host }}:{{ redis_port }} \
+    {{ my_master_host }}:{{ my_master_port }} \
+    --cluster-slave --cluster-master-id {{ get_st.stdout }}
+  register: add_st
+  retries: 5
+  delay: 3
+  until: "'[OK] New node added correctly' in add_st.stdout"
+  failed_when: "'[OK] New node added correctly' not in add_st.stdout"

@@ -1,0 +1,16 @@
+{%- set my_master_host = [] -%}
+
+{%- set times = groups['redis_masters'] | length -%}
+
+{%- for i in range(times) -%}
+  {%- set str = i | string -%}
+  {%- set gname = 'master' + str + '_slaves' -%}
+  {%- if inventory_hostname_short in groups[gname]  -%}
+    {%- set host = hostvars[groups['redis_masters'][i]]['ansible_host'] | string -%}
+    {%- set _ = my_master_host.append(host)  -%}
+  {%- endif -%}
+{%- endfor -%}
+
+{%- set my_master_host = ("").join(my_master_host) -%}
+
+{{ my_master_host | to_yaml }}
