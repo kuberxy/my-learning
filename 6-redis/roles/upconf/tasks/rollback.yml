@@ -8,4 +8,4 @@
 
 - name: update result
   fail:
-    msg: update dnsmasq failed
+    msg: update redis failed
