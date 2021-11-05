@@ -1,4 +1,0 @@
----
-
-dependencies:
-  - { role: apt, apt_packages: ['nmap']}
