@@ -5,23 +5,68 @@ local_resource_dir: "{{ playbook_dir }}/resource"
 local_binary_dir: "{{ playbook_dir }}/resource/bin"
 local_conf_dir: "{{ playbook_dir }}/conf"
 
-download_type: image
-
-# urls
-flannel_image_repo: "quay.io/coreos"
-kubernetes_image_repo: "registry.aliyuncs.com/google_containers"
-
-# versions
-kube_vip_version: 0.1.1
-pause_version: 3.1
-etcd_version: 3.3.15-0
-kube_version: v1.16.0
-flannel_version: v0.12.0-amd64
-coredns_version: 1.6.2
-
 # names
-names:
+package_names:
+  - kubeadm
+  - kubelet
+  - kubernetes-cni
+  - kubectl
+  - cri-tools
+
+image_names:
+  - kube-vip
+  - flannel
+  - pause
+  - etcd
+  - coredns
   - kube-apiserver
   - kube-controller-manager
   - kube-scheduler
   - kube-proxy
+
+# urls
+package_urls:
+  - "http://pub.mirrors.aliyun.com/kubernetes/apt/pool/kubeadm_1.16.14-00_amd64_09ddd55fae26182e601ef43936cbbcb6ab4c069a4d53421d9a1cdd0327b14b63.deb"
+  - "http://pub.mirrors.aliyun.com/kubernetes/apt/pool/kubelet_1.16.14-00_amd64_a26311f529fca86bfd2f6fea4b761cdfa5111574819cc5f349308cd86d26fce9.deb"
+  - "http://pub.mirrors.aliyun.com/kubernetes/apt/pool/kubernetes-cni_0.8.6-00_amd64_c9664b9edd952e981a98d1a13021cbaa545ea2651bf3686b1e9c2e9a5147d169.deb"
+  - "http://pub.mirrors.aliyun.com/kubernetes/apt/pool/kubectl_1.16.14-00_amd64_c20d474a4f05d03e93f82fb412bbf5101c39d0d09abfd2a839b9dcb0f0c3474e.deb"
+  - "http://pub.mirrors.aliyun.com/kubernetes/apt/pool/cri-tools_1.19.0-00_amd64_b6fdfd86c8a3665ab10b9bd9565354977cd5abbaefeb2ee953bc4a13fe7d3326.deb"
+
+image_repos:
+  - plndr/kube-vip
+  - quay.io/coreos/flannel
+  - registry.aliyuncs.com/google_containers/pause
+  - registry.aliyuncs.com/google_containers/etcd
+  - registry.aliyuncs.com/google_containers/coredns
+  - registry.aliyuncs.com/google_containers/kube-apiserver
+  - registry.aliyuncs.com/google_containers/kube-controller-manager
+  - registry.aliyuncs.com/google_containers/kube-scheduler
+  - registry.aliyuncs.com/google_containers/kube-proxy
+
+# versions
+package_versions:
+  - 1.16.14-00_amd64
+  - 1.16.14-00_amd64
+  - 0.8.6-00_amd64
+  - 1.16.14-00_amd64
+  - 1.19.0-00_amd64
+
+image_tags:
+  - 0.1.1
+  - v0.12.0-amd64
+  - 3.1
+  - 3.3.15-0
+  - 1.6.2
+  - v1.16.0
+  - v1.16.0
+  - v1.16.0
+  - v1.16.0
+
+# type 
+package_types:
+  - deb
+  - deb
+  - deb
+  - deb
+  - deb
+

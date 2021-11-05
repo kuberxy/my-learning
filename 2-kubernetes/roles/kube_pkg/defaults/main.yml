@@ -1,6 +1,16 @@
 ---
 
-deployment_method: apt
+kube_pkg_user: "{{ deploy_user }}"
+
+deployment_method: dpkg
+
+# dpkg config
+dpkg_packages:
+  - kubeadm.deb
+  - kubelet.deb
+  - kubernetes-cni.deb
+  - kubectl.deb
+  - cri-tools.deb
 
 # apt config
 service_apt_enable: True
@@ -10,3 +20,4 @@ apt_packages:
   - kubernetes-cni=0.8.6-00
   - kubeadm=1.16.14-00
   - kubectl=1.16.14-00
+

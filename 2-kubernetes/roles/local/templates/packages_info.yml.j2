@@ -1,0 +1,13 @@
+---
+
+packages_info:
+{% for name in package_names %}
+  - name: {{ name }}
+    url: {{ package_urls[loop.index0] }}
+    version: {{ package_versions[loop.index0] }}
+    type: {{ package_types[loop.index0] }}
+{% if package_tar_st is defined %}
+    exist: {{ package_tar_st['results'][loop.index0].stat.exists | default(false) }}
+{% endif %}
+{% endfor %}
+
