@@ -1,6 +1,6 @@
 ---
 
-- name: check_if_master
+- name: delete instance
   hosts: redis_cluster
   gather_facts: false
   any_errors_fatal: true
@@ -11,5 +11,11 @@
     - { role: del_instance }
     - { role: cluster_check }
     - { role: uninstance }
+
+- name: delete redis
+  hosts: redis_cluster
+  gather_facts: false
+  any_errors_fatal: true
+  roles:
     - { role: unredis }
 
