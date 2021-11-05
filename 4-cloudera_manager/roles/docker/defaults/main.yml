@@ -1,0 +1,22 @@
+---
+
+docker_user: root
+docker_conf_dir: /etc/docker/
+docker_conf_filename: daemon.json
+
+deployment_method: dpkg
+
+# apt config
+service_apt_enable: True
+docker_enable: True
+apt_packages:
+  - docker-ce=18.06.3~ce~3-0~ubuntu
+
+# dpkg config
+dpkg_url: http://pub.mirrors.aliyun.com/docker-ce/linux/ubuntu/dists/bionic/pool/stable/amd64/docker-ce_18.06.3~ce~3-0~ubuntu_amd64.deb
+dpkg_name: docker-ce
+
+# docker config
+dns: "{{ docker_dns }}"
+registry_mirrors: "{{ docker_registry_mirrors }}"
+insecure_registries: "{{ docker_insecure_registries | default(False) }}"

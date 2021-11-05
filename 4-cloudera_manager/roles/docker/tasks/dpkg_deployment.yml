@@ -1,0 +1,20 @@
+---
+
+- name: download package
+  get_url:
+    url: "{{ dpkg_url }}"
+    dest: "{{ image_dir }}/{{ dpkg_name }}.deb"
+    owner: "{{ deploy_user }}"
+    group: "{{ deploy_user }}"
+    force: yes
+    validate_certs: no
+  register: get_url_result
+  until: "'OK' in get_url_result.msg or 'file already exists' in get_url_result.msg"
+  retries: 4
+  delay: "{{ 5 | random + 3 }}"
+
+- name: install package
+  shell: "apt-get install -y ./{{ dpkg_name }}.deb"
+  args:
+    chdir: "{{ image_dir }}"
+
