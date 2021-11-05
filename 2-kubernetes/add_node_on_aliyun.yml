@@ -5,7 +5,9 @@
   gather_facts: false
   any_errors_fatal: true
   roles:
+    - { role: common_dir }
     - { role: docker }
+    - { role: change_dir }
     - { role: kube_pkg }
     - { role: haproxy }
 

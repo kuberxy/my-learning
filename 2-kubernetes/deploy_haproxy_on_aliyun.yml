@@ -7,21 +7,22 @@
   roles:
     - { role: common_dir }
     - { role: docker }
+    - { role: change_dir }
     - { role: kube_pkg }
 
 - name: reset node env
-  hosts: load_balancer
+  hosts: kube_node
   gather_facts: false
   any_errors_fatal: true
   roles:
     - { role: reset }
 
 - name: deploy load balancer
-  hosts: load_balancer
+  hosts: kube_master,kube_worker
   gather_facts: false
   any_errors_fatal: true
   roles:
-    - { role: kube_vip }
+    - { role: haproxy }
 
 - name: init master
   hosts: kube_master[0]

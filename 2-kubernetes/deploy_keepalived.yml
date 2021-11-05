@@ -5,8 +5,9 @@
   gather_facts: false
   any_errors_fatal: true
   roles:
+    - { role: common_dir }
     - { role: docker }
-    - { role: node }
+    - { role: kube_pkg }
 
 - name: reset node env
   hosts: kube_node
