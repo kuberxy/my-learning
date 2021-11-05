@@ -1,0 +1,12 @@
+---
+
+images_info:
+{% for name in image_names %}
+  - name: {{ name }}
+    repository: {{ image_repos[loop.index0] }}
+    tag: {{ image_tags[loop.index0] }}
+{% if image_tar_st is defined %}
+    exist: {{ image_tar_st['results'][loop.index0].stat.exists | default(false) }}
+{% endif %}
+{% endfor %}
+

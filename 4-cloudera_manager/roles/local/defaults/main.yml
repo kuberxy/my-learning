@@ -1,0 +1,52 @@
+---
+
+local_download_dir: "{{ playbook_dir }}/download"
+local_resource_dir: "{{ playbook_dir }}/resource"
+local_binary_dir: "{{ playbook_dir }}/resource/bin"
+local_conf_dir: "{{ playbook_dir }}/conf"
+
+# names
+package_names:
+  - openresty
+  - openresty-openssl
+  - openresty-openssl-dev
+  - openresty-pcre
+  - openresty-zlib
+  - ip2location
+
+image_names:
+  - keepalived
+
+# urls
+package_urls:
+  - "https://mirrors.tuna.tsinghua.edu.cn/openresty/ubuntu/pool/main/o/openresty/openresty_1.15.8.3-1~bionic1_amd64.deb"
+  - "https://mirrors.tuna.tsinghua.edu.cn/openresty/ubuntu/pool/main/o/openresty-openssl/openresty-openssl_1.1.0l-2~bionic1_amd64.deb"
+  - "https://mirrors.tuna.tsinghua.edu.cn/openresty/ubuntu/pool/main/o/openresty-openssl/openresty-openssl-dev_1.1.0l-2~bionic1_amd64.deb"
+  - "https://mirrors.tuna.tsinghua.edu.cn/openresty/ubuntu/pool/main/o/openresty-pcre/openresty-pcre_8.44-1~bionic1_amd64.deb"
+  - "https://mirrors.tuna.tsinghua.edu.cn/openresty/ubuntu/pool/main/o/openresty-zlib/openresty-zlib_1.2.11-3~bionic1_amd64.deb"
+  - "https://github.com/chrislim2888/IP2Location-C-Library/archive/8.3.1-1.tar.gz"
+
+image_repos:
+  - osixia/keepalived
+
+# versions
+package_versions:
+  - 1.15.8.3-1
+  - 1.1.0l-2
+  - 1.1.0l-2
+  - 8.44-1
+  - 1.2.11-3
+  - 8.3.1-1
+
+image_tags:
+  - 1.3.9
+
+# type 
+package_types:
+  - deb
+  - deb
+  - deb
+  - deb
+  - deb
+  - tar.gz
+
