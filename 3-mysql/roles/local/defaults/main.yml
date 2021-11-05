@@ -1,0 +1,61 @@
+---
+
+local_download_dir: "{{ playbook_dir }}/download"
+local_resource_dir: "{{ playbook_dir }}/resource"
+local_binary_dir: "{{ playbook_dir }}/resource/bin"
+local_conf_dir: "{{ playbook_dir }}/conf"
+
+# names
+package_names:
+  - mysql-server
+  - mysql-community-server
+  - mysql-community-server-core
+  - mysql-client
+  - mysql-community-client
+  - mysql-community-client-core
+  - mysql-common
+  - proxysql
+  - xtrabackup
+
+image_names:
+
+# urls
+package_urls:
+  - "http://repo.mysql.com/apt/ubuntu/pool/mysql-8.0/m/mysql-community/mysql-server_8.0.21-1ubuntu18.04_amd64.deb"
+  - "http://repo.mysql.com/apt/ubuntu/pool/mysql-8.0/m/mysql-community/mysql-community-server_8.0.21-1ubuntu18.04_amd64.deb"
+  - "http://repo.mysql.com/apt/ubuntu/pool/mysql-8.0/m/mysql-community/mysql-community-server-core_8.0.21-1ubuntu18.04_amd64.deb"
+  - "http://repo.mysql.com/apt/ubuntu/pool/mysql-8.0/m/mysql-community/mysql-client_8.0.21-1ubuntu18.04_amd64.deb"
+  - "http://repo.mysql.com/apt/ubuntu/pool/mysql-8.0/m/mysql-community/mysql-community-client_8.0.21-1ubuntu18.04_amd64.deb"
+  - "http://repo.mysql.com/apt/ubuntu/pool/mysql-8.0/m/mysql-community/mysql-community-client-core_8.0.21-1ubuntu18.04_amd64.deb"
+  - "http://repo.mysql.com/apt/ubuntu/pool/mysql-8.0/m/mysql-community/mysql-common_8.0.21-1ubuntu18.04_amd64.deb"
+  - "https://github.com/sysown/proxysql/releases/download/v2.0.12/proxysql_2.0.12-ubuntu18_amd64.deb"
+  - "https://mirrors.tuna.tsinghua.edu.cn/percona/apt/pool/main/p/percona-xtrabackup-80/percona-xtrabackup-80_8.0.22-15-1.bionic_amd64.deb"
+
+image_repos:
+
+# versions
+package_versions:
+  - 8.0.21
+  - 8.0.21
+  - 8.0.21
+  - 8.0.21
+  - 8.0.21
+  - 8.0.21
+  - 8.0.21
+  - 2.0.12
+  - 8.0.22-15-1
+
+image_tags:
+
+# type 
+package_types:
+  - deb
+  - deb
+  - deb
+  - deb
+  - deb
+  - deb
+  - deb
+  - deb
+  - deb
+

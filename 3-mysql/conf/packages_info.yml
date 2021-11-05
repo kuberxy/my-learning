@@ -1,39 +1,49 @@
 ---
 
 packages_info:
+  - name: mysql-server
+    url: http://repo.mysql.com/apt/ubuntu/pool/mysql-8.0/m/mysql-community/mysql-server_8.0.21-1ubuntu18.04_amd64.deb
+    version: 8.0.21
+    type: deb
+    exist: False
+  - name: mysql-community-server
+    url: http://repo.mysql.com/apt/ubuntu/pool/mysql-8.0/m/mysql-community/mysql-community-server_8.0.21-1ubuntu18.04_amd64.deb
+    version: 8.0.21
+    type: deb
+    exist: True
+  - name: mysql-community-server-core
+    url: http://repo.mysql.com/apt/ubuntu/pool/mysql-8.0/m/mysql-community/mysql-community-server-core_8.0.21-1ubuntu18.04_amd64.deb
+    version: 8.0.21
+    type: deb
+    exist: True
+  - name: mysql-client
+    url: http://repo.mysql.com/apt/ubuntu/pool/mysql-8.0/m/mysql-community/mysql-client_8.0.21-1ubuntu18.04_amd64.deb
+    version: 8.0.21
+    type: deb
+    exist: True
+  - name: mysql-community-client
+    url: http://repo.mysql.com/apt/ubuntu/pool/mysql-8.0/m/mysql-community/mysql-community-client_8.0.21-1ubuntu18.04_amd64.deb
+    version: 8.0.21
+    type: deb
+    exist: True
+  - name: mysql-community-client-core
+    url: http://repo.mysql.com/apt/ubuntu/pool/mysql-8.0/m/mysql-community/mysql-community-client-core_8.0.21-1ubuntu18.04_amd64.deb
+    version: 8.0.21
+    type: deb
+    exist: True
+  - name: mysql-common
+    url: http://repo.mysql.com/apt/ubuntu/pool/mysql-8.0/m/mysql-community/mysql-common_8.0.21-1ubuntu18.04_amd64.deb
+    version: 8.0.21
+    type: deb
+    exist: True
   - name: proxysql
     url: https://github.com/sysown/proxysql/releases/download/v2.0.12/proxysql_2.0.12-ubuntu18_amd64.deb
     version: 2.0.12
-    state: True
+    type: deb
+    exist: True
   - name: xtrabackup
     url: https://mirrors.tuna.tsinghua.edu.cn/percona/apt/pool/main/p/percona-xtrabackup-80/percona-xtrabackup-80_8.0.22-15-1.bionic_amd64.deb
     version: 8.0.22-15-1
-    state: True
-  - name: mysql-common
-    url: https://mirrors.tuna.tsinghua.edu.cn/mysql/downloads/MySQL-8.0/mysql-common_8.0.21-1ubuntu18.04_amd64.deb
-    version: 8.0.21
-    state: True
-  - name: mysql-client
-    url: https://mirrors.tuna.tsinghua.edu.cn/mysql/downloads/MySQL-8.0/mysql-client_8.0.21-1ubuntu18.04_amd64.deb
-    version: 8.0.21
-    state: True
-  - name: mysql-community-client
-    url: https://mirrors.tuna.tsinghua.edu.cn/mysql/downloads/MySQL-8.0/mysql-community-client_8.0.21-1ubuntu18.04_amd64.deb
-    version: 8.0.21
-    state: True
-  - name: mysql-community-client-core
-    url: https://mirrors.tuna.tsinghua.edu.cn/mysql/downloads/MySQL-8.0/mysql-community-client-core_8.0.21-1ubuntu18.04_amd64.deb
-    version: 8.0.21
-    state: True
-  - name: mysql-server
-    url: https://mirrors.tuna.tsinghua.edu.cn/mysql/downloads/MySQL-8.0/mysql-server_8.0.21-1ubuntu18.04_amd64.deb
-    version: 8.0.21
-    state: True
-  - name: mysql-community-server
-    url: https://mirrors.tuna.tsinghua.edu.cn/mysql/downloads/MySQL-8.0/mysql-community-server_8.0.21-1ubuntu18.04_amd64.deb
-    version: 8.0.21
-    state: True
-  - name: mysql-community-server-core
-    url: https://mirrors.tuna.tsinghua.edu.cn/mysql/downloads/MySQL-8.0/mysql-community-server-core_8.0.21-1ubuntu18.04_amd64.deb
-    version: 8.0.21
-    state: True
+    type: deb
+    exist: True
+
