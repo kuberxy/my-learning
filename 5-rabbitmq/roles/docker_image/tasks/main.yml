@@ -1,0 +1,8 @@
+---
+
+# preflight checks
+- include_tasks: "check.yml" 
+
+# do actual downloading
+- include_tasks: "docker_image.yml" 
+
