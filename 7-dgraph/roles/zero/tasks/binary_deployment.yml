@@ -1,0 +1,14 @@
+---
+
+- name: create run script
+  template:
+    src: "run_{{ role_name }}_binary.sh.j2"
+    dest: "{{ script_dir }}/run_{{ role_name }}_{{ zero_port }}.sh"
+    owner: "{{ zero_user }}"
+    group: "{{ zero_user }}"
+    mode: "0755"
+    backup: yes
+  with_items:
+    - run
+
+- include_tasks: "{{ process_supervision_method }}_supervision.yml"

@@ -1,0 +1,11 @@
+---
+
+ratel_user: "{{ deploy_user }}"
+ratel_log_dir: "{{ log_dir }}"
+ratel_log_filename: "ratel-{{ ratel_port }}.log"
+
+deployment_method: binary
+process_supervision_method: systemd
+
+# ratel config
+ratel_addr_port: 8083

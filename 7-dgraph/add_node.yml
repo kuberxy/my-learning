@@ -1,0 +1,33 @@
+---
+
+- name: deploy dgraph
+  hosts: dgraph_nodes
+  gather_facts: false
+  any_errors_fatal: true
+  roles:
+    - { role: common_dir }
+    - { role: dgraph }
+
+- name: deploy zero
+  hosts: zero_instances
+  gather_facts: false
+  any_errors_fatal: true
+  roles:
+    - { role: zero }
+
+- name: deploy alpha
+  hosts: alpha_instances
+  gather_facts: false
+  any_errors_fatal: true
+  roles:
+    - { role: alpha }
+
+- name: deploy ratel
+  hosts: ratel_instances
+  gather_facts: false
+  any_errors_fatal: true
+  roles:
+    - { role: ratel }
+  tags:
+    - ratel
+

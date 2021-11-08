@@ -1,0 +1,9 @@
+---
+
+- name: deploy systemd
+  include_role:
+    name: systemd
+  vars:
+    this_role_name: "alpha_{{ alpha_port }}"
+    service_name: "alpha-{{ alpha_port }}"
+    service_type: "{{ deployment_method }}" 

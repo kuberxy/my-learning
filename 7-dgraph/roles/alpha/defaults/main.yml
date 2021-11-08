@@ -1,0 +1,16 @@
+---
+
+alpha_user: "{{ deploy_user }}"
+alpha_conf_dir: "{{ conf_dir }}"
+alpha_conf_filename: "alpha-{{ alpha_port }}.yml"
+alpha_log_dir: "{{ log_dir }}"
+alpha_log_filename: "alpha-{{ alpha_port }}.log"
+alpha_data_dir: "{{ data_dir }}"
+
+deployment_method: binary
+process_supervision_method: systemd
+
+# alpha config
+alpha_zero: "{{ dgraph_alpha_zero }}"
+alpha_lru_mb: "{{ dgraph_alpha_lru_mb }}"
+alpha_whitelist: "{{ dgraph_alpha_whitelist }}"

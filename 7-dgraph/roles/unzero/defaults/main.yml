@@ -1,0 +1,14 @@
+---
+
+zero_user: "{{ deploy_user }}"
+zero_conf_dir: "{{ conf_dir }}"
+zero_conf_filename: "zero-{{ zero_port }}.yml"
+zero_log_dir: "{{ log_dir }}"
+zero_log_filename: "zero-{{ zero_port }}.log"
+zero_data_dir: "{{ data_dir }}"
+
+deployment_method: binary
+process_supervision_method: systemd
+
+# zero config
+shard_replica_num: "{{ dgraph_zero_shard_replica_num }}"

@@ -1,0 +1,12 @@
+---
+
+- name: rollback configuration file
+  command: mv {{ backup_dir }}/{{ zero_conf_st.backup_file.split('/')[-1] }} {{ zero_conf_dir }}/{{ zero_conf_filename }}
+  when: zero_conf_st.changed and zero_conf_st.backup_file is defined
+
+- include_tasks: "restart.yml"
+
+- name: update result
+  fail:
+    msg: update zero failed
+

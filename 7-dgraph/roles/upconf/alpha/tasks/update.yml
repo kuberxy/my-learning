@@ -1,0 +1,6 @@
+---
+
+- name: create configuration file
+  template: src=alpha.yml.j2 dest={{ alpha_conf_dir }}/{{ alpha_conf_filename }} owner={{ alpha_user }}  group={{ alpha_user }} mode=0644 backup=yes
+  register: alpha_conf_st
+

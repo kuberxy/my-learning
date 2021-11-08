@@ -1,0 +1,15 @@
+---
+  
+- block:
+    - name: restart alpha
+      systemd: name=alpha-{{ alpha_port }} state=restarted
+    - name: wait for alpha port up
+      wait_for:
+        port: "{{ alpha_port }}"
+        state: started
+        msg: "the alpha port {{ alpha_port }} is not up" 
+        timeout: 60
+  when: alpha_conf_st.changed
+  rescue:
+    - include_tasks: "rollback.yml"
+

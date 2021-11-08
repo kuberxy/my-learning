@@ -1,0 +1,24 @@
+---
+
+- name: stop zero
+  systemd: name=zero-{{ zero_port }} state=stopped enabled=no
+
+- name: delete start/stop script
+  file: path={{ deploy_dir }}/script/{{ item }}_zero_{{ zero_port }}.sh state=absent
+  with_items:
+    - start
+    - stop
+
+- name: create systemd service configuration
+  file: path=/etc/systemd/system/zero-{{ zero_port }}.service state=absent
+
+- name: delete run script
+  file: path={{ script_dir }}/run_zero_{{ zero_port }}.sh state=absent
+
+- name: delete deploy directories
+  file: path={{ item }} state=absent
+  with_items:
+  - "{{ zero_conf_dir }}/{{ zero_conf_filename }}"
+  - "{{ zero_log_dir }}/{{ zero_log_filename }}"
+  - "{{ zero_data_dir }}"
+

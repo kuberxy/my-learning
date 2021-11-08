@@ -1,0 +1,15 @@
+---
+
+# prepare
+- name: create deploy directories
+  file: path={{ item }} state=directory owner={{ zero_user }} group={{ zero_user }} mode=0755
+  with_items:
+  - "{{ zero_conf_dir }}"
+  - "{{ zero_log_dir }}"
+  - "{{ zero_data_dir }}"
+
+# deployment
+- include_tasks: "{{ deployment_method }}_deployment.yml"
+
+# configure
+- include_tasks: "configure.yml"

@@ -1,0 +1,10 @@
+---
+
+dgraph_user: "{{ deploy_user }}"
+dgraph_bin_dir: "{{ bin_dir }}"
+
+deployment_method: binary
+
+# binary config
+binary_names:
+  - dgraph

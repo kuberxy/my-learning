@@ -1,0 +1,78 @@
+---
+
+- name: start zero
+  hosts: zero_instances
+  gather_facts: False
+  any_errors_fatal: true
+  roles:
+    - { role: start/zero }
+  tags:
+    - zero
+
+
+- name: start alpha master
+  hosts: alpha_masters[0]
+  gather_facts: False
+  any_errors_fatal: true
+  roles:
+    - { role: start/alpha }
+  tags:
+    - alpha
+
+- name: start alpha slave
+  hosts: master0_slaves
+  gather_facts: False
+  any_errors_fatal: true
+  roles:
+    - { role: start/alpha }
+  tags:
+    - alpha
+
+
+- name: start alpha master
+  hosts: alpha_masters[1]
+  gather_facts: False
+  any_errors_fatal: true
+  roles:
+    - { role: start/alpha }
+  tags:
+    - alpha
+
+- name: start alpha slave
+  hosts: master1_slaves
+  gather_facts: False
+  any_errors_fatal: true
+  roles:
+    - { role: start/alpha }
+  tags:
+    - alpha
+
+
+- name: start alpha master
+  hosts: alpha_masters[2]
+  gather_facts: False
+  any_errors_fatal: true
+  roles:
+    - { role: start/alpha }
+  tags:
+    - alpha
+
+- name: start alpha slave
+  hosts: master2_slaves
+  gather_facts: False
+  any_errors_fatal: true
+  roles:
+    - { role: start/alpha }
+  tags:
+    - alpha
+
+
+- name: start ratel
+  hosts: ratel_instances
+  gather_facts: False
+  any_errors_fatal: true
+  roles:
+    - { role: start/ratel }
+  tags:
+    - ratel
+

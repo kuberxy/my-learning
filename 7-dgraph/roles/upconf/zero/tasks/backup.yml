@@ -1,0 +1,6 @@
+---
+
+- name: backup configuration file
+  command: mv {{ zero_conf_st.backup_file }} {{ backup_dir }}
+  when: zero_conf_st.changed and zero_conf_st.backup_file is defined
+

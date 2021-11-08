@@ -1,0 +1,10 @@
+idx: {{ groups['zero_instances'].index(inventory_hostname_short) + 1 }}
+my: "{{ inventory_hostname.split('_')[0] }}:{{ zero_port }}"
+port_offset: "{{ zero_port - 5080 }}"
+{% if groups['zero_instances'].index(inventory_hostname_short) != 0 %}
+peer: "{{ hostvars[groups['zero_instances'][0]].inventory_hostname_short }}:{{ zero_port }}"
+{% endif %}
+replicas: {{ shard_replica_num }}
+wal: "{{ zero_data_dir }}/{{ role_name }}-{{ zero_port }}.w"
+
+cwd: "{{ deploy_dir }}"

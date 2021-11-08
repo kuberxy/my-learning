@@ -1,0 +1,22 @@
+---
+
+- name: stop ratel
+  systemd: name=ratel-{{ ratel_port }} state=stopped enabled=no
+
+- name: delete start/stop script
+  file: path={{ deploy_dir }}/script/{{ item }}_ratel_{{ ratel_port }}.sh state=absent
+  with_items:
+    - start
+    - stop
+
+- name: delete systemd service configuration
+  file: path=/etc/systemd/system/ratel-{{ ratel_port }}.service state=absent
+
+- name: delete run script
+  file: path={{ script_dir }}/run_ratel_{{ ratel_port }}.sh state=absent
+
+- name: delete deploy directories
+  file: path={{ item }} state=absent
+  with_items:
+  - "{{ ratel_log_dir }}"
+

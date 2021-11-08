@@ -1,0 +1,5 @@
+---
+
+- name: restart alpha
+  systemd: name=alpha-{{ alpha_port }} state=restarted
+

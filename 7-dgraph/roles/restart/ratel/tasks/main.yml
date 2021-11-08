@@ -1,0 +1,11 @@
+---
+
+- name: restart ratel
+  systemd: name=ratel-{{ ratel_port }} state=restarted daemon_reload=yes enabled=yes
+
+- name: wait for service port is up
+  wait_for:
+    port: "{{ ratel_port }}"
+    state: started
+    msg: "the service port {{ ratel_port }} is not up"
+

@@ -1,0 +1,9 @@
+---
+
+- name: deploy systemd
+  include_role:
+    name: systemd
+  vars:
+    this_role_name: "ratel_{{ ratel_port }}"
+    service_name: "ratel-{{ ratel_port }}"
+    service_type: "{{ deployment_method }}" 

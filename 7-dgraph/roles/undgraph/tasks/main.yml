@@ -1,0 +1,5 @@
+---
+
+- name: delete deploy dir
+  file: path={{ deploy_dir }} state=absent
+

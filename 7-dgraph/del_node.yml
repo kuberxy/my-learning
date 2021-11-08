@@ -1,0 +1,30 @@
+---
+
+- name: delete ratel
+  hosts: ratel_instances
+  gather_facts: false
+  any_errors_fatal: true
+  roles:
+    - { role: unratel }
+
+- name: delete alpha
+  hosts: alpha_instances
+  gather_facts: false
+  any_errors_fatal: true
+  roles:
+    - { role: unalpha }
+
+- name: delete zero
+  hosts: zero_instances
+  gather_facts: false
+  any_errors_fatal: true
+  roles:
+    - { role: unzero }
+
+- name: delete dgraph
+  hosts: dgraph_nodes
+  gather_facts: false
+  any_errors_fatal: true
+  roles:
+    - { role: undgraph }
+

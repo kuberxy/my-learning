@@ -1,0 +1,6 @@
+---
+
+- name: create configuration file
+  template: src=zero.yml.j2 dest={{ zero_conf_dir }}/{{ zero_conf_filename }} owner={{ zero_user }}  group={{ zero_user }} mode=0644 backup=yes
+  register: zero_conf_st
+

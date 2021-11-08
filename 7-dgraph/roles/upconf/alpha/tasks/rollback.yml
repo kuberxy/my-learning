@@ -1,0 +1,12 @@
+---
+
+- name: rollback configuration file
+  command: mv {{ backup_dir }}/{{ alpha_conf_st.backup_file.split('/')[-1] }} {{ alpha_conf_dir }}/{{ alpha_conf_filename }}
+  when: alpha_conf_st.changed and alpha_conf_st.backup_file is defined
+
+- include_tasks: "restart.yml"
+
+- name: update result
+  fail:
+    msg: update alpha failed
+

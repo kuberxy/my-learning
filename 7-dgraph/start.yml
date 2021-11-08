@@ -1,0 +1,29 @@
+---
+
+- name: start zero
+  hosts: zero_instances
+  gather_facts: false
+  any_errors_fatal: true
+  roles:
+    - { role: start/zero }
+  tags:
+    - zero
+
+- name: start alpha
+  hosts: alpha_instances
+  gather_facts: false
+  any_errors_fatal: true
+  roles:
+    - { role: start/alpha }
+  tags:
+    - alpha
+
+- name: start ratel
+  hosts: ratel_instances
+  gather_facts: false
+  any_errors_fatal: true
+  roles:
+    - { role: start/ratel }
+  tags:
+    - ratel
+

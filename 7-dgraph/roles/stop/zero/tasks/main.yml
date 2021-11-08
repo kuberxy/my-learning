@@ -1,0 +1,11 @@
+---
+
+- name: stop zero
+  systemd: name=zero-{{ zero_port }} state=stopped daemon_reload=yes enabled=yes
+
+- name: wait for service port is down
+  wait_for:
+    port: "{{ zero_port }}"
+    state: stopped
+    msg: "the service port {{ zero_port }} is not down"
+

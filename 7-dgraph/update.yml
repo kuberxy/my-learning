@@ -1,0 +1,30 @@
+---
+
+- name: update one zero instance
+  hosts: zero_instances[0]
+  gather_facts: false
+  any_errors_fatal: true
+  roles:
+    - { role: upconf/zero, tags: ['never', 'zero'] }
+
+- name: update other zero instance
+  hosts: zero_instances[1:]
+  gather_facts: false
+  any_errors_fatal: true
+  roles:
+    - { role: upconf/zero, tags: ['never', 'zero'] }
+
+- name: update one alpha instance
+  hosts: master0_slaves[0],master1_slaves[0],master2_slaves[0]
+  gather_facts: false
+  any_errors_fatal: true
+  roles:
+    - { role: upconf/alpha, tags: ['never', 'alpha'] }
+
+- name: update other alpha instance
+  hosts: master0_slaves[1:],master1_slaves[1:],master2_slaves[1:],alpha_masters
+  gather_facts: false
+  any_errors_fatal: true
+  roles:
+    - { role: upconf/alpha, tags: ['never', 'alpha'] }
+

@@ -1,0 +1,6 @@
+---
+
+- name: backup configuration file
+  command: mv {{ alpha_conf_st.backup_file }} {{ backup_dir }}
+  when: alpha_conf_st.changed and alpha_conf_st.backup_file is defined
+

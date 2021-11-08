@@ -1,0 +1,5 @@
+---
+
+- name: restart zero
+  systemd: name=zero-{{ zero_port }} state=restarted
+

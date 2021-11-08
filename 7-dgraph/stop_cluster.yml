@@ -1,0 +1,38 @@
+---
+
+- name: stop ratel
+  hosts: ratel_instances
+  gather_facts: False
+  any_errors_fatal: true
+  roles:
+    - { role: stop/ratel }
+  tags:
+    - ratel
+
+- name: stop alpha slave
+  hosts: alpha_slaves
+  gather_facts: False
+  any_errors_fatal: true
+  roles:
+    - { role: stop/alpha }
+  tags:
+    - alpha
+
+- name: stop alpha master
+  hosts: alpha_masters
+  gather_facts: False
+  any_errors_fatal: true
+  roles:
+    - { role: stop/alpha }
+  tags:
+    - alpha
+
+- name: stop zero
+  hosts: zero_instances
+  gather_facts: False
+  any_errors_fatal: true
+  roles:
+    - { role: stop/zero }
+  tags:
+    - zero
+

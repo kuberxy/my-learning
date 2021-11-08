@@ -1,0 +1,29 @@
+---
+
+- name: restart zero
+  hosts: zero_instances
+  gather_facts: false
+  any_errors_fatal: true
+  roles:
+    - { role: restart/zero }
+  tags:
+    - zero
+
+- name: restart alpha
+  hosts: alpha_instances
+  gather_facts: false
+  any_errors_fatal: true
+  roles:
+    - { role: restart/alpha }
+  tags:
+    - alpha
+
+- name: restart ratel
+  hosts: ratel_instances
+  gather_facts: false
+  any_errors_fatal: true
+  roles:
+    - { role: restart/ratel }
+  tags:
+    - ratel
+

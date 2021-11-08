@@ -1,0 +1,11 @@
+---
+
+- name: restart zero
+  systemd: name=zero-{{ zero_port }} state=restarted daemon_reload=yes enabled=yes
+
+- name: wait for service port is up 
+  wait_for:
+    port: "{{ zero_port }}"
+    state: started
+    msg: "the service port {{ zero_port }} is not up"
+

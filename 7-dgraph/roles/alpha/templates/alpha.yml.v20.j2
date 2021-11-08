@@ -1,0 +1,21 @@
+{%- set alpha_zeros = [] -%}
+
+{%- for zero in groups['zero_instances'] -%}
+  {%- set host = hostvars[zero]['inventory_hostname_short'].split('_')[0] -%}
+  {%- set port = hostvars[zero]['zero_port'] | string -%}
+  {%- set _ = alpha_zeros.append(host + ':' + port ) -%}
+{%- endfor -%}
+
+{%- set alpha_zeros = (",").join(alpha_zeros) -%}
+
+zero: {{ alpha_zeros }}
+
+my: "{{ inventory_hostname.split('_')[0] }}:{{ alpha_port }}"
+port_offset: {{ alpha_port - 7080 }}
+lru_mb: {{ alpha_lru_mb }}
+postings: "{{alpha_data_dir }}/{{ role_name }}-{{ alpha_port }}.p"
+wal: "{{alpha_data_dir }}/{{ role_name }}-{{ alpha_port }}.w"
+export: "{{alpha_data_dir }}/{{ role_name }}-{{ alpha_port }}.e"
+whitelist: {{ alpha_whitelist }}
+
+cwd: "{{ deploy_dir }}"
