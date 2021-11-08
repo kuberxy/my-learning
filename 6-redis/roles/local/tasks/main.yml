@@ -1,8 +1,23 @@
 ---
 
-- import_role: 
-    name: download
-  vars:
-    src_pkgs_file_name: "../templates/packages_info.yml.j2"
-    dest_pkgs_file_name: "packages_info.yml"
-    pkgs_file_suffix: "tar.gz"
+# prepare
+- name: create downloads and resources directories
+  file: "path={{ item }} state=directory owner={{ deploy_user }} group={{ deploy_user }} mode=0755"
+  with_items:
+  - "{{ local_download_dir }}"
+  - "{{ local_resource_dir }}"
+  - "{{ local_binary_dir }}"
+  - "{{ local_conf_dir }}"
+
+# package
+- block:
+   - name: include package task
+     include_tasks: "package.yml"
+  when: package_names
+
+# image
+- block:
+   - name: include image task
+     include_tasks: "image.yml"
+  when: image_names
+

@@ -5,12 +5,29 @@ local_resource_dir: "{{ playbook_dir }}/resource"
 local_binary_dir: "{{ playbook_dir }}/resource/bin"
 local_conf_dir: "{{ playbook_dir }}/conf"
 
-download_type: package
+# names
+package_names:
+  - redis
+  - redis_shake
+
+image_names:
 
 # urls
-redis_binary_url: "http://download.redis.io/releases/redis-5.0.4.tar.gz"
-redis_shake_url: "https://github.com/alibaba/RedisShake/releases/download/release-v2.0.3-20200724/redis-shake-v2.0.3.tar.gz"
+package_urls:
+  - "http://download.redis.io/releases/redis-5.0.4.tar.gz"
+  - "https://github.com/alibaba/RedisShake/releases/download/release-v2.0.3-20200724/redis-shake-v2.0.3.tar.gz"
+
+image_repos:
 
 # versions
-redis_version: 5.0.4
-redis_shake_version: v2.0.3
+package_versions:
+  - 5.0.4
+  - v2.0.3
+
+image_tags:
+
+# type 
+package_types:
+  - tar.gz
+  - tar.gz
+

@@ -1,15 +1,5 @@
 ---
 
-# prepare
-- name: create downloads and resources directories
-  file: "path={{ item }} state=directory owner={{ deploy_user }} group={{ deploy_user }} mode=0755"
-  with_items:
-  - "{{ local_download_dir }}"
-  - "{{ local_resource_dir }}"
-  - "{{ local_binary_dir }}"
-  - "{{ local_conf_dir }}"
-
-# preflight checks
 ## check internal network
 - name: detect internal network
   shell: >
@@ -37,6 +27,3 @@
 - name: set external network fact
   set_fact: has_external_network={{ external_network_st.stdout.strip() == '0' }}
 
-
-# do actual downloading
-- include_tasks: "download.yml" 
