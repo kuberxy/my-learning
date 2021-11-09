@@ -1,0 +1,16 @@
+---
+
+- name: start redis master
+  hosts: redis_masters
+  gather_facts: False
+  any_errors_fatal: true
+  roles:
+    - { role: start }
+
+- name: start redis slave
+  hosts: redis_slaves
+  gather_facts: False
+  any_errors_fatal: true
+  roles:
+    - { role: start }
+

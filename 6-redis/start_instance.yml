@@ -1,0 +1,9 @@
+---
+
+- name: start redis master
+  hosts: redis_cluster
+  gather_facts: False
+  any_errors_fatal: true
+  roles:
+    - { role: start }
+

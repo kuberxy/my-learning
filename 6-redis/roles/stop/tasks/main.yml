@@ -1,0 +1,11 @@
+---
+
+- name: stop instance
+  systemd: name=redis-{{ redis_port }} state=stopped daemon_reload=yes enabled=yes
+
+- name: wait for service port is down
+  wait_for:
+    port: "{{ redis_port }}"
+    state: stopped
+    msg: "the service port {{ redis_port }} is not down"
+

@@ -1,0 +1,16 @@
+---
+  
+- name: stop redis slave
+  hosts: redis_slaves
+  gather_facts: False
+  any_errors_fatal: true
+  roles:
+    - { role: stop }
+
+- name: stop redis master
+  hosts: redis_masters
+  gather_facts: False
+  any_errors_fatal: true
+  roles:
+    - { role: stop }
+

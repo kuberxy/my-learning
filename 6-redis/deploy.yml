@@ -5,6 +5,7 @@
   gather_facts: false
   any_errors_fatal: true
   roles:
+    - { role: common_dir }
     - { role: redis }
 
 - name: create redis instance
@@ -14,23 +15,3 @@
   roles:
     - { role: instance }
 
-- name: create redis cluster
-  hosts: redis_masters[0]
-  gather_facts: false
-  any_errors_fatal: true
-  roles:
-    - { role: cluster }
-
-- name: slave join to cluster
-  hosts: redis_slaves
-  gather_facts: false
-  any_errors_fatal: true
-  roles:
-    - { role: slave_join }
-
-- name: cluster check
-  hosts: redis_masters[0]
-  gather_facts: false
-  any_errors_fatal: true
-  roles:
-    - { role: cluster_check }

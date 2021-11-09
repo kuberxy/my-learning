@@ -1,28 +1,18 @@
 ---
 
-- name: deploy redis
-  hosts: redis_nodes
-  gather_facts: false
-  any_errors_fatal: true
-  roles:
-    - { role: common_dir }
-    - { role: redis }
-
-- name: create redis instance
+- name: start redis instance
   hosts: redis_cluster
   gather_facts: false
   any_errors_fatal: true
   roles:
-    - { role: instance }
+    - { role: start }
 
-- name: add master to cluster
-  hosts: redis_masters
+- name: create redis cluster
+  hosts: redis_masters[0]
   gather_facts: false
   any_errors_fatal: true
   roles:
-    - { role: master_join }
-    - { role: move_slot }
-    - { role: rebalance_slot }
+    - { role: cluster }
 
 - name: slave join to cluster
   hosts: redis_slaves
@@ -32,7 +22,7 @@
     - { role: slave_join }
 
 - name: cluster check
-  hosts: redis_masters[-1]
+  hosts: redis_masters[0]
   gather_facts: false
   any_errors_fatal: true
   roles:
