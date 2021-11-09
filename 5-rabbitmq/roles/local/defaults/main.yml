@@ -7,24 +7,24 @@ local_conf_dir: "{{ playbook_dir }}/conf"
 
 # names
 package_names:
-  - rabbitmq-server_3.8.18-1_all
-  - erlang-base_23.3.1-1~ubuntu~bionic_amd64
-  - erlang-asn1_23.3.1-1~ubuntu~bionic_amd64
-  - erlang-crypto_23.3.1-1~ubuntu~bionic_amd64
-  - erlang-eldap_23.3.1-1~ubuntu~bionic_amd64
-  - erlang-ftp_23.3.1-1~ubuntu~bionic_amd64
-  - erlang-inets_23.3.1-1~ubuntu~bionic_amd64
-  - erlang-mnesia_23.3.1-1~ubuntu~bionic_amd64
-  - erlang-os-mon_23.3.1-1~ubuntu~bionic_amd64
-  - erlang-parsetools_23.3.1-1~ubuntu~bionic_amd64
-  - erlang-public-key_23.3.1-1~ubuntu~bionic_amd64
-  - erlang-runtime-tools_23.3.1-1~ubuntu~bionic_amd64
-  - erlang-snmp_23.3.1-1~ubuntu~bionic_amd64
-  - erlang-ssl_23.3.1-1~ubuntu~bionic_amd64
-  - erlang-syntax-tools_23.3.1-1~ubuntu~bionic_amd64
-  - erlang-tftp_23.3.1-1~ubuntu~bionic_amd64
-  - erlang-tools_23.3.1-1~ubuntu~bionic_amd64
-  - erlang-xmerl_23.3.1-1~ubuntu~bionic_amd64
+  - rabbitmq-server
+  - erlang-base
+  - erlang-asn1
+  - erlang-crypto
+  - erlang-eldap
+  - erlang-ftp
+  - erlang-inets
+  - erlang-mnesia
+  - erlang-os-mon
+  - erlang-parsetools
+  - erlang-public-key
+  - erlang-runtime-tools
+  - erlang-snmp
+  - erlang-ssl
+  - erlang-syntax-tools
+  - erlang-tftp
+  - erlang-tools
+  - erlang-xmerl
   - rabbitmq_delayed_message_exchange
   - prometheus_rabbitmq_exporter
   - prometheus_process_collector
@@ -37,24 +37,24 @@ image_names:
 
 # urls
 package_urls:
-  - "https://mirrors.huaweicloud.com/rabbitmq-server/v3.8.18/rabbitmq-server_3.8.18-1_all.deb"
-  - "https://mirrors.tuna.tsinghua.edu.cn/erlang-solutions/ubuntu/pool//erlang-base_23.3.1-1~ubuntu~bionic_amd64.deb"
-  - "https://mirrors.tuna.tsinghua.edu.cn/erlang-solutions/ubuntu/pool//erlang-asn1_23.3.1-1~ubuntu~bionic_amd64.deb"
-  - "https://mirrors.tuna.tsinghua.edu.cn/erlang-solutions/ubuntu/pool//erlang-crypto_23.3.1-1~ubuntu~bionic_amd64.deb"
-  - "https://mirrors.tuna.tsinghua.edu.cn/erlang-solutions/ubuntu/pool//erlang-eldap_23.3.1-1~ubuntu~bionic_amd64.deb"
-  - "https://mirrors.tuna.tsinghua.edu.cn/erlang-solutions/ubuntu/pool//erlang-ftp_23.3.1-1~ubuntu~bionic_amd64.deb"
-  - "https://mirrors.tuna.tsinghua.edu.cn/erlang-solutions/ubuntu/pool//erlang-inets_23.3.1-1~ubuntu~bionic_amd64.deb"
-  - "https://mirrors.tuna.tsinghua.edu.cn/erlang-solutions/ubuntu/pool//erlang-mnesia_23.3.1-1~ubuntu~bionic_amd64.deb"
-  - "https://mirrors.tuna.tsinghua.edu.cn/erlang-solutions/ubuntu/pool//erlang-os-mon_23.3.1-1~ubuntu~bionic_amd64.deb"
-  - "https://mirrors.tuna.tsinghua.edu.cn/erlang-solutions/ubuntu/pool//erlang-parsetools_23.3.1-1~ubuntu~bionic_amd64.deb"
-  - "https://mirrors.tuna.tsinghua.edu.cn/erlang-solutions/ubuntu/pool//erlang-public-key_23.3.1-1~ubuntu~bionic_amd64.deb"
-  - "https://mirrors.tuna.tsinghua.edu.cn/erlang-solutions/ubuntu/pool//erlang-runtime-tools_23.3.1-1~ubuntu~bionic_amd64.deb"
-  - "https://mirrors.tuna.tsinghua.edu.cn/erlang-solutions/ubuntu/pool//erlang-snmp_23.3.1-1~ubuntu~bionic_amd64.deb"
-  - "https://mirrors.tuna.tsinghua.edu.cn/erlang-solutions/ubuntu/pool//erlang-ssl_23.3.1-1~ubuntu~bionic_amd64.deb"
-  - "https://mirrors.tuna.tsinghua.edu.cn/erlang-solutions/ubuntu/pool//erlang-syntax-tools_23.3.1-1~ubuntu~bionic_amd64.deb"
-  - "https://mirrors.tuna.tsinghua.edu.cn/erlang-solutions/ubuntu/pool//erlang-tftp_23.3.1-1~ubuntu~bionic_amd64.deb"
-  - "https://mirrors.tuna.tsinghua.edu.cn/erlang-solutions/ubuntu/pool//erlang-tools_23.3.1-1~ubuntu~bionic_amd64.deb"
-  - "https://mirrors.tuna.tsinghua.edu.cn/erlang-solutions/ubuntu/pool//erlang-xmerl_23.3.1-1~ubuntu~bionic_amd64.deb"
+  - "https://mirrors.huaweicloud.com/rabbitmq-server/v3.7.26/rabbitmq-server_3.7.26-1_all.deb"
+  - "https://dl.bintray.com/rabbitmq-erlang/debian/pool/erlang/21.3.8.18-1/ubuntu/bionic/erlang-base_21.3.8.18-1_amd64.deb"
+  - "https://dl.bintray.com/rabbitmq-erlang/debian/pool/erlang/21.3.8.18-1/ubuntu/bionic/erlang-asn1_21.3.8.18-1_amd64.deb"
+  - "https://dl.bintray.com/rabbitmq-erlang/debian/pool/erlang/21.3.8.18-1/ubuntu/bionic/erlang-crypto_21.3.8.18-1_amd64.deb"
+  - "https://dl.bintray.com/rabbitmq-erlang/debian/pool/erlang/21.3.8.18-1/ubuntu/bionic/erlang-eldap_21.3.8.18-1_amd64.deb"
+  - "https://dl.bintray.com/rabbitmq-erlang/debian/pool/erlang/21.3.8.18-1/ubuntu/bionic/erlang-ftp_21.3.8.18-1_amd64.deb"
+  - "https://dl.bintray.com/rabbitmq-erlang/debian/pool/erlang/21.3.8.18-1/ubuntu/bionic/erlang-inets_21.3.8.18-1_amd64.deb"
+  - "https://dl.bintray.com/rabbitmq-erlang/debian/pool/erlang/21.3.8.18-1/ubuntu/bionic/erlang-mnesia_21.3.8.18-1_amd64.deb"
+  - "https://dl.bintray.com/rabbitmq-erlang/debian/pool/erlang/21.3.8.18-1/ubuntu/bionic/erlang-os-mon_21.3.8.18-1_amd64.deb"
+  - "https://dl.bintray.com/rabbitmq-erlang/debian/pool/erlang/21.3.8.18-1/ubuntu/bionic/erlang-parsetools_21.3.8.18-1_amd64.deb"
+  - "https://dl.bintray.com/rabbitmq-erlang/debian/pool/erlang/21.3.8.18-1/ubuntu/bionic/erlang-public-key_21.3.8.18-1_amd64.deb"
+  - "https://dl.bintray.com/rabbitmq-erlang/debian/pool/erlang/21.3.8.18-1/ubuntu/bionic/erlang-runtime-tools_21.3.8.18-1_amd64.deb"
+  - "https://dl.bintray.com/rabbitmq-erlang/debian/pool/erlang/21.3.8.18-1/ubuntu/bionic/erlang-snmp_21.3.8.18-1_amd64.deb"
+  - "https://dl.bintray.com/rabbitmq-erlang/debian/pool/erlang/21.3.8.18-1/ubuntu/bionic/erlang-ssl_21.3.8.18-1_amd64.deb"
+  - "https://dl.bintray.com/rabbitmq-erlang/debian/pool/erlang/21.3.8.18-1/ubuntu/bionic/erlang-syntax-tools_21.3.8.18-1_amd64.deb"
+  - "https://dl.bintray.com/rabbitmq-erlang/debian/pool/erlang/21.3.8.18-1/ubuntu/bionic/erlang-tftp_21.3.8.18-1_amd64.deb"
+  - "https://dl.bintray.com/rabbitmq-erlang/debian/pool/erlang/21.3.8.18-1/ubuntu/bionic/erlang-tools_21.3.8.18-1_amd64.deb"
+  - "https://dl.bintray.com/rabbitmq-erlang/debian/pool/erlang/21.3.8.18-1/ubuntu/bionic/erlang-xmerl_21.3.8.18-1_amd64.deb"
   - "https://github.com/rabbitmq/rabbitmq-delayed-message-exchange/releases/download/v3.8.0/rabbitmq_delayed_message_exchange-3.8.0.ez"
   - "https://github.com/deadtrickster/prometheus_rabbitmq_exporter/releases/download/v3.7.9.1/prometheus_rabbitmq_exporter-3.7.9.1.ez"
   - "https://github.com/deadtrickster/prometheus_rabbitmq_exporter/releases/download/v3.7.9.1/prometheus_process_collector-1.4.3.ez"
@@ -67,24 +67,24 @@ image_repos:
 
 # versions
 package_versions:
-  - 3.8.18-1
-  - 23.3.1-1
-  - 23.3.1-1
-  - 23.3.1-1
-  - 23.3.1-1
-  - 23.3.1-1
-  - 23.3.1-1
-  - 23.3.1-1
-  - 23.3.1-1
-  - 23.3.1-1
-  - 23.3.1-1
-  - 23.3.1-1
-  - 23.3.1-1
-  - 23.3.1-1
-  - 23.3.1-1
-  - 23.3.1-1
-  - 23.3.1-1
-  - 23.3.1-1
+  - 3.7.26-1
+  - 21.3.8.18-1
+  - 21.3.8.18-1
+  - 21.3.8.18-1
+  - 21.3.8.18-1
+  - 21.3.8.18-1
+  - 21.3.8.18-1
+  - 21.3.8.18-1
+  - 21.3.8.18-1
+  - 21.3.8.18-1
+  - 21.3.8.18-1
+  - 21.3.8.18-1
+  - 21.3.8.18-1
+  - 21.3.8.18-1
+  - 21.3.8.18-1
+  - 21.3.8.18-1
+  - 21.3.8.18-1
+  - 21.3.8.18-1
   - 3.8.0
   - 3.7.9.1
   - 1.4.3

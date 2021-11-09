@@ -1,5 +1,7 @@
 ---
 
+local_conf_dir: "{{ playbook_dir }}/conf"
+
 rabbitmq_user: "{{ deploy_user }}"
 rabbitmq_conf_dir: "/etc/rabbitmq"
 rabbitmq_conf_emv_file: "rabbitmq-env.conf"
@@ -8,7 +10,8 @@ deployment_method: dpkg
 
 # dpkg config
 dpkg_packages:
-  - rabbitmq-server_3.7.26-1_all.deb
+  - rabbitmq-server
 
 # rabbitmq conf env
 nodename: "{{ rabbitmq_nodename }}"
+

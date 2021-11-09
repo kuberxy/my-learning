@@ -1,10 +1,17 @@
 ---
 
+- include_vars: file={{ local_conf_dir }}/packages_info.yml
+
 - name: copy packages
-  copy: src={{ local_download_dir }}/{{ item }} dest={{ image_dir }} owner={{ erlang_user }} group={{ erlang_user }} mode=0755
-  loop: "{{ dpkg_packages }}"
+  copy: src={{ local_download_dir }}/{{ item.name }}.{{ item.type }} dest={{ image_dir }} owner={{ erlang_user }} group={{ erlang_user }} mode=0755
+  when: "item.name in dpkg_packages"
+  loop: "{{ packages_info }}"
 
 - name: install packages
-  shell: "apt-get install -y ./*.deb"
+  shell: |
+    echo -e '#!/bin/sh\nexit 101' | install -m 755 /dev/stdin /usr/sbin/policy-rc.d && \
+    apt-get install -y ./*.deb && \
+    rm -f /usr/sbin/policy-rc.d
   args:
     chdir: "{{ image_dir }}"
+

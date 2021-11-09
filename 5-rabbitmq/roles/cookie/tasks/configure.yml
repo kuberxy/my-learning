@@ -2,4 +2,4 @@
 
 - name: create configuration file
   template: src=cookie.conf.j2 dest={{ cookie_conf_dir }}/{{ cookie_conf_filename }} owner={{ cookie_user }}  group={{ cookie_user }} mode=0600 backup=yes
-  notify: restart rabbitmq
+
