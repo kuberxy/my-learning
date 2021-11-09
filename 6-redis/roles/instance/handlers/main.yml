@@ -1,4 +1,0 @@
----
-
-- name: restart instance
-  systemd: name=redis-{{ instance_port }} state=restarted daemon_reload=yes enabled=yes

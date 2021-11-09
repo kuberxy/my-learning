@@ -1,5 +1,6 @@
 ---
 
+instance_host: "{{ ansible_host }}"
 instance_port: "{{ redis_port }}"
 
 instance_user: "{{ deploy_user }}"

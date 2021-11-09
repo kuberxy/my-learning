@@ -7,3 +7,4 @@
     this_role_name: "redis_{{ instance_port }}"
     service_name: "redis-{{ instance_port }}"
     service_type: "{{ deployment_method }}" 
+
